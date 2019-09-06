@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="最近在看一些关于图网络的内容，初步入坑…之前看过那几篇赫赫有名的综述论文，看过后一个感觉：GNN是一个筐，什么都能往里面装。确实，这块很有研究价值，总的来讲就是使得机器学习能够处理Non Euclidean data。比如推荐系统、电子交易、计算几何、脑信号、分子结构等抽象出的图谱。这些图谱结构每个节点连接都不尽相同，有的节点有三个连接，有的节点有两个连接，是不规则的数据结构。以前机器学习只能处理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DeepWalk论文阅读学习笔记">
+<meta property="og:url" content="http://yoursite.com/2019/04/26/DeepWalk/index.html">
+<meta property="og:site_name" content="MuMaXu&#39;s Blog">
+<meta property="og:description" content="最近在看一些关于图网络的内容，初步入坑…之前看过那几篇赫赫有名的综述论文，看过后一个感觉：GNN是一个筐，什么都能往里面装。确实，这块很有研究价值，总的来讲就是使得机器学习能够处理Non Euclidean data。比如推荐系统、电子交易、计算几何、脑信号、分子结构等抽象出的图谱。这些图谱结构每个节点连接都不尽相同，有的节点有三个连接，有的节点有两个连接，是不规则的数据结构。以前机器学习只能处理">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.loli.net/2019/02/14/5c64d68246393.png">
+<meta property="og:image" content="https://i.loli.net/2019/03/19/5c90a5b202d95.png">
+<meta property="og:image" content="https://i.loli.net/2019/03/19/5c90a86c864b2.png">
+<meta property="og:image" content="https://i.loli.net/2019/03/19/5c90a9454cdc5.png">
+<meta property="og:image" content="https://i.loli.net/2019/03/19/5c90acd8ed2ae.png">
+<meta property="og:image" content="https://i.loli.net/2019/03/19/5c90af8c9bc18.png">
+<meta property="og:image" content="https://i.loli.net/2019/03/19/5c90afe7395ac.png">
+<meta property="og:image" content="https://i.loli.net/2019/03/19/5c90b0c5dd0ae.png">
+<meta property="og:image" content="https://i.loli.net/2019/03/19/5c90b12e01bbf.png">
+<meta property="og:image" content="https://i.loli.net/2019/03/19/5c90b21a5c57a.png">
+<meta property="og:image" content="https://i.loli.net/2019/03/19/5c90b1a3c821b.png">
+<meta property="og:updated_time" content="2019-06-22T12:18:11.258Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DeepWalk论文阅读学习笔记">
+<meta name="twitter:description" content="最近在看一些关于图网络的内容，初步入坑…之前看过那几篇赫赫有名的综述论文，看过后一个感觉：GNN是一个筐，什么都能往里面装。确实，这块很有研究价值，总的来讲就是使得机器学习能够处理Non Euclidean data。比如推荐系统、电子交易、计算几何、脑信号、分子结构等抽象出的图谱。这些图谱结构每个节点连接都不尽相同，有的节点有三个连接，有的节点有两个连接，是不规则的数据结构。以前机器学习只能处理">
+<meta name="twitter:image" content="https://i.loli.net/2019/02/14/5c64d68246393.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/04/26/DeepWalk/">
+
+
+
+
+
+  <title>DeepWalk论文阅读学习笔记 | MuMaXu's Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">MuMaXu's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Hello,world!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/26/DeepWalk/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="XuHejun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/image/xu.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MuMaXu's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">DeepWalk论文阅读学习笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-26T12:00:00+08:00">
+                2019-04-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Graph-Embedding/" itemprop="url" rel="index">
+                    <span itemprop="name">Graph Embedding</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近在看一些关于图网络的内容，初步入坑…之前看过那几篇赫赫有名的综述论文，看过后一个感觉：GNN是一个筐，什么都能往里面装。确实，这块很有研究价值，总的来讲就是使得机器学习能够处理Non Euclidean data。比如推荐系统、电子交易、计算几何、脑信号、分子结构等抽象出的图谱。这些图谱结构每个节点连接都不尽相同，有的节点有三个连接，有的节点有两个连接，是不规则的数据结构。以前机器学习只能处理Euclidean data，这类数据最显著的特征就是有规则的空间结构，比如图片是规则的正方形栅格，比如语音是规则的一维序列。而这些数据结构能够用一维、二维的矩阵表示，卷积神经网络处理起来很高效。</p>
+<p><img src="https://i.loli.net/2019/02/14/5c64d68246393.png" alt=""></p>
+<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>文章简介部分介绍了网络嵌入是什么，以社交网络为例，网络嵌入就是将网络中的点用一个低维的向量表示，并且这些向量要能反应原先网络的某些特性，比如如果在原网络中两个点的结构类似，那么这两个点表示成的向量也应该类似。文中以Karate network数据为例，效果见下图：</p>
+<p><img src="https://i.loli.net/2019/03/19/5c90a5b202d95.png" alt=""></p>
+<p>本文提出了一种网络嵌入的方法叫<strong>DeepWalk</strong>，它的输入是一张图或者网络，输出为网络中顶点的向量表示。DeepWalk通过<strong>截断随机游走</strong>(truncated random walk)学习出一个网络的<strong>社会表示</strong>(social representation)，在网络标注顶点很少的情况也能得到比较好的效果。并且该方法还具有可扩展的优点，能够适应网络的变化。</p>
+<p>我个人理解可以将这个过程理解为一个降维的过程，但是不同于传统意义上的高纬度降到低纬度，而是将一个复杂的结构降到低纬度。或者说可以理解为，将网络中的拓扑结构，嵌入到一个低维向量中，每个节点的低维向量，从某种程度上反应了该节点在网络中的连接情况。</p>
+<h2 id="这样做的好处"><a href="#这样做的好处" class="headerlink" title="这样做的好处"></a>这样做的好处</h2><p>前面也讲了，目前机器学习也只能够处理一些Euclidean data，网络这种Non Euclidean data是无能为力的，主要是这类的数据不是我们常规的机器学习方法所能够处理的数据，那么很自然的想法就是将网络这种数据转换为我们机器学习能够处理的数据，然后就可以进行机器学习里面的常见比如分类、聚类、回归，这篇文章提到的DeepWalk算法也可以说是在深度学习火热的今天在Graph Embedding的开山之作了。</p>
+<p>例如网络中的社团发现算法，大多数情况下我们都针对网络做大量的游走，不断改变网络的社团结构，以使网络获得最优的模块度，但是如果我们能将拓扑信息嵌入到低维向量中，那么每个节点我们都可以看做是一个样本，每个维度都可以看做一个feature，那么只需要跑个聚类算法，就可以得到很好的结果。除了聚类，还有链路预测、推荐等一系列网络中的问题，都可以直接扔到机器学习的相关算法中跑出来。</p>
+<h1 id="问题定义"><a href="#问题定义" class="headerlink" title="问题定义"></a>问题定义</h1><p>图G定义如下，由顶点集V和边集E组成：</p>
+<p><img src="https://i.loli.net/2019/03/19/5c90a86c864b2.png" alt=""></p>
+<p>如果在图G的基础上再加上顶点的向量表示和顶点所属的标注（网络节点分类问题中，网络中的每个顶点都有一个类别，所属的类别即为该顶点的标注）就构成了一个<strong>标注图</strong>(labeled graph)。顶点的表示X是一个|V|×s维的矩阵，|V|表示顶点的数量，s是代表每个顶点的向量的维数（一般比较小），所以X即为将每个顶点的向量结合在一起形成的矩阵。Y则是每个顶点的标注构成的矩阵。</p>
+<p><img src="https://i.loli.net/2019/03/19/5c90a9454cdc5.png" alt=""></p>
+<h1 id="学习社会表示"><a href="#学习社会表示" class="headerlink" title="学习社会表示"></a>学习社会表示</h1><p>首先给出我对这种方法的理解：<strong>dedpwalk的主要思想是类比word2vec的方法，将一系列的walks作为自己的语料库，而将图中的节点作为自己的词汇表，然后运用word2vec的方法得到节点向量表示（也就是社会表示）。</strong></p>
+<p>文中提到社会表示具有如下特性</p>
+<ul>
+<li><strong>适应性</strong>，网络表示必须能适应网络的变化。网络是一个动态的图，不断地会有新的节点和边添加进来，网络表示需要适应网络的正常演化。</li>
+</ul>
+<ul>
+<li><strong>属于同一个社区的节点有着类似的表示</strong>。网络中往往会出现一些特征相似的点构成的团状结构，这些节点表示成向量后必须相似。</li>
+</ul>
+<ul>
+<li><strong>低维</strong>。代表每个顶点的向量维数不能过高，过高会有过拟合的风险，对网络中有缺失数据的情况处理能力较差。</li>
+</ul>
+<ul>
+<li><strong>连续性</strong>。低维的向量应该是连续的。</li>
+</ul>
+<p>于是作者提出了一个思路，针对每个节点跑了个随机游走，游走过程中就得到了一系列的有序节点序列，这些节点序列可以类比于文章的句子，节点类比于句子中的单词，然后再使用word2vec跑，得到对应的向量。</p>
+<p>上边的思路可行不可行，重点是要证明网络中的节点与文本中的词相似不相似，于是作者针对YouTube的社交网络与Wikipedia的文章进行了研究，比较了在短的随机游走中节点出现的频度与文章中单词的频度进行了比较，可以得出二者基本上类似。（说实话我不是很理解这样的比较有什么意义，可能我对word2vec理解的不够。确实两个图比较相似，这个就是证明了一下Zipf’s law，关键能不能用word2vec取决于这个吗？）</p>
+<h1 id="算法核心部分"><a href="#算法核心部分" class="headerlink" title="算法核心部分"></a>算法核心部分</h1><p>提到网络嵌入，可能会让人联想到NLP中的word2vec，也就是<strong>词嵌入</strong>(word embedding)。前者是将网络中的节点用向量表示，后者是将单词用向量表示。因为大多数机器学习的方法的输入往往都是一个向量，算法也都基于对向量的处理，从而将不能直接处理的东西转化成向量表示，这样就能利用机器学习的方法对其分析，这是一种很自然的思想。</p>
+<p>本文处理网络节点的表示(node representation)就是利用了词嵌入（词向量）的的思想。词嵌入的基本处理元素是<strong>单词</strong>，对应网络网络节点的表示的处理元素是<strong>网络节点</strong>；词嵌入是对构成一个<strong>句子</strong>中单词序列进行分析，那么网络节点的表示中节点构成的序列就是<strong>随机游走</strong>。</p>
+<p>所谓随机游走(random walk)，就是在网络上不断重复地随机选择游走路径，最终形成一条贯穿网络的路径。从某个特定的端点开始，游走的每一步都从与当前节点相连的边中随机选择一条，沿着选定的边移动到下一个顶点，不断重复这个过程。下图所示绿色部分即为一条随机游走。</p>
+<p><img src="https://i.loli.net/2019/03/19/5c90acd8ed2ae.png" alt=""></p>
+<p>关于随机游走的符号解释：以$v_{i}$为根节点生成的一条随机游走路径（绿色）为$W_{v_{i}}$，其中路径上的点（蓝色）分别标记为 $W_{v_{i}}^{1}, W_{v_{i}}^{2}, W_{v_{i}}^{3} \ldots$，截断随机游走(truncated random walk)实际上就是长度固定的随机游走。</p>
+<p>使用随机游走有两个好处：</p>
+<ul>
+<li><strong>并行化</strong>，随机游走是局部的，对于一个大的网络来说，可以同时在不同的顶点开始进行一定长度的随机游走，多个随机游走同时进行，可以减少采样的时间。</li>
+<li><strong>适应性</strong>，可以适应网络局部的变化。网络的演化通常是局部的点和边的变化，这样的变化只会对部分随机游走路径产生影响，因此在网络的演化过程中不需要每一次都重新计算整个网络的随机游走。</li>
+</ul>
+<p>首这部分内容需要理解词向量模型这一块的内容：（这部分如果不懂的话可以看我之前写的一篇<a href="https://mumaxu.github.io/2019/01/03/%E6%B5%85%E8%B0%88Word2Vec/" target="_blank" rel="noopener">博客）</a></p>
+<p>如果将单词对应成网络中的节点$v_{i}$，句子序列对应成网络的随机游走，那么对于一个随机游走 $\left(v_{0}, v_{1}, \ldots, v_{i}\right)$要优化的目标就是：$\operatorname{Pr}\left(v_{i} |\left(v_{0}, v_{1}, \ldots, v_{i-1}\right)\right)$</p>
+<p>按照上面的理解就是，当知道$\left(v_{0}, v_{1}, \ldots, v_{i-1}\right)$游走路径后，游走的下一个节点是$v_i$的概率是多少？可是这里的$v_i$是顶点本身没法计算，于是引入一个映射函数$\Phi$，它的功能是将顶点映射成向量（这其实就是我们要求的），转化成向量后就可以对顶点$v_i$进行计算了。</p>
+<p><img src="https://i.loli.net/2019/03/19/5c90af8c9bc18.png" alt=""></p>
+<p>映射函数$𝚽$对网络中每一个节点映射成d维向量，$𝚽$实际上是一个矩阵，总共有|V|×d个参数，这些参数就是需要学习的。</p>
+<p><img src="https://i.loli.net/2019/03/19/5c90afe7395ac.png" alt=""></p>
+<p>有了$𝚽$之后，$\mathbf{\Phi}\left(v_{i}\right)$就是一个可以计算的向量了，这时原先的优化目标可以写成：</p>
+<p>$\operatorname{Pr}\left(v_{i} |\left(\mathbf{\Phi}\left(v_{0}\right), \mathbf{\Phi}\left(v_{1}\right), \ldots, \mathbf{\Phi}\left(v_{i}-1\right)\right)\right)$</p>
+<p>但是怎么计算这个概率呢？同样借用词向量中使用的skip-gram模型</p>
+<p>skip-gram模型有这样3个特点：</p>
+<ul>
+<li>不使用上下文（context）预测缺失词（missing word），而使用缺失词预测上下文。因为 $\left(\mathbf{\Phi}\left(v_{0}\right), \mathbf{\Phi}\left(v_{1}\right), \ldots, \mathbf{\Phi}\left(v_{i}-1\right)\right)$ 这部分太难算了，但是如果只计算一个 $\mathbf{\Phi}\left(v_{k}\right)$，其中$v_k$是缺失词，这就很好算。</li>
+<li>同时考虑左边窗口和右边窗口。下图中橘黄色部分，对于$v_4$同时考虑左边的2个窗口内的节点和右边2个窗口内的节点。</li>
+<li>不考虑顺序，只要是窗口中出现的词都算进来，而不管它具体出现在窗口的哪个位置。</li>
+</ul>
+<p>应用skip-gram模型后，优化目标变成了这样：</p>
+<p><img src="https://i.loli.net/2019/03/19/5c90b0c5dd0ae.png" alt=""></p>
+<p>其中概率部分的意思是，在一个随机游走中，当给定一个顶点$v_i$时，出现它的w窗口范围内顶点的概率。</p>
+<p><img src="https://i.loli.net/2019/03/19/5c90b12e01bbf.png" alt=""></p>
+<p>做了这样的处理后可以发现，忽视顶点的顺序更好地体现了在随机游走中顶点的邻近关系，并且只需要计算一个顶点的向量，减少了计算量。所以DeepWalk是将截断随机游走与神经语言模型(neural language model)结合形成的网络表示，它具有低维、连续和适应性特征。</p>
+<p>整个DeepWalk算法包含两部分，一部分是随机游走的生成，另一部分是参数的更新。</p>
+<p>算法的流程如下：</p>
+<p><img src="https://i.loli.net/2019/03/19/5c90b21a5c57a.png" alt=""></p>
+<p>其中第2步是构建Hierarchical Softmax，第3步对每个节点做γ次随机游走，第4步打乱网络中的节点，第5步以每个节点为根节点生成长度为t的随机游走，第7步根据生成的随机游走使用skip-gram模型利用梯度的方法对参数进行更新。</p>
+<p>参数更新的细节如下：</p>
+<p><img src="https://i.loli.net/2019/03/19/5c90b1a3c821b.png" alt=""></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>DeepWalk目前主要还是用来做分类，有节点的分类和图的分类。原文见<a href="https://arxiv.org/pdf/1403.6652.pdf" target="_blank" rel="noopener">这里</a>。作者的<a href="https://arxiv.org/pdf/1403.6652.pdf" target="_blank" rel="noopener">源代码</a>和作者<a href="http://www.perozzi.net/projects/deepwalk/" target="_blank" rel="noopener">PPT</a>。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+    
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="XuHejun 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/22/数据结构算法题总结/" rel="next" title="数据结构算法题总结">
+                <i class="fa fa-chevron-left"></i> 数据结构算法题总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/06/大数据概述/" rel="prev" title="大数据概述">
+                大数据概述 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/image/xu.jpg" alt="XuHejun">
+            
+              <p class="site-author-name" itemprop="name">XuHejun</p>
+              <p class="site-description motion-element" itemprop="description">Stay hungry,stay foolish</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/MuMaXu" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/xu-he-jun-24" target="_blank" title="Zhihu">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Zhihu</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/MuMaXu2" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Twitter</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/5307894956" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Weibo</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#这样做的好处"><span class="nav-number">1.1.</span> <span class="nav-text">这样做的好处</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题定义"><span class="nav-number">2.</span> <span class="nav-text">问题定义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#学习社会表示"><span class="nav-number">3.</span> <span class="nav-text">学习社会表示</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法核心部分"><span class="nav-number">4.</span> <span class="nav-text">算法核心部分</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">XuHejun</span>
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+  
+</body>
+</html>

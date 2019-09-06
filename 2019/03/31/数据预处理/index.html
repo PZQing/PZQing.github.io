@@ -1,0 +1,1635 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="特征工程,机器学习,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="概述数据预处理和特征选择是数据挖掘与机器学习中关注的重要问题，坊间常说：数据和特征决定了机器学习的上限，而模型和算法只是逼近这个上限而已。特征工程就是将原始数据转化为有用的特征，更好的表示预测模型处理的实际问题，提升对于未知数据的预测准确性。 缺失值处理 数据缺失值的产生的原因多种多样，主要分为客观原因和人为原因。  客观原因：比如数据存储的失败、存储器损坏、机械故障导致某段时间数据未能收集（对于">
+<meta name="keywords" content="特征工程,机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据预处理">
+<meta property="og:url" content="http://yoursite.com/2019/03/31/数据预处理/index.html">
+<meta property="og:site_name" content="MuMaXu&#39;s Blog">
+<meta property="og:description" content="概述数据预处理和特征选择是数据挖掘与机器学习中关注的重要问题，坊间常说：数据和特征决定了机器学习的上限，而模型和算法只是逼近这个上限而已。特征工程就是将原始数据转化为有用的特征，更好的表示预测模型处理的实际问题，提升对于未知数据的预测准确性。 缺失值处理 数据缺失值的产生的原因多种多样，主要分为客观原因和人为原因。  客观原因：比如数据存储的失败、存储器损坏、机械故障导致某段时间数据未能收集（对于">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.loli.net/2019/03/31/5ca063080772a.png">
+<meta property="og:image" content="https://i.loli.net/2019/03/31/5ca0867f58544.png">
+<meta property="og:image" content="https://i.loli.net/2019/03/31/5ca0885ea5253.png">
+<meta property="og:image" content="https://i.loli.net/2019/03/31/5ca08be137419.png">
+<meta property="og:image" content="https://i.loli.net/2019/03/31/5ca08e6e61d9a.png">
+<meta property="og:updated_time" content="2019-06-22T08:54:11.821Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据预处理">
+<meta name="twitter:description" content="概述数据预处理和特征选择是数据挖掘与机器学习中关注的重要问题，坊间常说：数据和特征决定了机器学习的上限，而模型和算法只是逼近这个上限而已。特征工程就是将原始数据转化为有用的特征，更好的表示预测模型处理的实际问题，提升对于未知数据的预测准确性。 缺失值处理 数据缺失值的产生的原因多种多样，主要分为客观原因和人为原因。  客观原因：比如数据存储的失败、存储器损坏、机械故障导致某段时间数据未能收集（对于">
+<meta name="twitter:image" content="https://i.loli.net/2019/03/31/5ca063080772a.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/03/31/数据预处理/">
+
+
+
+
+
+  <title>数据预处理 | MuMaXu's Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">MuMaXu's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Hello,world!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/31/数据预处理/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="XuHejun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/image/xu.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MuMaXu's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">数据预处理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-31T20:17:39+08:00">
+                2019-03-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>数据预处理和特征选择是数据挖掘与机器学习中关注的重要问题，坊间常说：数据和特征决定了机器学习的上限，而模型和算法只是逼近这个上限而已。特征工程就是将原始数据转化为有用的特征，更好的表示预测模型处理的实际问题，提升对于未知数据的预测准确性。</p>
+<h1 id="缺失值处理"><a href="#缺失值处理" class="headerlink" title="缺失值处理"></a>缺失值处理</h1><ol>
+<li><p>数据缺失值的产生的原因多种多样，主要分为客观原因和人为原因。</p>
+<ul>
+<li>客观原因：比如数据存储的失败、存储器损坏、机械故障导致某段时间数据未能收集（对于定时数据采集而言）。</li>
+<li>人为原因：由于人的主观失误（如：数据录入人员失误漏录了数据）、历史局限（如：数据在早期尚无记录）、有意隐瞒数据（如：在市场调查中被访人拒绝透露相关问题的答案，或者回答的问题是无效的）导致数据未能收集。</li>
+</ul>
+</li>
+<li><p>缺失值的处理有三种方法：</p>
+<ul>
+<li><p>直接使用含有缺失值的数据。</p>
+<p>某些算法可以直接使用含有缺失值的情况，如决策树算法可以直接使用含有缺失值的数据。</p>
+</li>
+<li><p>优点：直接使用原始数据，排除了人工处理缺失值带来的信息损失。</p>
+</li>
+<li><p>缺点：只有少量的算法支持这种方式。</p>
+</li>
+<li><p>删除含有缺失值的数据。</p>
+<p>最简单的办法就是删除含有缺失值的样本。</p>
+<ul>
+<li>优点：简单、高效。</li>
+<li>缺点：如果样本中的缺失值较少，则直接丢弃样本会损失大量的有效信息。这是对信息的极大浪费。</li>
+</ul>
+<p>如果样本中包含大量的缺失值，只有少量的有效值，则该方法可以接受。</p>
+</li>
+<li><p>缺失值补全。</p>
+<p>用最可能的值来插补缺失值。这也是在实际工程中应用最广泛的技术。</p>
+<ul>
+<li>优点：保留了原始数据</li>
+<li>缺点：计算复杂，而且当插补的值估计不准确时，会对后续的模型引入额外的误差。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>缺失值补全常见有以下方法：</p>
+</li>
+</ol>
+<ul>
+<li>均值插补</li>
+<li>同类值插补</li>
+<li>建模预测</li>
+<li>高维映射</li>
+<li>多重插补</li>
+<li>压缩感知与矩阵补全</li>
+</ul>
+<h2 id="均值插补-amp-amp-同类均值插补"><a href="#均值插补-amp-amp-同类均值插补" class="headerlink" title="均值插补 &amp;&amp; 同类均值插补"></a>均值插补 &amp;&amp; 同类均值插补</h2><ol>
+<li>均值插补：<ul>
+<li>如果样本的属性是连续值，则该属性的缺失值就以该属性有效值的平均值来插补。</li>
+<li>如果样本的属性是离散值，则该属性的缺失值就以该属性有效值的众数（出现频率最高的值）来插补。</li>
+</ul>
+</li>
+<li>均值插补在含有缺失值的属性上的所有缺失值都填补为同一个值。而同类均值插补首先将样本进行分类，然后以该类中的样本的均值来插补缺失值。</li>
+</ol>
+<h2 id="建模预测"><a href="#建模预测" class="headerlink" title="建模预测"></a>建模预测</h2><ol>
+<li><p>建模预测的思想是：将缺失的属性作为预测目标，通过建立模型来预测。</p>
+</li>
+<li><p>给定数据集$\mathbb{D}=\left\{\left(\vec{\mathbf{x}}_{1}, \tilde{y}_{1}\right),\left(\vec{\mathbf{x}}_{2}, \tilde{y}_{2}\right), \cdots,\left(\vec{\mathbf{x}}_{N}, \tilde{y}_{N}\right)\right\}$</p>
+<p>假设属性$j$含有缺失值，根据$x_{ij}$是否缺失，将数据集划分为：</p>
+<ul>
+<li>$\mathbb{D}_{1}=\left\{\vec{\mathbf{x}}_{i} | x_{i, j} \neq n u l l\right\}$：属性有$j$效的样本的集合。</li>
+<li>$\mathbb{D}_{2}=\left\{\vec{\mathbf{x}}_{i} | x_{i, j}=n u l l\right\}$：属性$j$缺失的样本的集合。</li>
+</ul>
+<p>将$\mathbb{D}_{1}$中的样本作为新的训练集，标签值重新定义为属性$j$的值，通过建模来完成属性$j$的学习。将$\mathbb{D}_{2}$中的样本作为测试集，通过学得的模型来预测其属性$j$的值。</p>
+</li>
+<li><p>这种方法的效果相对较好，但是该方法有个根本缺陷：</p>
+<ul>
+<li><p>如果其他属性和属性 无关，则预测的结果无意义。</p>
+</li>
+<li><p>如果预测结果相当准确，则又说明属性 可以由其它属性计算得到， 于是属性 信息冗余，没有必要纳入数据集中。</p>
+<p> 一般的情况是介于两者之间。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="高维映射"><a href="#高维映射" class="headerlink" title="高维映射"></a>高维映射</h2><ol>
+<li><p>高维映射的思想是：将属性映射到高维空间。</p>
+</li>
+<li><p>给定数据集$\mathbb{D}$，假设属性$j$的取值为离散值$\left\{a_{1}, a_{2} \cdots, a_{K}\right\}$一共$K$个值，则将该属性扩展为$k+1$个属性$\left(j_{1}, j_{2}, \cdots, j_{K+1}\right)$，其中：</p>
+<ul>
+<li>若样本在属性$j$上的取值为$a_k$，则样本在新的属性$j_k$上的取值为 1，在新的属性$j_{1}, \cdots, j_{k-1}, j_{k+1}, \cdots, j_{K+1}$上的取值为0 。</li>
+<li>若样本在属性$j$上缺失，则样本的新的属性$j_{K+1}$上的取值为 1,在新的属性$j_{1}, \cdots, j_{K}$上取值为 0 。</li>
+</ul>
+</li>
+<li><p>对于连续特征，高维映射无法直接处理。可以在连续特征离散化之后，再进行高维映射。</p>
+</li>
+<li><p>高维映射是最精确的做法，它完全保留了所有的信息，也未增加任何额外的信息。比如广告的<code>CTR</code> 预估模<br>型，预处理时会把所有变量都这样处理，达到几亿维。</p>
+<ul>
+<li>优点：完整保留了原始数据的全部信息。</li>
+<li>缺点：计算量大大提升。而且只有在样本量非常大的时候效果才好，否则会因为过于稀疏，效果很差。</li>
+</ul>
+</li>
+</ol>
+<h2 id="多重插补"><a href="#多重插补" class="headerlink" title="多重插补"></a>多重插补</h2><ol>
+<li><p>多重插补（ <code>Multiple Imputation:MI</code>）认为待插补的值是随机的，它的值来自于已观测到的值。</p>
+<p>具体实践上通常是估计出待插补的值，然后再加上不同的噪声，形成多组可选插补值。然后根据某种选择依<br>据，选取最合适的插补值。</p>
+</li>
+<li><p>多重插补法的步骤：</p>
+<ul>
+<li>通过变量之间的关系对缺失数据进行预测，利用蒙特卡洛方法生成多个完整的数据集。</li>
+<li>在每个完整的数据集上进行训练，得到训练后的模型以及评价函数值。</li>
+<li>对来自各个完整的数据集的结果，根据评价函数值进行选择，选择评价函数值最大的模型，其对应的插<br>值就是最终的插补值。</li>
+</ul>
+<p>​</p>
+</li>
+</ol>
+<h2 id="压缩感知-amp-amp-矩阵补全"><a href="#压缩感知-amp-amp-矩阵补全" class="headerlink" title="压缩感知 &amp;&amp; 矩阵补全"></a>压缩感知 &amp;&amp; 矩阵补全</h2><ol>
+<li><p>在现实任务中，经常希望根据部分信息来恢复全部信息。压缩感知和矩阵补全就是用于完成这个任务。</p>
+</li>
+<li><p>假定有长度为$n$的离散信号$\vec{x}$。 根据奈奎斯特采样定理，当采样频率达到$\vec{x}$最高频率的两倍时，采样后的信号就保留了原信号的全部信息。</p>
+<p>假定以远小于奈奎斯特采样定理要求的采样频率进行采样，得到了长度为 的采样后信号 ， 其中$m \ll n$。 则有：$\vec{\mathbf{y}}=\Phi \vec{\mathbf{x}}$</p>
+<p>其中$\Phi \in \mathbb{R}^{m \times n}$是对信号$\vec{x}$的测量矩阵，它确定了以什么样的频率采样以及如何将采样样本组成采样后的信号。</p>
+</li>
+<li><p>通常在已知离散信号$\vec{x}$和测量矩阵$\Phi$时要得到测量值$\vec{\mathbf{y}}$很容易。但是如果给定测量值$\vec{\mathbf{y}}$和测量矩阵$\Phi$， 要<br>还原出原始信号$\vec{x}$比较困难。这是由于当$m \ll n$时，$\vec{\mathbf{y}}=\Phi \vec{\mathbf{x}}$是一个欠定方程，无法简单的求出数值解。<br>假设存在某种线性变换$\Psi \in \mathbb{R}^{n \times n}$， 使得$\vec{\mathbf{x}}=\Psi \vec{\mathbf{s}}$ ，其中$\vec{\mathrm{s}}$也和$\vec{x}$一样是$n$维列向量，则有$\vec{\mathbf{y}}=\Phi \vec{\mathbf{x}}=\Phi \Psi \vec{\mathbf{s}}$<br>。令$\mathbf{A}=\Phi \Psi \in \mathbb{R}^{m \times n}$，则$\vec{\mathbf{y}}=\mathbf{A} \vec{\mathbf{s}}$。</p>
+</li>
+<li><p>如果能够从$\vec{\mathbf{y}}$中恢复$\vec{\mathbf{x}}$，则能够通过$\vec{\mathbf{x}}=\Psi \vec{\mathbf{s}}$从$\vec{\mathbf{y}}$中恢复出$\vec{\mathbf{x}}$。</p>
+<p>从数学意义上来看，这种做法没有解决任何问题。因为根据$\vec{\mathbf{y}}=\mathbf{A} \vec{\mathbf{s}}$， 从$\vec{\mathbf{y}}$中恢复$\vec{\mathbf{s}}$这个问题仍然是欠定的。</p>
+<p>但是在实际应用中发现，如果$\vec{\mathbf{s}}$具有稀疏性（即大量的分量为零），则该问题能够很好地求解。这是因为稀疏性使得未知因素的影响大大减少。</p>
+<p>此时$\Psi$称作稀疏基，而$A$的作用类似于字典，能够将信号转换为稀疏表示。</p>
+<p>​</p>
+</li>
+</ol>
+<h3 id="压缩感知"><a href="#压缩感知" class="headerlink" title="压缩感知"></a>压缩感知</h3><ol>
+<li><p>与特征选择、稀疏表示不同，压缩感知侧重的是如何利用信号本身所具有的稀疏性，从部分观测样本中恢复原信号。</p>
+</li>
+<li><p>压缩感知分为感知测量和重构恢复两个阶段。</p>
+<ul>
+<li>感知测量：关注如何对原始信号进行处理以获得稀疏样本表示。常用的手段是傅里叶变换、小波变换、字典学习、稀疏编码等</li>
+<li>重构恢复：关注的是如何基于稀疏性从少量观测中恢复原信号。</li>
+</ul>
+</li>
+<li><p>限定等距性<code>Restricted Isometry Property:RIP</code> ：对于大小为$m \times n, m \ll n$的矩阵$\mathbf{A}$，若存在常数$\delta_{k} \in(0,1)$，使得对于任意向量$\vec{\mathbf{S}}$和$A$的所有子矩阵$\mathbf{A}_{k} \in \mathbb{R}^{m \times k}$，都有：</p>
+<script type="math/tex; mode=display">
+\left(1-\delta_{k}\right)| | \vec{\mathbf{s}}\left\|_{2}^{2} \leq\right\| \mathbf{A}_{k} \vec{\mathbf{s}}\left\|_{2}^{2} \leq\left(1+\delta_{k}\right)\right\| \mathbf{s}\left\|_{2}^{2}\right.</script><p>则称$A$满足$k$限定等距性<code>k-RIP</code>。</p>
+<p>此时通过下面的最优化问题可以近乎完美的从$\vec{\mathbf{y}}$中恢复出稀疏信号$\vec{\mathbf{s}} $，进而恢复出$\vec{\mathbf{x}}$：</p>
+<script type="math/tex; mode=display">
+\begin{array}{c}{\min _{\vec{\mathrm{s}}}\|\vec{\mathbf{s}}\|_{0}} \\ {\text { s.t. } \vec{\mathbf{y}}=\mathbf{A} \vec{\mathbf{s}}}\end{array}</script><p>这里$L_0$范数表示向量中非零元素的个数。</p>
+</li>
+<li><p>该最优化问题涉及$L_0$范数最小化，这是个<code>NP</code>难问题。但是$L_1$范数最小化在一定条件下与$L_0$范数最小化</p>
+<p>问题共解，于是实际上只需要求解最小化问题：</p>
+<script type="math/tex; mode=display">
+\begin{array}{c}{\min _{\vec{\mathbf{s}}}\|\vec{\mathbf{s}}\|_{1}} \\ {\text { s.t. } \quad \vec{\mathbf{y}}=\mathbf{A} \vec{\mathbf{s}}}\end{array}</script><p>可以将该问题转化为<code>LASSO</code>等价形式，然后通过近端梯度下降法来求解。</p>
+</li>
+</ol>
+<h3 id="矩阵补全"><a href="#矩阵补全" class="headerlink" title="矩阵补全"></a>矩阵补全</h3><ol>
+<li><p>矩阵补全matrix completion 解决的问题是：</p>
+<script type="math/tex; mode=display">
+\begin{array}{c}{\min _{\mathbf{X}} \operatorname{rank}(\mathbf{X})} \\ {\text {s.t.} \quad x_{i, j}=a_{i, j},(i, j) \in \Omega}\end{array}</script><p>其中</p>
+<script type="math/tex; mode=display">
+\mathbf{X}=\left[ \begin{array}{cccc}{x_{1,1}} & {x_{1,2}} & {\cdots} & {x_{1, n}} \\ {x_{2,1}} & {x_{2,2}} & {\cdots} & {x_{2, n}} \\ {\vdots} & {\vdots} & {\ddots} & {\vdots} \\ {x_{m, 1}} & {x_{m, 2}} & {\cdots} & {x_{m, n}}\end{array}\right] \quad \mathbf{A}=\left[ \begin{array}{cccc}{a_{1,1}} & {a_{1,2}} & {\cdots} & {a_{1, n}} \\ {a_{2,1}} & {a_{2,2}} & {\cdots} & {a_{2, n}} \\ {\vdots} & {\vdots} & {\ddots} & {\vdots} \\ {a_{m, 1}} & {a_{m, 2}} & {\cdots} & {a_{m, n}}\end{array}\right]</script><ul>
+<li>$A$为观测矩阵，其中有很多缺失值。</li>
+<li>$\Omega$为$A$中所有的有数值的下标的集合。</li>
+<li>$X$为需要恢复的稀疏信号，$rank(X)$为矩阵$A$的秩。</li>
+</ul>
+<p>该最优化问题也是一个<code>NP</code>难问题。</p>
+</li>
+<li><p>考虑到在集合上的凸包是的核范数<code>nuclear norm</code>：</p>
+<script type="math/tex; mode=display">
+\|\mathbf{X}\|_{*}=\sum_{j=1}^{\min \{m, n\}} \sigma_{j}(\mathbf{X})</script><p>其中$\sigma_{j}(\mathbf{X})$表示$X$的奇异值。于是可以通过最小化矩阵核范数来近似求解：</p>
+<script type="math/tex; mode=display">
+\begin{array}{c}{\min _{\mathbf{X}}\|\mathbf{X}\|_{*}} \\ {\text {s.t.} \quad x_{i, j}=a_{i, j},(i, j) \in \Omega}\end{array}</script><p>该最优化问题是一个凸优化问题，可以通过半正定规划Semi-Definite Programming:SDP 求解。</p>
+</li>
+<li><p>理论研究表明：若$A$的秩为$r$，$n \leq m$，则只需要观察$O\left(m r \log ^{2} m\right)$个元素就能够完美恢复出$A$。</p>
+<p>​</p>
+</li>
+</ol>
+<h1 id="特征编码"><a href="#特征编码" class="headerlink" title="特征编码"></a>特征编码</h1><h2 id="特征二元化"><a href="#特征二元化" class="headerlink" title="特征二元化"></a>特征二元化</h2><ol>
+<li><p>特征二元化的过程是<strong>将数值型的属性转换为布尔值的属性</strong>。通常用于假设属性取值为取值分布为伯努利分布<br>的情形。</p>
+</li>
+<li><p>特征二元化的算法比较简单。 对属性$j$指定一个阈值$\epsilon$。</p>
+<ul>
+<li>如果样本在属性$j$上的值大于等于$\epsilon$，则二元化之后为 1 。</li>
+<li>如果样本在属性$j$ 上的值小于$\epsilon$，则二元化之后为 0 。</li>
+</ul>
+</li>
+<li>阈值$\epsilon$是一个超参数，其选取需要结合模型和具体的任务来选择。</li>
+</ol>
+<h2 id="one-hot"><a href="#one-hot" class="headerlink" title="one-hot"></a>one-hot</h2><ol>
+<li><p>对于非数值属性，如性别：<code>[男，女]</code>、国籍：<code>[中国，美国，英国]</code> 等等，可以构建一个到整数的映射。如性<br>别：<code>[男，女]</code> 属性中，将<code>男</code>映射为整数 1、<code>女</code>映射为整数 0。</p>
+<p>该方法的优点是简单。但是问题是，在这种处理方式中无序的属性被看成有序的。<code>男</code>和<code>女</code>无法比较大小，但是1 和0 有大小。</p>
+<p>解决的办法是采用独热码编码One-Hot Encoding 。</p>
+</li>
+<li><p><code>One-Hot Encoding</code>采用<code>N</code>位状态位来对<code>N</code>个可能的取值进行编码，每个取值都由独立的状态位来表示，并<br>且在任意时刻只有其中的一位有效。</p>
+<p>假设属性 的取值为非数值的离散集合$\left\{a_{1}, a_{2}, \cdots, a_{K}\right\}$，独热码将其扩展成 个属性，每个新属性代表属性$j$的一个状态位：若样本在属性$j$上的取值为$a_k$，则样本在新的属性$j_k$上的取值为 1，在新的属性$j_{1}, \cdots, j_{k-1}, j_{k+1}, \cdots, j_{K}$上的取值为 0 。</p>
+<ul>
+<li><p>这种做法中，如果在$j_{1}, \cdots, j_{K}$上取值全为 0，则表示发生了缺失。</p>
+<blockquote>
+<p>缺失值也可以用第$K+1$个状态位来表示.</p>
+</blockquote>
+</li>
+<li><p>也可以扩展成 个$K-1$属性， 如果在$\dot{\jmath}_{1}, \cdots, j_{K-1}$上取值全为 0，则表示样本在属性$j$上的取值为$a_K$<br>。</p>
+</li>
+</ul>
+</li>
+<li><p>One-Hot Encoding 的优点：</p>
+<ul>
+<li>能够处理非数值属性。</li>
+<li>在一定程度上也扩充了特征。如<code>性别</code>是一个属性，经过独热码编码之后变成了<code>是否男</code> 和<code>是否女</code>两个属性。</li>
+<li>编码后的属性是稀疏的，存在大量的零元分量。</li>
+</ul>
+</li>
+<li><p>在决策树模型中，并不推荐对离散特征进行one-hot 。 主要有两个原因：</p>
+<ul>
+<li><p>产生样本切分不平衡的问题，此时且分增益会非常小。</p>
+<p>如：<code>国籍</code>这个离散特征经过独热码编码之后，会产生<code>是否中国、是否美国、是否英国、...</code>等一系列特征。在这一系列特征上，只有少量样本为<code>1</code> ，大量样本为<code>0</code> 。</p>
+<p>这种划分的增益非常小，因为拆分之后：</p>
+<ul>
+<li>较小的那个拆分样本集，它占总样本的比例太小。无论增益多大，乘以该比例之后几乎可以忽略。</li>
+</ul>
+</li>
+<li>较大的那个拆分样本集，它几乎就是原始的样本集，增益几乎为零。</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><p>影响决策树的学习。</p>
+<p>决策树依赖的是数据的统计信息。而独热码编码会把数据切分到零散的小空间上。在这些零散的小空间上，统计信息是不准确的，学习效果变差。</p>
+<p>本质是因为独热码编码之后的特征的表达能力较差的。该特征的预测能力被人为的拆分成多份，每一份与其他特征竞争最优划分点都失败。最终该特征得到的重要性会比实际值低。</p>
+</li>
+</ul>
+<p>   ​</p>
+<h2 id="离散化"><a href="#离散化" class="headerlink" title="离散化"></a>离散化</h2><ol>
+<li>离散化用于将连续的数值属性转化为离散的数值属性。</li>
+<li><p>是否使用特征离散化，这背后是：使用“海量离散特征+简单模型”，还是“少量连续特征+复杂模型”。</p>
+<ul>
+<li>对于线性模型，通常使用“海量离散特征+简单模型”。</li>
+<li>优点：模型简单。<ul>
+<li>缺点：特征工程比较困难。但是一旦有成功的经验就可以推广，并且可以很多人并行研究。</li>
+</ul>
+</li>
+<li>对于非线性模型（如深度学习），通常使用“少量连续特征+复杂模型”。<ul>
+<li>优点是：不需要进行复杂的特征工程.</li>
+<li>缺点是：模型复杂。<h3 id="分桶"><a href="#分桶" class="headerlink" title="分桶"></a>分桶</h3></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>离散化的常用方法是分桶。</p>
+<ul>
+<li>将所有样本在连续的数值属性$j$的取值从小到大排列$\left\{a_{0}, a_{1}, \cdots, a_{N}\right\}$。</li>
+<li>然后从小到大依次选择分桶边界$b_{1}, b_{2}, \cdots, b_{M}$。其中：<ul>
+<li>$M$为分桶的数量，它是一个超参数，需要人工指定。</li>
+<li>每个桶的大小$b_{k+1}-b_{k}$也是一个超参数，需要人工指定。</li>
+</ul>
+</li>
+<li>给定属性$j$的取值$a_i$，对其进行分桶：<ul>
+<li>如果$a_{i}&lt;b_{1}$，则分桶编号为 0。分桶后的属性的取值为 0 。</li>
+<li>如果$b_{k} \leq a_{i}&lt;b_{k+1}$，则分桶编号为$k$。分桶后的属性的取值为$k$。</li>
+<li>如果$a_{i} \geq b_{M}$，则分桶编号为$M$。分桶后的属性的取值为$M$。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>分桶的数量和边界通常需要人工指定。一般有两种方法：</p>
+<ul>
+<li>根据业务领域的经验来指定。如：对年收入进行分桶时，根据2017年全国居民人均可支配收入约为 2.6万元，可以选择桶的数量为5。其中：</li>
+<li>年收入小于 1.3 万元（人均的0.5倍），则为分桶 0 。<ul>
+<li>年收入在 1.3万元 ～5.2 万元（人均的0.5～2倍），则为分桶 1 。</li>
+<li>年收入在 5.3万元～26万元（人均的2倍～10倍），则为分桶 2 。年收入在 26万元～260万元（人均的10倍～100倍），则为分桶 3 。</li>
+<li>年收入超过 260万，则为分桶 4 。</li>
+</ul>
+</li>
+<li>根据模型指定。根据具体任务来训练分桶之后的数据集，通过超参数搜索来确定最优的分桶数量和分桶边界。</li>
+</ul>
+</li>
+<li><p>选择分桶大小时，有一些经验指导：</p>
+<ul>
+<li><p>分桶大小必须足够小，使得桶内的属性取值变化对样本标记的影响基本在一个不大的范围。</p>
+<p>即不能出现这样的情况：单个分桶的内部，样本标记输出变化很大。</p>
+</li>
+<li><p>分桶大小必须足够大，使每个桶内都有足够的样本。</p>
+<p>如果桶内样本太少，则随机性太大，不具有统计意义上的说服力。</p>
+</li>
+<li><p>每个桶内的样本尽量分布均匀。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><ol>
+<li><p>在工业界很少直接将连续值作为逻辑回归模型的特征输入，而是将连续特征离散化为一系列 0/1 的离散特征。</p>
+<p>其优势有：</p>
+<ul>
+<li><p>离散化之后得到的稀疏向量，内积乘法运算速度更快，计算结果方便存储。</p>
+</li>
+<li><p>离散化之后的特征对于异常数据具有很强的鲁棒性。</p>
+<p>如：销售额作为特征，当销售额在 [30,100) 之间时，为1，否则为 0。如果未离散化，则一个异常10000 会给模型造成很大的干扰。由于其数值较大，它对权重的学习影响较大。</p>
+</li>
+<li><p>逻辑回归属于广义线性模型，表达能力受限，只能描述线性关系。特征离散化之后，相当于引入了非线性，提升模型的表达能力，增强拟合能力。</p>
+<p>假设某个连续特征$j$，它离散化为$M$个 0/1 特征$j_{1}, j_{2}, \cdots, j_{M}$。则：</p>
+<p>$w_{j} <em> x_{j} \rightarrow w_{j_{1}} </em> x_{j_{1}}^{\prime}+w_{j_{2}} <em> x_{j_{2}}^{\prime}+\cdots+w_{j_{M}} </em> x_{j_{M}}^{\prime}$。其中$x_{j_{1}}^{\prime}, \cdots, x_{j_{M}}^{\prime}$是离散化之后的新的特征，它们的取值空间都是${0,1}$。</p>
+<p>上式右侧是一个分段线性映射，其表达能力更强。</p>
+</li>
+<li><p>离散化之后可以进行特征交叉。假设有连续特征$j$，离散化为$N$个 0/1 特征；连续特征$k$，离散化为$M$个 0/1 特征，则分别进行离散化之后引入了$M+N$个特征。</p>
+<p>假设离散化时，并不是独立进行离散化，而是特征$j,k$联合进行离散化，则可以得到$M \times N$个组合特征。这会进一步引入非线性，提高模型表达能力。</p>
+</li>
+<li><p>离散化之后，模型会更稳定。</p>
+<p>如对销售额进行离散化，<code>[30,100)</code> 作为一个区间。当销售额在40左右浮动时，并不会影响它离散化后的特征的值。</p>
+<p>但是处于区间连接处的值要小心处理，另外如何划分区间也是需要仔细处理。</p>
+</li>
+</ul>
+</li>
+<li><p>特征离散化简化了逻辑回归模型，同时降低模型过拟合的风险。能够对抗过拟合的原因：经过特征离散化之后，模型不再拟合特征的具体值，而是拟合特征的某个概念。因此能够对抗数据的扰动，更具有鲁棒性。</p>
+<p>另外它使得模型要拟合的值大幅度降低，也降低了模型的复杂度。</p>
+</li>
+</ol>
+<h1 id="数据标准化、正则化"><a href="#数据标准化、正则化" class="headerlink" title="数据标准化、正则化"></a>数据标准化、正则化</h1><h2 id="数据标准化"><a href="#数据标准化" class="headerlink" title="数据标准化"></a>数据标准化</h2><ol>
+<li><p>数据标准化是将样本的属性取值缩放到某个指定的范围。</p>
+</li>
+<li><p>数据标准化的两个原因：</p>
+<ul>
+<li><p>某些算法要求样本数据的属性取值具有零均值和单位方差。</p>
+</li>
+<li><p>样本不同属性具有不同量级时，消除数量级的影响。如下图所示为两个属性的目标函数的等高线。</p>
+<ul>
+<li><p>数量级的差异将导致量级较大的属性占据主导地位。</p>
+<p>从图中看到：如果样本的某个属性的量级特别巨大，将原本为椭圆的等高线压缩成直线，从而使得目标函数值仅依赖于该属性。</p>
+</li>
+<li><p>数量级的差异将导致迭代收敛速度减慢。</p>
+<p>原始的特征进行梯度下降时，每一步梯度的方向会偏离最小值（等高线中心点）的方向，迭代次数较多，且学习率必须非常小，否则非常容易引起宽幅震荡。</p>
+<p>标准化后进行梯度下降时，每一步梯度的方向都几乎指向最小值（等高线中心点）的方向，迭代次数较少。</p>
+</li>
+<li><p>所有依赖于样本距离的算法对于数据的数量级都非常敏感。</p>
+<p>如$k$近邻算法需要计算距离当前样本最近的$k$个样本。当属性的量级不同时，选取的最近的$k$个样本也会不同。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2019/03/31/5ca063080772a.png" alt=""></p>
+</li>
+<li><p>设数据集$D=\left\{\left(\vec{\mathbf{x}}_{1}, \tilde{y}_{1}\right),\left(\vec{\mathbf{x}}_{2}, \tilde{y}_{2}\right), \cdots,\left(\vec{\mathbf{x}}_{N}, \tilde{y}_{N}\right)\right\}, \vec{\mathbf{x}}_{i}=\left(x_{i, 1}, \cdots, x_{i, n}\right)^{T}$。常用的标准化算法有：</p>
+<ul>
+<li><code>min-max</code> 标准化：对于属性$j$，设所有样本在属性$j$上的最大值为$j_{max}$，最小值为$j_{min}$ 。则标准化后的属性值为:<script type="math/tex; mode=display">
+\hat{x}_{i, j}=\frac{x_{i, j}-j_{\min }}{j_{\max }-j_{\min }}</script></li>
+</ul>
+</li>
+</ol>
+<pre><code> - ``z-score`` 标准化：对于属性，设所有样本在属性 上的均值为，方差为。则标准化后的属性值为：
+   $$
+   \hat{x}_{i, j}=\frac{x_{i, j}-j_{\min }}{j_{\max }-j_{\min }}
+   $$
+</code></pre><ol>
+<li><p>注意：如果数据集分为训练集、验证集和测试集，则：训练集、验证集、测试集使用相同标准化参数，该参数的值都是从训练集中得到。</p>
+<ul>
+<li><p>如果使用<code>min-max</code>标准化，则属性$j$的标准化参数$j_{max}、j_{min}$都是从训练集中计算得到。</p>
+</li>
+<li><p>如果使用<code>z-score</code> 标准化，则属性$j$的标准化参数$\mu_{j}, \sigma_{j}$都是从训练集中计算得到。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="数据正则化"><a href="#数据正则化" class="headerlink" title="数据正则化"></a>数据正则化</h2><ol>
+<li><p>数据正则化是将样本的某个范数（如$L_1$范数）缩放到单位1。</p>
+<p>设数据集$D=\left\{\left(\vec{\mathbf{x}}_{1}, \tilde{y}_{1}\right),\left(\vec{\mathbf{x}}_{2}, \tilde{y}_{2}\right), \cdots,\left(\vec{\mathbf{x}}_{N}, \tilde{y}_{N}\right)\right\}, \vec{\mathbf{x}}_{i}=\left(x_{i, 1}, x_{i, 2}, \cdots, x_{i, n}\right)^{T}$。 则样本$\vec{\mathbf{x}}_{i}$正则化后的结果为：</p>
+<script type="math/tex; mode=display">
+\hat{\vec{\mathbf{x}}}_{i}=\left(\frac{x_{i, 1}}{L_{p}\left(\vec{\mathbf{x}}_{i}\right)}, \frac{x_{i, 2}}{L_{p}\left(\vec{\mathbf{x}}_{i}\right)}, \cdots, \frac{x_{i, n}}{L_{p}\left(\vec{\mathbf{x}}_{i}\right)}\right)^{T}</script><p>其中$L_p$为范数：$L_{p}\left(\vec{\mathbf{x}}_{i}\right)=\left(\left|x_{i, 1}\right|^{p}+\left|x_{i, 2}\right|^{p}+\cdots+\left|x_{i, n}\right|^{p}\right)^{1 / p}$</p>
+</li>
+<li><p>正则化的过程是针对单个样本的，对每个样本将它缩放到单位范数。</p>
+<p>标准化是针对单个属性的，需要用到所有样本在该属性上的值。</p>
+</li>
+<li><p>通常如果使用二次型（如点积）或者其他核方法计算两个样本之间的相似性时，该方法会很有用。</p>
+</li>
+</ol>
+<h1 id="特征选择"><a href="#特征选择" class="headerlink" title="特征选择"></a>特征选择</h1><ol>
+<li><p>对于一个学习任务，给定了属性集，其中某些属性可能对于学习来说是很关键的，但是有些属性可能就意义不大。</p>
+<ul>
+<li>对当前学习任务有用的属性称作相关特征<code>relevant feature</code> 。</li>
+<li>对当前学习任务没有用的属性称作无关特征<code>irrelevant feature</code> 。</li>
+</ul>
+<p>从给定的特征集合中选出相关特征子集的过程称作特征选择<code>feature selection</code>。</p>
+</li>
+<li><p>特征选择可能会降低模型的预测能力。因为被剔除的特征中可能包含了有效的信息，抛弃了这部分信息会一定程度上降低预测准确率。</p>
+<p>这是计算复杂度和预测能力之间的折衷：</p>
+<ul>
+<li>如果保留尽可能多的特征，则模型的预测能力会有所提升，但是计算复杂度会上升。</li>
+<li>如果剔除尽可能多的特征，则模型的预测能力会有所下降，但是计算复杂度会下降。</li>
+</ul>
+</li>
+</ol>
+<h2 id="特征选择原理"><a href="#特征选择原理" class="headerlink" title="特征选择原理"></a>特征选择原理</h2><ol>
+<li><p>特征选择是一个重要的数据预处理（ data preprocessing ）过程。在现实机器学习任务中，获取数据之后通常首先进行特征选择，然后再训练学习器。</p>
+<p>  进行特征选择的原因：</p>
+<ul>
+<li><p>首先，在现实任务中经常会遇到<strong>维数灾难问题</strong>，这是由于属性过多造成的。如果能从中选择出重要的特征，使得后续学习过程仅仅需要在一部分特征上构建模型，则维数灾难问题会大大减轻。</p>
+<p>从这个意义上讲，特征选择与降维技术有相似的动机。事实上它们是处理高维数据的两大主流技术。</p>
+</li>
+<li><p>其次，去除不相关特征往往会降低学习任务的难度。</p>
+</li>
+</ul>
+</li>
+<li><p>特征选择过程必须确保不丢失重要特征，否则后续学习过程会因为重要信息的缺失而无法获得很好的性能。</p>
+<ul>
+<li><p>给定数据集，如果学习任务不同，则相关特征很可能不同，因此特征选择中的无关特征指的是与当前学习任务无关的特征。</p>
+</li>
+<li><p>有一类特征称作冗余特征<code>redundant feature</code> ，它们所包含的信息能从其他特征中推演出来。</p>
+<p>冗余特征在很多时候不起作用，去除它们能够减轻学习过程的负担。</p>
+</li>
+<li><p>但如果冗余特征恰好对应了完成学习任务所需要的某个中间概念，则该冗余特征是有益的，能降低学习任务的难度。</p>
+<p>这里暂且不讨论冗余特征，且假设初始的特征集合包含了所有的重要信息。</p>
+</li>
+</ul>
+</li>
+<li><p>要想从初始的特征集合中选取一个包含了所有重要信息的特征子集，如果没有任何领域知识作为先验假设，则只能遍历所有可能的特征组合。</p>
+<p>  这在计算上是不可行的，因为这样会遭遇组合爆炸，特征数量稍多就无法进行。</p>
+<p>  一个可选的方案是：</p>
+<ul>
+<li>产生一个候选子集，评价出它的好坏。</li>
+<li>基于评价结果产生下一个候选子集，再评价其好坏。</li>
+<li>这个过程持续进行下去，直至无法找到更好的后续子集为止。</li>
+</ul>
+<p>这里有两个问题：如何根据评价结果获取下一个候选特征子集？如何评价候选特征子集的好坏？</p>
+</li>
+</ol>
+<h3 id="子集搜索"><a href="#子集搜索" class="headerlink" title="子集搜索"></a>子集搜索</h3><ol>
+<li><p>如何根据评价结果获取下一个候选特征子集？这是一个子集搜索<code>subset search</code>问题。</p>
+</li>
+<li><p>解决该问题的算法步骤如下：</p>
+<ul>
+<li><p>给定特征集合$\mathbb{A}=\left\{A_{1}, A_{2}, \cdots, A_{d}\right\}$，首先将每个特征看作一个候选子集（即每个子集中只有一个元<br>素），然后对这$d$个候选子集进行评价。</p>
+<p>假设$A_2$最优，于是将$A_2$作为第一轮的选定子集。</p>
+</li>
+<li><p>然后在上一轮的选定子集中加入一个特征，构成了包含两个特征的候选子集。</p>
+<p>假定$A_{2}, A_{5}$最优，且优于$A_{2}$，于是将$A_{2}, A_{5}$作为第二轮的选定子集。</p>
+</li>
+<li><p>……</p>
+</li>
+<li><p>假定在第$k+1$轮时，本轮的最优的特征子集不如上一轮的最优的特征子集，则停止生成候选子集，并<br>将上一轮选定的特征子集作为特征选择的结果。</p>
+</li>
+</ul>
+</li>
+<li><p>这种逐渐增加相关特征的策略称作前向<code>forward</code>搜索。</p>
+<p>类似地，如果从完整的特征集合开始，每次尝试去掉一个无关特征，这样逐渐减小特征的策略称作后向<br><code>backward</code>搜索。</p>
+</li>
+<li><p>也可以将前向和后向搜索结合起来，每一轮逐渐增加选定相关特征（这些特征在后续迭代中确定不会被去</p>
+<p>除）、同时减少无关特征，这样的策略被称作双向<code>bidirectional</code>搜索。</p>
+</li>
+<li><p>该策略是贪心的，因为它们仅仅考虑了使本轮选定集最优。但是除非进行穷举搜索，否则这样的问题无法避</p>
+<p>免。</p>
+</li>
+</ol>
+<h3 id="子集评价"><a href="#子集评价" class="headerlink" title="子集评价"></a>子集评价</h3><ol>
+<li><p>如何评价候选特征子集的好坏？这是一个子集评价<code>subset evaluation</code>问题。</p>
+</li>
+<li><p>给定数据集$\mathbb{D}$，假设所有属性均为离散型。对属性子集$A$， 假定根据其取值将$\mathbb{D}$分成了$V$个子集：$\left\{\mathbb{D}_{1}, \mathbb{D}_{2}, \cdots, \mathbb{D}_{V}\right\}$</p>
+<p>于是可以计算属性子集$A$的信息增益：</p>
+<script type="math/tex; mode=display">
+g(\mathbb{D}, \mathbb{A})=H(\mathbb{D})-H(\mathbb{D} | \mathbb{A})=H(\mathbb{D})-\sum_{v=1}^{V} \frac{\left|\mathbb{D}_{v}\right|}{|\mathbb{D}|} H\left(\mathbb{D}_{v}\right)</script><p>其中$|\cdot|$为集合大小，$H(\cdot)$为熵。</p>
+<p>信息增益越大，则表明特征子集 包含的有助于分类的信息越多。于是对于每个候选特征子集，可以基于训<br>练数据集 来计算其信息增益作为评价准则。</p>
+</li>
+<li><p>更一般地，特征子集$A$实际上确定了对数据集$D$的一个划分规则。</p>
+<ul>
+<li>每个划分区域对应着$A$上的一个取值，而样本标记信息$y$则对应着$D$的真实划分。</li>
+<li>通过估算这两种划分之间的差异，就能对$A$进行评价：与$y$对应的划分的差异越小，则说明$A$越好。</li>
+<li>信息熵仅仅是判断这个差异的一种方法，其他能判断这两个划分差异的机制都能够用于特征子集的评价</li>
+</ul>
+</li>
+<li><p>将特征子集搜索机制与子集评价机制结合就能得到特征选择方法。</p>
+<ul>
+<li>事实上，决策树可以用于特征选择，所有树结点的划分属性所组成的集合就是选择出来的特征子集。</li>
+<li>其他特征选择方法本质上都是显式或者隐式地结合了某些子集搜索机制和子集评价机制。</li>
+</ul>
+</li>
+<li><p>常见的特征选择方法大致可分为三类：过滤式<code>filter</code> 、包裹式<code>wrapper</code> 、嵌入式<code>embedding</code> 。</p>
+</li>
+</ol>
+<h2 id="过滤式选择"><a href="#过滤式选择" class="headerlink" title="过滤式选择"></a>过滤式选择</h2><ol>
+<li><p>过滤式方法先对数据集进行特征选择，然后再训练学习器，特征选择过程与后续学习器无关。<br>这相当于先用特征选择过程对初始特征进行过滤，再用过滤后的特征来训练模型。</p>
+</li>
+<li><p><code>Relief:Relevant Features</code>是一种著名的过滤式特征选择方法，该方法设计了一个相关统计量来度量特征的<br>重要性。</p>
+<ul>
+<li><p>该统计量是一个向量，其中每个分量都对应于一个初始特征。特征子集的重要性则是由该子集中每个特征所对应的相关统计量分量之和来决定的。</p>
+</li>
+<li><p>最终只需要指定一个阈值$\theta$，然后选择比$\theta$大的相关统计量分量所对应的特征即可。</p>
+<p>也可以指定特征个数$k$，然后选择相关统计量分量最大的$k$个特征。</p>
+</li>
+</ul>
+</li>
+<li><p>给定训练集$\mathbb{D}=\left\{\left(\vec{\mathbf{x}}_{1}, \tilde{y}_{1}\right),\left(\vec{\mathbf{x}}_{2}, \tilde{y}_{2}\right), \cdots,\left(\vec{\mathbf{x}}_{N}, \tilde{y}_{N}\right)\right\}, \tilde{y}_{i} \in\{0,1\}$。 对于每个样本$\vec{\mathbf{x}}_{i}$：</p>
+<ul>
+<li><p>Relief 先在$\vec{\mathbf{x}}_{i}$同类样本中寻找其最近邻$\vec{\mathbf{x}}_{n h_{i}}$，称作猜中近邻<code>near-hit</code> 。</p>
+</li>
+<li><p>然后从$\vec{x}_{i}$的异类样本中寻找其最近邻$\vec{\mathbf{x}}_{n m_{i}}$，称作猜错近邻<code>near-miss</code>。</p>
+</li>
+<li><p>然后相关统计量对应于属性$j$的分量为：</p>
+<script type="math/tex; mode=display">
+\delta_{j}=\sum_{i=1}^{N}\left(-\operatorname{diff}\left(x_{i, j}, x_{n h_{i}, j}\right)^{2}+\operatorname{diff}\left(x_{i, j}, x_{n m_{i}, j}\right)^{2}\right)</script><p>其中$\operatorname{diff}\left(x_{a, j}, x_{b, j}\right)$为两个样本在属性 上的差异值，其结果取决于该属性是离散的还是连续的：</p>
+<ul>
+<li>如果属性$j$是离散的，则：<script type="math/tex; mode=display">
+\operatorname{diff}\left(x_{a, j}, x_{b, j}\right)=\left\{\begin{array}{ll}{0,} & {\text { if } \quad x_{a, j}=x_{b, j}} \\ {1,} & {\text { else }}\end{array}\right.</script></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<pre><code> - 如果属性是连续的，则：
+   $$
+   \operatorname{diff}\left(x_{a, j}, x_{b, j}\right)=\left|x_{a, j}-x_{b, j}\right|
+   $$
+   注意：此时$x_{a, j}, x_{b, j}$需要标准化到` [0,1]` 区间。
+</code></pre><ol>
+<li><p>从公式</p>
+<script type="math/tex; mode=display">
+\delta_{j}=\sum_{i=1}^{N}\left(-\operatorname{diff}\left(x_{i, j}, x_{n h_{i}, j}\right)^{2}+\operatorname{diff}\left(x_{i, j}, x_{n m_{i}, j}\right)^{2}\right)</script><p>​</p>
+<p>可以看出：</p>
+<ul>
+<li>如果$\vec{\mathbf{x}}_{i}$与其猜中近邻$\vec{\mathbf{x}}_{n h_{i}}$在属性 上的距离小于$\vec{\mathbf{x}}_{i}$与其猜错近邻$\vec{\mathbf{x}}_{n m_{i}}$的距离，则说明属性$j$对于区分同类与异类样本是有益的，于是增大属性$j$所对应的统计量分量。</li>
+<li>如果$\vec{\mathbf{x}}_{i}$与其猜中近邻$\vec{\mathbf{x}}_{n h_{i}}$在属性 上的距离大于$\vec{\mathbf{x}}_{i}$与其猜错近邻$\vec{\mathbf{x}}_{n m_{i}}$的距离，则说明属性$j$对于区分同类与异类样本是起负作用的，于是减小属性$j$所对应的统计量分量。</li>
+<li>最后对基于不同样本得到的估计结果进行平均，就得到各属性的相关统计量分量。分量值越大，则对应属性的分类能力越强。</li>
+</ul>
+</li>
+<li><p><code>Relief</code> 是为二分类问题设计的，其扩展变体 <code>Relief-F</code> 能处理多分类问题。</p>
+<p>假定数据集$\mathbb{D}$中的样本类别为：$c_{1}, c_{2}, \cdots, c_{K}$ 。对于样本$\vec{\mathbf{x}}_{i}$ ，假设 $\tilde{y}_{i}=c_{k}$。</p>
+<ul>
+<li><p><code>Relief-F</code>先在类别$c_k$的样本中寻找$\vec{\mathbf{x}}_{i}$的最近邻$\vec{\mathbf{x}}_{n h_{i}}$作为猜中近邻。</p>
+</li>
+<li><p>然后在$c_k$之外的每个类别中分别找到一个$\vec{\mathbf{x}}_{i}$的最近邻$\vec{\mathbf{x}}_{n m_{i}^{l}}, l=1,2, \cdots, K ; l \neq k$作为猜错近邻。</p>
+</li>
+<li><p>于是相关统计量对应于属性$j$的分量为：</p>
+<script type="math/tex; mode=display">
+\delta_{j}=\sum_{i=1}^{N}\left(-\operatorname{diff}\left(x_{i, j}, x_{n h_{i}, j}\right)^{2}+\sum_{l \neq k}\left(p_{l} \times \operatorname{diff}\left(x_{i, j}, x_{n m_{i}^{\prime}, j}\right)^{2}\right)\right)</script><p> 其中$p_{l}$为第$l$类的样本在数据集$D$中所占的比例。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="包裹式选择"><a href="#包裹式选择" class="headerlink" title="包裹式选择"></a>包裹式选择</h2><ol>
+<li><p>与过滤式特征选择不考虑后续学习器不同，包裹式特征选择直接把最终将要使用的学习器的性能作为特征子集的评价准则。其目的就是为给定学习器选择最有利于其性能、量身定做的特征子集。</p>
+<ul>
+<li>优点：由于直接针对特定学习器进行优化，因此从最终学习器性能来看，效果比过滤式特征选择更好。</li>
+<li>缺点：需要多次训练学习器，因此计算开销通常比过滤式特征选择大得多。</li>
+</ul>
+</li>
+<li><code>LVW:Las Vegas Wrapper</code>是一个典型的包裹式特征选择方法。它是<code>Las Vegas method</code> 框架下使用随机策略来进行子集搜索，并以最终分类器的误差作为特征子集的评价标准。</li>
+<li>LVW 算法：<ul>
+<li>输入：<ul>
+<li>数据集$\mathbb{D}=\left\{\left(\vec{\mathbf{x}}_{1}, \tilde{y}_{1}\right),\left(\vec{\mathbf{x}}_{2}, \tilde{y}_{2}\right), \cdots,\left(\vec{\mathbf{x}}_{N}, \tilde{y}_{N}\right)\right\}$</li>
+</ul>
+</li>
+<li>特征集$A=\{1,2, \cdots, n\}$</li>
+<li>学习器 <code>estimator</code></li>
+<li>迭代停止条件$T$</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>输出： 最优特征子集$A^{*}$</li>
+<li>算法步骤：<ul>
+<li>初始化：令候选的最优特征子集$\tilde{\mathbb{A}}^{<em>}=\mathbb{A}$，然后学习器 <code>estimator</code>在特征子集$\tilde{A}^{</em>}$上使用交叉验证法进行学习，通过学习结果评估学习器<code>estimator</code> 的误差$e r r^{*}$。</li>
+<li>迭代，停止条件为迭代次数到达$T$。迭代过程为：<ul>
+<li>随机产生特征子集$A^{\prime}$ 。</li>
+<li>学习器 <code>estimator</code>在特征子集$A^{\prime}$上使用交叉验证法进行学习，通过学习结果评估学习器<code>estimator</code>的误差$e rr^{\prime}$。</li>
+<li>如果$e r r^{\prime}$比$e r r^{<em>}$更小，或者$e r r^{\prime}=e r r^{</em>}$但是$A^{\prime}$的特征数量$\tilde{A}^{<em>}$的特征数量更少，则将$A^{\prime}$作为候选的最优特征子集$\tilde{\mathbb{A}}^{</em>}=\mathbb{A}^{\prime} ; \quad$ err $^{*}=e r r^{\prime}$ 。</li>
+</ul>
+</li>
+<li>最终 $\mathbb{A}^{<em>}=\tilde{\mathbb{A}}^{</em>}$。</li>
+</ul>
+</li>
+<li>由于<code>LVW</code>算法中每次特征子集评价都需要训练学习器，计算开销很大，因此算法设置了停止条件控制参数$T$。但是如果初始特征数量很多、$T$设置较大、以及每一轮训练的时间较长， 则很可能算法运行很长时间都不会停止。即：如果有运行时间限制，则有可能给不出解。</li>
+</ul>
+<h2 id="嵌入式选择"><a href="#嵌入式选择" class="headerlink" title="嵌入式选择"></a>嵌入式选择</h2><ol>
+<li><p>在过滤式和包裹式特征选择方法中，特征选择过程与学习器训练过程有明显的分别。</p>
+<p>嵌入式特征选择是将特征选择与学习器训练过程融为一体，两者在同一个优化过程中完成的。即学习器训练过程中自动进行了特征选择。</p>
+</li>
+<li><p>以线性回归模型为例。</p>
+<p>给定数据集$\mathbb{D}=\left\{\left(\vec{\mathbf{x}}_{1}, \tilde{y}_{1}\right),\left(\vec{\mathbf{x}}_{2}, \tilde{y}_{2}\right), \cdots,\left(\vec{\mathbf{x}}_{N}, \tilde{y}_{N}\right)\right\}, \tilde{y}_{i} \in \mathbb{R}$。以平方误差为损失函数，则优化目标为：如果使用 范数正则化，则优化目标为：</p>
+<script type="math/tex; mode=display">
+\min _{\vec{\mathbf{w}}} \sum_{i=1}^{N}\left(\tilde{y}_{i}-\vec{\mathbf{w}}^{T} \vec{\mathbf{x}}_{i}\right)^{2}</script><ul>
+<li><p>如果使用$L_2$范数正则化，则优化目标为：</p>
+<script type="math/tex; mode=display">
+\min _{\vec{w}} \sum_{i=1}^{N}\left(\tilde{y}_{i}-\vec{\mathbf{w}}^{T} \vec{\mathbf{x}}_{i}\right)^{2}+\lambda\|\vec{\mathbf{w}}\|_{2}^{2}, \quad \lambda>0</script><p> 此时称作岭回归<code>ridge regression</code>。</p>
+</li>
+<li><p>如果使用$L_1$范数正则化，则优化目标为：</p>
+<script type="math/tex; mode=display">
+\min _{\vec{\mathbf{w}}} \sum_{i=1}^{N}\left(\tilde{y}_{i}-\vec{\mathbf{w}}^{T} \vec{\mathbf{x}}_{i}\right)^{2}+\lambda\|\vec{\mathbf{w}}\|_{1}, \quad \lambda>0</script><p>此时称作<code>LASSO:Least Absolute Shrinkage and Selection Operator</code>回归。</p>
+</li>
+</ul>
+</li>
+<li><p>引入$L_1$范数除了降低过拟合风险之外，还有一个好处：它求得的$\vec{\mathbf{w}}$会有较多的分量为零。即：它更容易获得稀疏解。</p>
+<p>于是基于$L_1$正则化的学习方法就是一种嵌入式特征选择方法，其特征选择过程与学习器训练过程融为一体，二者同时完成。</p>
+</li>
+<li><p>正则化问题的求解可以用近端梯度下降<code>Proximal Gradient Descent:PGD</code>算法求解。</p>
+<p>对于优化目标：$\min _{\vec{\mathbf{x}}} f(\vec{\mathbf{x}})+\lambda|\vec{\mathbf{x}}|_{1}$ ，若$f(\vec{\mathbf{x}})$可导且$\nabla f$满足<code>L-Lipschitz</code>条件，即存在常数$L&gt;0$使得：</p>
+<script type="math/tex; mode=display">
+\left\|\nabla f(\vec{\mathbf{x}})-\nabla f\left(\vec{\mathbf{x}}^{\prime}\right)\right\|_{2}^{2} \leq L\left\|\vec{\mathbf{x}}-\vec{\mathbf{x}}^{\prime}\right\|_{2}^{2}, \forall\left(\vec{\mathbf{x}}, \vec{\mathbf{x}}^{\prime}\right)</script><p>则在$\vec{\mathbf{x}}_{0}$附近将$f(\vec{x})$通过二阶泰勒公式展开的近似值为：</p>
+<script type="math/tex; mode=display">
+\begin{aligned} \hat{f}(\vec{\mathbf{x}}) & \simeq f\left(\vec{\mathbf{x}}_{0}\right)+\nabla f\left(\vec{\mathbf{x}}_{0}\right) \cdot\left(\vec{\mathbf{x}}-\vec{\mathbf{x}}_{0}\right)+\frac{L}{2}\left\|\vec{\mathbf{x}}-\vec{\mathbf{x}}_{0}\right\|_{2}^{2} \\ &=\frac{L}{2}\left\|\vec{\mathbf{x}}-\left(\vec{\mathbf{x}}_{0}-\frac{1}{L} \nabla f\left(\vec{\mathbf{x}}_{0}\right)\right)\right\|_{2}^{2}+\mathrm{const} \end{aligned}</script><p>其中$const$是与$\vec{x}$无关的常数项。</p>
+<ul>
+<li><p>若通过梯度下降法对$f(\vec{\mathbf{x}})$进行最小化，则每一步梯度下降迭代实际上等价于最小化二次函数$\hat{f}(\vec{\mathbf{x}})$。</p>
+</li>
+<li><p>同理，若通过梯度下降法对$f(\vec{\mathbf{x}})+\lambda|\vec{\mathbf{x}}|_{1}$进行最小化，则每一步梯度下降迭代实际上等价于最小化函<br>数：$\hat{f}(\vec{\mathbf{x}})+\lambda|\vec{\mathbf{x}}|_{1}$ 。</p>
+<p>则每一步迭代为：</p>
+<script type="math/tex; mode=display">
+\vec{\mathbf{x}}^{<k+1>}=\arg \min _{\mathbf{x}} \frac{L}{2}\left\|\vec{\mathbf{x}}-\left(\vec{\mathbf{x}}^{<k>}-\frac{1}{L} \nabla f\left(\vec{\mathbf{x}}^{<k>}\right)\right)\right\|_{2}^{2}+\lambda\|\vec{\mathbf{x}}\|_{1}</script><p>其中$\vec{\mathbf{x}}^{<k>}$为$\vec{\mathbf{x}}$的第次$k$迭代的值。</k></p>
+<p>该问题有解析解，因此通过<code>PGD</code> 能够使得<code>LASSO</code>和其他基于$L_1$范数最小化的方法能够快速求解。</p>
+</li>
+</ul>
+</li>
+<li><p>常见的嵌入式选择模型：</p>
+<ul>
+<li>在<code>Lasso</code> 中，$\lambda$参数控制了稀疏性：<ul>
+<li>如果$\lambda$越小，则稀疏性越小，则被选择的特征越多。</li>
+</ul>
+</li>
+<li>如果$\lambda$越大，则稀疏性越大，则被选择的特征越少。</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>在<code>SVM</code> 和<code>logistic-regression</code>中，参数$C$ 控制了稀疏性<ul>
+<li>如果$C$越小，则稀疏性越大，则被选择的特征越少.</li>
+<li>如果$C$ 越大，则稀疏性越小，则被选择的特征越多。</li>
+</ul>
+</li>
+</ul>
+<h1 id="多类分类问题"><a href="#多类分类问题" class="headerlink" title="多类分类问题"></a>多类分类问题</h1><ol>
+<li>某些算法原生的支持多分类，如：决策树、最近邻算法等。但是有些算法只能求解二分类问题，如：支持向量机。</li>
+<li>对于只能求解二分类问题的算法，一旦遇到问题是多类别的，那么可以将多分类问题拆解成二分类任务求解。即：<ul>
+<li>先对原问题进行拆分，然后为拆出的每个二分类任务训练一个分类器。</li>
+<li>测试时，对这些二分类器的预测结果进行集成，从而获得最终的多分类结果。</li>
+</ul>
+</li>
+<li>多分类问题有三种拆解方式：<ul>
+<li>一对其余( One-vs-rest:OvR ) 。</li>
+<li>一对一( one-vs-one:OvO ) 。</li>
+<li>多对多( many-vs-many:MvM ) 。</li>
+</ul>
+</li>
+</ol>
+<h2 id="one-vs-rest"><a href="#one-vs-rest" class="headerlink" title="one vs rest"></a>one vs rest</h2><ol>
+<li><p>一对其余：为每一个类别训练一个分类器。</p>
+<p>假设类别为$\left\{c_{1}, c_{2}, \cdots, c_{K}\right\}$，则训练$K$ 个分类器 ：$C L F_{1}, C L F_{2}, \cdots, C L F_{K}$</p>
+<ul>
+<li>训练$C L F_{i}$时，将类别为$c_{i}$的样本点定义为正类，将类别不是$c_{i}$的样本点定义为负类。</li>
+<li>训练$C L F_{i}$不光需要给出预测结果是否属于类别$c_{i}$，还要给出置信度。</li>
+</ul>
+</li>
+<li><p>预测时，对于未知的实例，用训练出来的$K$个分类器来预测。</p>
+<p>假设置信度最高的分类器为$C L F_{m}$，则该实例的类别预测为$c_m$。</p>
+</li>
+<li><p>缺点：非常容易陷入样本不平衡。</p>
+<p>即使训练集中每一类样本都是平衡的，训练每个分类器时样本反而不平衡。</p>
+</li>
+</ol>
+<h2 id="one-vs-one"><a href="#one-vs-one" class="headerlink" title="one vs one"></a>one vs one</h2><ol>
+<li><p>一对一：为每一对类别训练一个分类器。<br>假设类别为$\left\{c_{1}, c_{2}, \cdots, c_{K}\right\}$。那么训练$\frac{K(K-1)}{2}$个分类器$C L F_{1,2}, C L F_{1,3}, \cdots, C L F_{i, j}, \cdots, C L F_{K-1, K}$。<br>$C L F_{i, j}, i&lt;j$分类器从原始训练集中提取类别为$c_{i}, c_{j}$的样本点作为新的训练集，然后训练$C L F_{i, j}$。</p>
+</li>
+<li><p>预测时，对于未知的实例，对预测结果进行投票。</p>
+<ul>
+<li>首先设投票结果为$s_{0}=0, s_{1}=0, \cdots, s_{K}=0$</li>
+<li>然后用每个分类器$C L F_{i, j}, i&lt;j ; i, j=1,2, \cdots, K$对未知实例进行预测：<ul>
+<li>若预测结果是类别$c_i$，则$s_{i}+=1$ 。</li>
+</ul>
+</li>
+<li>若预测结果是类别$c_j$，则$s_{j}+=1$ 。</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>最终假设$\mathcal{S}_{m}$最大，则该未知的实例分类为$\mathcal{c}_{m}$。</li>
+</ul>
+<ol>
+<li>缺点：需要训练的分类器数量为$O\left(K^{2}\right)$，计算量太大。</li>
+</ol>
+<h2 id="many-vs-many"><a href="#many-vs-many" class="headerlink" title="many vs many"></a>many vs many</h2><ol>
+<li><p>多对多：每次都将若干个类作为正类，若干个其他类作为反类。</p>
+<ul>
+<li>正、反类的构造必须有特殊的设计，不能随意选取。</li>
+<li>通常采用纠错输出码<code>Error Correcting Output Codes:ECOC</code>技术。该技术将编码的思想引入类别拆分，并尽可能在解码过程中具有容错性。</li>
+</ul>
+</li>
+<li><p><code>ECOC</code> 工作过程主要分两步，假设类别为$c_{1}, c_{2}, \cdots, c_{K}$：</p>
+<ul>
+<li><p>编码：对$K$个类别进行 $M$次划分，每次划分都将一部分类别划分为正类，一部分类别划分为反类，从而形成一个二分类训练集。</p>
+<p>这样一个产生$M$个训练集，可以训练出 $M$个分类器。</p>
+</li>
+<li><p>解码：用$M$个分类器分别对测试样本进行预测，这些预测标记组成一个编码。</p>
+<p>将这个预测编码与每个类别各自的编码进行比较，返回其中距离最小的类别作为最终预测结果。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h1 id="类别不平衡问题"><a href="#类别不平衡问题" class="headerlink" title="类别不平衡问题"></a>类别不平衡问题</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>常用的分类算法一般假设不同类的比例是均衡的，现实生活中经常遇到不平衡的数据集，比如广告点击预测（点击转化率一般都很小）、商品推荐（推荐的商品被购买的比例很低）、信用卡欺诈检测等等。</p>
+<p>对于不平衡数据集，一般的分类算法都倾向于将样本划分到多数类，体现在模型整体的准确率很高。</p>
+<p>但对于极不均衡的分类问题，比如仅有1%的人是坏人，99%的人是好人，最简单的分类模型就是将所有人都划分为好人，模型都能得到99%的准确率，显然这样的模型并没有提供任何的信息。</p>
+<p>在类别不平衡的情况下，对模型使用F值或者AUC值是更好的选择。</p>
+<p>处理不平衡数据，可以从两方面考虑：一是改变数据分布，从数据层面使得类别更为平衡；</p>
+<p>二是改变分类算法，在传统分类算法的基础上对不同类别采取不同的加权方式，使得模型更看重少数类。</p>
+<p>本部分对数据层面的一些方法做一个介绍，改变数据分布的方法主要是重采样：</p>
+<ul>
+<li>过采样：增加少数类样本的数量</li>
+</ul>
+<ul>
+<li>欠采样：减少多数类样本的数量</li>
+</ul>
+<ul>
+<li>综合采样：将过采样和欠采样结合</li>
+</ul>
+<h2 id="过采样"><a href="#过采样" class="headerlink" title="过采样"></a>过采样</h2><h3 id="随机过采样"><a href="#随机过采样" class="headerlink" title="随机过采样"></a>随机过采样</h3><p>采样算法通过某一种策略改变样本的类别分布，以达到将不平衡分布的样本转化为相对平衡分布的样本的目的，而随机采样是采样算法中最简单也最直观易懂的一种方法。</p>
+<p>随机过抽样是增加少数类样本数量可以事先设置多数类与少数类最终的数量比例在保留多数类样本不变的情况下，根据比例随机复制少数类样本，在使用的过程中为了保证所有的少数类样本信息都会被包含，可以先完全复制一份全量的少数类样本，再随机复制少数样本使得满足数量比例具体步骤如下：</p>
+<ul>
+<li>首先在少数类$S_{min}$集合中随机选中一些少数类样本</li>
+<li>然后通过复制所选样本生成样本集合$E$</li>
+<li>将它们添加到$S_{min}$中来扩大原始数据集从而得到新的少数类集合$S_{min-new}$</li>
+</ul>
+<p>$S_{\min }$中的总样本数增加了$|E|$个新样本，且$S_{m i n-n e w}$的类分布均衡度进行了相应的调整，如此操作可以改变类分布平衡度从而达到所需水平。</p>
+<p>重复样本过多，容易造成分类器器的过拟合</p>
+<h3 id="SMOTE算法"><a href="#SMOTE算法" class="headerlink" title="SMOTE算法"></a>SMOTE算法</h3><p>在合成抽样技术方面，Chawla NY等人提出的SMOTE过抽样技术是基于随机过采样算法的一种改进方案，由于随机过采样简单复制样本的策略来增加少数类样本，这样容易产生模型过拟合的问题，即使模型学习到的信息过于特别（Specific）而不够泛化(General)。</p>
+<p><code>SMOTE</code>的主要思想是利用特征空间中现存少数类样本之间的相似性来建立人工数据，特别是，对于子集$S_{\min } \subset S$ ，对于每一个样本$x_{i} \subset S_{m i n}$使用K-近邻法，其中K-近邻被定义为考虑中的K个元素本身与的欧氏距离在n维特征空间X中表现为最小幅度值的样本。由于不是简单地复制少数类样本，因此可以在一定程度上避免分类器器的过度拟合，实践证明此方法可以提高分类器器的性能。但是由于对每个少数类样本都生生成新样本，因此容易发生生成样本重叠（overlapping）的问题。算法流程如下：</p>
+<ul>
+<li><p>对于少数类中的每一个样本$\left(x_{i}\right)$，以欧氏距离为标准计算它到少数类样本集$S_{\min }$中所有样本的距离，得到K近邻</p>
+</li>
+<li><p>根据样本不平衡比例设置一个采样比例以确定采样倍率N，对于每一个少数类样本$x_i$，从其K近邻中随机选择若干个样本， 假设选择的近邻为$\tilde{x}$；</p>
+</li>
+<li><p>对于每一个随机选出的近邻$\tilde{x}$，分别与原样本按照如下的公式构建新的样本:</p>
+<script type="math/tex; mode=display">
+x_{n e w}=x+\operatorname{rand}(0,1) \times(\tilde{x}-x)</script></li>
+</ul>
+<h3 id=""><a href="#" class="headerlink" title=""></a><img src="https://i.loli.net/2019/03/31/5ca0867f58544.png" alt=""></h3><h3 id="Borderline-SMOTE算法"><a href="#Borderline-SMOTE算法" class="headerlink" title="Borderline-SMOTE算法"></a>Borderline-SMOTE算法</h3><p>原始的<code>SMOTE</code>算法对所有的少数类样本都是一视同仁的，但实际建模过程中发现那些处于边界位置的样本更容易被错分，因此利用边界位置的样本信息产生新样本可以给模型带来更大的提升。<code>Borderline-SMOTE</code>便是将原始<code>SMOTE</code>算法和边界信息算法结合的算法。算法流程如下：</p>
+<ul>
+<li>首先，对于每个$x_{i} \subset S_{m i n}$确定一系列K-近邻样本集，称该数据集为$S_{i-k N N}$，且$S_{i-k N N} \subset S$；</li>
+</ul>
+<ul>
+<li>然后，对每个样本，判断出最近邻样本集中属于多数类样本的个数，即：$| S_{i-k N N} \cap S_{m a j}$；</li>
+</ul>
+<ul>
+<li>最后，选择满足下面不等式的$x_i$: $\frac{k}{2}&lt;\left|S_{i-k N N} \cap S_{m a j}\right|&lt;k$ ,将其加危险集$DANGER$</li>
+</ul>
+<p>对危险集中的每一个样本点（最容易被错分的样本），采用普通的算法<code>SMOTE</code>成新的少数类样本。</p>
+<p><img src="https://i.loli.net/2019/03/31/5ca0885ea5253.png" alt=""></p>
+<h2 id="欠采样"><a href="#欠采样" class="headerlink" title="欠采样"></a>欠采样</h2><h3 id="随机欠采样"><a href="#随机欠采样" class="headerlink" title="随机欠采样"></a>随机欠采样</h3><p>减少多数类样本数量最简单的方法便是随机剔除多数类样本，可以事先设置多数类与少数类最终的数量比例，在保留少数类样本不变的情况下，根据比例随机选择多数类样本。</p>
+<ul>
+<li>首先我们从$S_{max}$中随机选取一些多数类样本$E$</li>
+</ul>
+<ul>
+<li>将这些样本从$S_{max}$中移除，就有$\left|S_{m a j-n e w}\right|=|S_{m a x}- E |$</li>
+</ul>
+<p>优点在于操作简单，只依赖于样本分布，不依赖任何距离信息，属于非启发式方法；缺点在于会丢失部分多数类样本的信息，无法充分利用已有信息。</p>
+<h3 id="Tomek-Links方法"><a href="#Tomek-Links方法" class="headerlink" title="Tomek Links方法"></a>Tomek Links方法</h3><p>定义：<code>Tomek links</code>被定义为相反类最近邻样本之间的一对连接。</p>
+<p>符号约定：给定一个样本对$\left(x_{i}, x_{j}\right)$，其中$x_{i} \in S_{m a j}, \quad x_{j} \in S_{m i n}$ ， 记$d\left(x_{i}, x_{j}\right)$是样本$x_i$和$x_j$之间的距离</p>
+<p>公式表示：如果不存在任何样本$x_k$，使得$d\left(x_{i}, x_{k}\right)&lt;d\left(x_{i}, x_{j}\right)$ ，那么样本对被称为<code>Tomek Links</code></p>
+<p>使用这种方法法，如果两个样本来自<code>Tomek Links</code>，那么他们中的一个样本要么是噪声要么它们都在两类的边界上。所以<code>Tomek Links</code>一般有两种用途：在欠采样中：将<code>Tomek Links</code>中属于是多数类的样本剔除；在数据清洗中，将<code>Tomek Links</code>中的两个样本都剔除。</p>
+<p><img src="https://i.loli.net/2019/03/31/5ca08be137419.png" alt=""></p>
+<h3 id="NearMiss方法"><a href="#NearMiss方法" class="headerlink" title="NearMiss方法"></a>NearMiss方法</h3><p><code>NearMiss</code>方法是利用距离远近剔除多数类样本的一类方法，实际操作中也是借助KNN，总结起来有以下几类：</p>
+<ul>
+<li><code>NearMiss-1</code>：在多数类样本中选择与最近的三个少数类样本的平均距离最小的样本</li>
+</ul>
+<ul>
+<li><code>NearMiss-2</code>：在多数类样本中选择与最远的3个少数类样本的平均距离最大的样本</li>
+</ul>
+<ul>
+<li><code>NearMiss-3</code>：对于每个少数类样本，选择离它最近的给定数量的多数类样本</li>
+</ul>
+<p><code>NearMiss-1</code>和<code>NearMiss-2</code>方法的描述仅有一字之差，但其含义是完全不同的：<code>NearMiss-1</code>考虑的是与最近的3个少数类样本的平均距离，是局部的；<code>NearMiss-2</code>考虑的是与最远的3个少数类样本的平均距离，是全局的。</p>
+<p><code>NearMiss-1</code>方法得到的多数类样本分布也是”不均衡“的，它倾向于在比较集中的少数类附近找到更多的多数类样本，而在孤立的（或者说是离群的）少数类附近找到更少的多数类样本，原因是<code>NearMiss-1</code>方法考虑的局部性质和平均距离。</p>
+<p><code>NearMiss-3</code>方法则会使得每一个少数类样本附近都有足够多的多数类样本，显然这会使得模型的精确度高、召回率低。<br>实验结果表明得到<code>NearMiss-2</code>的不均衡分类性能最优。</p>
+<h2 id="综合采样"><a href="#综合采样" class="headerlink" title="综合采样"></a>综合采样</h2><p>目前为止我们使用的重采样方法几乎都是只针对某一类样本：对多数类样本欠采样，对少数类样本过采样。也有人提出将欠采样和过采样综合的方法，解决样本类别分布不平衡和过拟合问题，本部分介绍其中的<code>SMOTE+Tomek Links</code>和<code>SMOTE+ENN</code>。</p>
+<h3 id="SMOTE-Tomek-Links"><a href="#SMOTE-Tomek-Links" class="headerlink" title="SMOTE+Tomek Links"></a>SMOTE+Tomek Links</h3><p><code>SMOTE</code>+<code>Tomek Links</code>方法的算法流程非常简单：</p>
+<ul>
+<li>利用<code>SMOTE</code>方法生成新的少数类样本，得到扩充后的数据集$T$</li>
+<li>剔除T中的<code>Tomek Links</code>对</li>
+</ul>
+<p>普通的<code>SMOTE</code>方法生成的少数类样本是通过线性插值得到的，在平衡类别分布的同时也扩张了少数类的样本空间，产生的问题是可能原本属于多数类样本的空间被少数类“入侵”，容易造成模型的过拟合。</p>
+<p><code>Tomek Links</code>对寻找的是那种噪声点或者边界点，可以很好地解决“入侵”的问题，下图红色加号为<code>SMOTE</code>产生的少数类样本，可以看到，红色样本“入侵”到原本属于多数类样本的空间，这种噪声数据由于第一步<code>SMOTE</code>方法已经很好地平衡了类别分布，因此在使用<code>Tomek Links</code>对的时候考虑剔除所有的<code>Tomek Links</code>对。</p>
+<p><img src="https://i.loli.net/2019/03/31/5ca08e6e61d9a.png" alt=""></p>
+<h3 id="SMOTE-ENN"><a href="#SMOTE-ENN" class="headerlink" title="SMOTE+ENN"></a>SMOTE+ENN</h3><p><code>SMOTE+ENN</code>方法和<code>SMOTE+Tomek Links</code>方法的想法和过程都是很类似的：</p>
+<ul>
+<li>利用<code>SMOTE</code>方法生成新的少数类样本，得到扩充后的数据集$T$</li>
+<li>对T中的每一个样本使用<code>KNN</code>（一般K取3）方法预测，若预测结果与实际类别标签不符，则剔除该样本。</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+    
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="XuHejun 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/特征工程/" rel="tag"># 特征工程</a>
+          
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/27/《剑指offer》week2/" rel="next" title="《剑指offer》 week2">
+                <i class="fa fa-chevron-left"></i> 《剑指offer》 week2
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/01/《剑指offer》week3/" rel="prev" title="《剑指offer》week3">
+                《剑指offer》week3 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/image/xu.jpg" alt="XuHejun">
+            
+              <p class="site-author-name" itemprop="name">XuHejun</p>
+              <p class="site-description motion-element" itemprop="description">Stay hungry,stay foolish</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/MuMaXu" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/xu-he-jun-24" target="_blank" title="Zhihu">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Zhihu</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/MuMaXu2" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Twitter</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/5307894956" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Weibo</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#缺失值处理"><span class="nav-number">2.</span> <span class="nav-text">缺失值处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#均值插补-amp-amp-同类均值插补"><span class="nav-number">2.1.</span> <span class="nav-text">均值插补 &amp;&amp; 同类均值插补</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建模预测"><span class="nav-number">2.2.</span> <span class="nav-text">建模预测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高维映射"><span class="nav-number">2.3.</span> <span class="nav-text">高维映射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多重插补"><span class="nav-number">2.4.</span> <span class="nav-text">多重插补</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#压缩感知-amp-amp-矩阵补全"><span class="nav-number">2.5.</span> <span class="nav-text">压缩感知 &amp;&amp; 矩阵补全</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#压缩感知"><span class="nav-number">2.5.1.</span> <span class="nav-text">压缩感知</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#矩阵补全"><span class="nav-number">2.5.2.</span> <span class="nav-text">矩阵补全</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#特征编码"><span class="nav-number">3.</span> <span class="nav-text">特征编码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#特征二元化"><span class="nav-number">3.1.</span> <span class="nav-text">特征二元化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#one-hot"><span class="nav-number">3.2.</span> <span class="nav-text">one-hot</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#离散化"><span class="nav-number">3.3.</span> <span class="nav-text">离散化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分桶"><span class="nav-number">3.3.1.</span> <span class="nav-text">分桶</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特性"><span class="nav-number">3.3.2.</span> <span class="nav-text">特性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据标准化、正则化"><span class="nav-number">4.</span> <span class="nav-text">数据标准化、正则化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据标准化"><span class="nav-number">4.1.</span> <span class="nav-text">数据标准化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据正则化"><span class="nav-number">4.2.</span> <span class="nav-text">数据正则化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#特征选择"><span class="nav-number">5.</span> <span class="nav-text">特征选择</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#特征选择原理"><span class="nav-number">5.1.</span> <span class="nav-text">特征选择原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#子集搜索"><span class="nav-number">5.1.1.</span> <span class="nav-text">子集搜索</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#子集评价"><span class="nav-number">5.1.2.</span> <span class="nav-text">子集评价</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过滤式选择"><span class="nav-number">5.2.</span> <span class="nav-text">过滤式选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#包裹式选择"><span class="nav-number">5.3.</span> <span class="nav-text">包裹式选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#嵌入式选择"><span class="nav-number">5.4.</span> <span class="nav-text">嵌入式选择</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#多类分类问题"><span class="nav-number">6.</span> <span class="nav-text">多类分类问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#one-vs-rest"><span class="nav-number">6.1.</span> <span class="nav-text">one vs rest</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#one-vs-one"><span class="nav-number">6.2.</span> <span class="nav-text">one vs one</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#many-vs-many"><span class="nav-number">6.3.</span> <span class="nav-text">many vs many</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#类别不平衡问题"><span class="nav-number">7.</span> <span class="nav-text">类别不平衡问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">7.1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过采样"><span class="nav-number">7.2.</span> <span class="nav-text">过采样</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#随机过采样"><span class="nav-number">7.2.1.</span> <span class="nav-text">随机过采样</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SMOTE算法"><span class="nav-number">7.2.2.</span> <span class="nav-text">SMOTE算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#"><span class="nav-number">7.2.3.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Borderline-SMOTE算法"><span class="nav-number">7.2.4.</span> <span class="nav-text">Borderline-SMOTE算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#欠采样"><span class="nav-number">7.3.</span> <span class="nav-text">欠采样</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#随机欠采样"><span class="nav-number">7.3.1.</span> <span class="nav-text">随机欠采样</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tomek-Links方法"><span class="nav-number">7.3.2.</span> <span class="nav-text">Tomek Links方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NearMiss方法"><span class="nav-number">7.3.3.</span> <span class="nav-text">NearMiss方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#综合采样"><span class="nav-number">7.4.</span> <span class="nav-text">综合采样</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SMOTE-Tomek-Links"><span class="nav-number">7.4.1.</span> <span class="nav-text">SMOTE+Tomek Links</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SMOTE-ENN"><span class="nav-number">7.4.2.</span> <span class="nav-text">SMOTE+ENN</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">XuHejun</span>
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+  
+</body>
+</html>

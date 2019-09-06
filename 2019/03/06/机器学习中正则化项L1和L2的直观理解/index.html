@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="正则化（Regularization）机器学习中几乎都可以看到损失函数后面会添加一个额外项，常用的额外项一般有两种，一般英文称作$\ell_{1}$ -norm和$\ell_{2}-$ norm，中文称作L1正则化和L2正则化，或者L1范数和L2范数。 L1正则化和L2正则化可以看做是损失函数的惩罚项。所谓『惩罚』是指对损失函数中的某些参数做一些限制。对于线性回归模型，使用L1正则化的模型建叫做L">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习中正则化项L1和L2的直观理解">
+<meta property="og:url" content="http://yoursite.com/2019/03/06/机器学习中正则化项L1和L2的直观理解/index.html">
+<meta property="og:site_name" content="MuMaXu&#39;s Blog">
+<meta property="og:description" content="正则化（Regularization）机器学习中几乎都可以看到损失函数后面会添加一个额外项，常用的额外项一般有两种，一般英文称作$\ell_{1}$ -norm和$\ell_{2}-$ norm，中文称作L1正则化和L2正则化，或者L1范数和L2范数。 L1正则化和L2正则化可以看做是损失函数的惩罚项。所谓『惩罚』是指对损失函数中的某些参数做一些限制。对于线性回归模型，使用L1正则化的模型建叫做L">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.loli.net/2019/03/17/5c8e42ec1830e.png">
+<meta property="og:image" content="https://i.loli.net/2019/03/17/5c8e4500d1665.png">
+<meta property="og:image" content="https://i.loli.net/2019/03/17/5c8e48d1a7a02.png">
+<meta property="og:updated_time" content="2019-06-22T08:58:02.044Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="机器学习中正则化项L1和L2的直观理解">
+<meta name="twitter:description" content="正则化（Regularization）机器学习中几乎都可以看到损失函数后面会添加一个额外项，常用的额外项一般有两种，一般英文称作$\ell_{1}$ -norm和$\ell_{2}-$ norm，中文称作L1正则化和L2正则化，或者L1范数和L2范数。 L1正则化和L2正则化可以看做是损失函数的惩罚项。所谓『惩罚』是指对损失函数中的某些参数做一些限制。对于线性回归模型，使用L1正则化的模型建叫做L">
+<meta name="twitter:image" content="https://i.loli.net/2019/03/17/5c8e42ec1830e.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/03/06/机器学习中正则化项L1和L2的直观理解/">
+
+
+
+
+
+  <title>机器学习中正则化项L1和L2的直观理解 | MuMaXu's Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">MuMaXu's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Hello,world!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/06/机器学习中正则化项L1和L2的直观理解/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="XuHejun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/image/xu.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MuMaXu's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">机器学习中正则化项L1和L2的直观理解</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-06T12:00:00+08:00">
+                2019-03-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="正则化（Regularization）"><a href="#正则化（Regularization）" class="headerlink" title="正则化（Regularization）"></a>正则化（Regularization）</h1><p>机器学习中几乎都可以看到损失函数后面会添加一个额外项，常用的额外项一般有两种，一般英文称作$\ell_{1}$ -norm和$\ell_{2}-$ norm，中文称作<strong>L1正则化</strong>和<strong>L2正则化</strong>，或者L1范数和L2范数。</p>
+<p>L1正则化和L2正则化可以看做是损失函数的惩罚项。所谓『惩罚』是指对损失函数中的某些参数做一些限制。对于线性回归模型，使用L1正则化的模型建叫做<code>Lasso</code>回归，使用L2正则化的模型叫做<code>Ridge</code>回归（岭回归）。下图是Python中Lasso回归的损失函数，式中加号后面一项$\alpha|w|_{1}$即为L1正则化项。</p>
+<p>$\min _{w} \frac{1}{2 n_{\text {samples}}}|X w-y|_{2}^{2}+\alpha|w|_{1}$</p>
+<p>下图是Python中Ridge回归的损失函数，式中加号后面一项$\alpha|w|_{2}^{2}$即为L2正则化项。</p>
+<p>$\min _{w}|X w-y|_{2}^{2}+\alpha|w|_{2}^{2}$</p>
+<p>一般回归分析中回归$w$表示特征的系数，从上式可以看到正则化项是对系数做了处理（限制）。<strong>L1正则化和L2正则化的说明如下：</strong></p>
+<ul>
+<li>L1正则化是指权值向量$w$中各个元素的<strong>绝对值之和</strong>，通常表示为$|w|_{1}$</li>
+</ul>
+<ul>
+<li>L2正则化是指权值向量$w$中各个元素的<strong>平方和然后再求平方根</strong>（可以看到Ridge回归的L2正则化项有平方符号），通常表示为$|w|_{2}$</li>
+</ul>
+<p>一般都会在正则化项之前添加一个系数，Python中用$\alpha$表示，一些文章也用$\lambda$表示。这个系数需要用户指定。</p>
+<p>那添加L1和L2正则化有什么用？<strong>下面是L1正则化和L2正则化的作用</strong>，这些表述可以在很多文章中找到。</p>
+<ul>
+<li>L1正则化可以产生稀疏权值矩阵，即产生一个稀疏模型，可以用于特征选择</li>
+</ul>
+<ul>
+<li>L2正则化可以防止模型过拟合（overfitting）；一定程度上，L1也可以防止过拟合</li>
+</ul>
+<h1 id="稀疏模型与特征选择"><a href="#稀疏模型与特征选择" class="headerlink" title="稀疏模型与特征选择"></a>稀疏模型与特征选择</h1><p>上面提到L1正则化有助于生成一个稀疏权值矩阵，进而可以用于特征选择。为什么要生成一个稀疏矩阵？</p>
+<p>稀疏矩阵指的是很多元素为0，只有少数元素是非零值的矩阵，即得到的线性回归模型的大部分系数都是0. 通常机器学习中特征数量很多，例如文本处理时，如果将一个词组（term）作为一个特征，那么特征数量会达到上万个（bigram）。在预测或分类时，那么多特征显然难以选择，但是如果代入这些特征得到的模型是一个稀疏模型，表示只有少数特征对这个模型有贡献，绝大部分特征是没有贡献的，或者贡献微小（因为它们前面的系数是0或者是很小的值，即使去掉对模型也没有什么影响），此时我们就可以只关注系数是非零值的特征。这就是稀疏模型与特征选择的关系。</p>
+<p>通过L1正则项来选择特征：L1正则方法具有稀疏解的特性，因此天然具备特征选择的特性，但是要注意，L1没有选到的特征不代表不重要，原因是两个具有高相关性的特征可能只保留了一个，如果要确定哪个特征重要应再通过L2正则方法交叉检验；应该是说，分别使用L1和L2拟合，如果两个特征在L2中系数相接近，在L1中一个系数为0一个不为0，那么其实这两个特征都应该保留，原因是L1对于强相关特征只会保留一个。</p>
+<h1 id="L1和L2正则化的直观理解"><a href="#L1和L2正则化的直观理解" class="headerlink" title="L1和L2正则化的直观理解"></a>L1和L2正则化的直观理解</h1><p>这部分内容将解释<strong>为什么L1正则化可以产生稀疏模型（L1是怎么让系数等于零的）</strong>，以及<strong>为什么L2正则化可以防止过拟合</strong>。</p>
+<h2 id="L1正则化和特征选择"><a href="#L1正则化和特征选择" class="headerlink" title="L1正则化和特征选择"></a>L1正则化和特征选择</h2><p>假设有如下带L1正则化的损失函数：</p>
+<p>$J=J_{0}+\alpha \sum_{w}|w|$</p>
+<p>其中$ J_0$是原始的损失函数，加号后面的一项是L1正则化项，$\alpha$是正则化系数。注意到L1正则化是权值的绝对值之和，$J$是带有绝对值符号的函数，因此$J$是不完全可微的。机器学习的任务就是要通过一些方法（比如梯度下降）求出损失函数的最小值。监督机器学习问题无非就是“minimizeyour error while regularizing your parameters”，也就是在规则化参数的同时最小化误差。当我们在原始损失函数$ J_0$后添加L1正则化项时，相当于对$J_0$做了一个约束。令$L=α∑w∣w∣ L = \alpha \sum_w{|w|}$，则$J=J_{0}+L$此时我们的任务变成在$L$约束下求出$J_0$取最小值的解.考虑二维的情况，即只有两个权值$w^1$和$w^2$ ，此时$L=\left|w^{1}\right|+\left|w^{2}\right|$，对于梯度下降法，求解$J_0$的过程可以画出等值线，同时L1正则化的函数$L$也可以在$w^1w^2$的二维平面上画出来。如下图：</p>
+<p><img src="https://i.loli.net/2019/03/17/5c8e42ec1830e.png" alt=""></p>
+<p>图中等值线是$J_0$的等值线，黑色方形是$L$函数的图形。在图中，当$J_0$ 等值线与$L$图形首次相交的地方就是最优解。上图中$J_0$与$L$在$L$的一个顶点处相交，这个顶点就是最优解。注意到这个顶点的值是$(w^1,w^2)=(0,w) $。可以直观想象，因为L LL函数有很多『突出的角』（二维情况下四个，多维情况下更多），$J_0$与这些角接触的机率会远大于与$L$其它部位接触的机率，而在这些角上，会有很多权值等于0，这就是为什么L1正则化可以产生稀疏模型，进而可以用于特征选择。</p>
+<p>而正则化前面的系数$\alpha$，可以控制$L$图形的大小。$\alpha$越小，$L$的图形越大（上图中的黑色方框）；$\alpha$越大，$L$的图形就越小，可以小到黑色方框只超出原点范围一点点，这是最优点的值$(w^1,w^2)=(0,w)$ 中的$w$可以取到很小的值。类似，假设有如下带L2正则化的损失函数：</p>
+<p>$J=J_{0}+\alpha \sum_{w} w^{2}$</p>
+<p>同样可以画出他们在二维平面上的图形，如下：</p>
+<p><img src="https://i.loli.net/2019/03/17/5c8e4500d1665.png" alt=""></p>
+<p>二维平面下L2正则化的函数图形是个圆，与方形相比，被磨去了棱角。因此$J_0$与$L$相交时使得$w^1$ 或$w^2$ 等于零的机率小了许多，这就是为什么L2正则化不具有稀疏性的原因。</p>
+<h2 id="L2正则化和过拟合"><a href="#L2正则化和过拟合" class="headerlink" title="L2正则化和过拟合"></a>L2正则化和过拟合</h2><p>拟合过程中通常都倾向于让权值尽可能小，最后构造一个所有参数都比较小的模型。因为一般认为参数值小的模型比较简单，能适应不同的数据集，也在一定程度上避免了过拟合现象。可以设想一下对于一个线性回归方程，若参数很大，那么只要数据偏移一点点，就会对结果造成很大的影响；但如果参数足够小，数据偏移得多一点也不会对结果造成什么影响，专业一点的说法是『抗扰动能力强』。</p>
+<p><strong>那为什么L2正则化可以获得值很小的参数？</strong></p>
+<p>以线性回归中的梯度下降法为例。假设要求的参数为$\theta$，$h_{\theta}(x)$是我们的假设函数。线性回归一般使用平方差损失函数。单个样本的平方差是$\left(h_{\theta}(x)-y\right)^{2}$，如果考虑所有样本，损失函数是对每个样本的平方差求和，假设有$m $个样本，线性回归的代价函数如下，为了后续处理方便，乘以一个常数$\frac{1}{2 m}$：</p>
+<p>$J(\theta)=\frac{1}{2 m} \sum_{i=1}^{m}\left(h_{\theta}\left(x^{(i)}\right)-y^{(i)}\right)^{2}$</p>
+<p>在梯度下降算法中，需要先对参数求导，得到梯度。梯度本身是上升最快的方向，为了让损失尽可能小，沿梯度的负方向更新参数即可。</p>
+<p>对于单个样本，先对某个参数$\theta_{j}$求导：</p>
+<p>$\frac{\partial}{\partial \theta_{j}} J(\theta)=\frac{1}{m}\left(h_{\theta}(x)-y\right) \frac{\partial}{\partial \theta_{j}} h_{\theta}(x)$</p>
+<p>注意到$h_{\theta}(x)$的表达式为$h_{\theta}(x)=\theta_{0} x_{0}+\theta_{1} x_{1}+\cdots+\theta_{n} x_{n}$。单个样本对某个参数$\theta_j$求导，$\frac{\partial}{\partial \theta_{j}} h_{\theta}(x)=x_{j}$，最终上式结果如下：</p>
+<p>$\frac{\partial}{\partial \theta_{j}} J(\theta)=\frac{1}{m}\left(h_{\theta}(x)-y\right) x_{j}$</p>
+<p>在考虑所有样本的情况，将每个样本对$\theta_j$的导数求和即可，得到下式：</p>
+<p>$\frac{\partial}{\partial \theta_{j}} J(\theta)=\frac{1}{m} \sum_{i=1}^{m}\left(h_{\theta}\left(x^{(i)}\right)-y^{(i)}\right) x_{j}^{(i)}$</p>
+<p>梯度下降算法中，为了尽快收敛，会沿梯度的负方向更新参数，因此在(3.3)式前添加一个负号，并乘以一个系数 $\alpha$（即学习率），得到最终用于迭代计算参数$\theta_j$的形式：</p>
+<p>$\theta_{j} :=\theta_{j}-\alpha \frac{1}{m} \sum_{i=1}^{m}\left(h_{\theta}\left(x^{(i)}\right)-y^{(i)}\right) x_{j}^{(i)}$</p>
+<p>其中$\alpha$是learning rate. 上式是没有添加L2正则化项的迭代公式，如果在原始代价函数之后添加L2正则化，则迭代公式会变成下面的样子：</p>
+<p>$\theta_{j} :=\theta_{j}\left(1-\alpha \frac{\lambda}{m}\right)-\alpha \frac{1}{m} \sum_{i=1}^{m}\left(h_{\theta}\left(x^{(i)}\right)-y^{(i)}\right) x_{j}^{(i)}$</p>
+<p>其中$\lambda$就是正则化参数。从上式可以看到，与未添加L2正则化的迭代公式相比，每一次迭代，$\theta_j$都要先乘以一个小于1的因子，从而使得$\theta_j$不断减小，因此总得来看，$\theta$是不断减小的。最开始也提到L1正则化一定程度上也可以防止过拟合。之前做了解释，当L1的正则化系数很小时，得到的最优解会很小，可以达到和L2正则化类似的效果。</p>
+<h1 id="正则化参数的选择"><a href="#正则化参数的选择" class="headerlink" title="正则化参数的选择"></a>正则化参数的选择</h1><h2 id="L1正则化参数"><a href="#L1正则化参数" class="headerlink" title="L1正则化参数"></a>L1正则化参数</h2><p>通常越大的$\lambda$可以让代价函数在参数为0时取到最小值。下面是一个简单的例子，这个例子来自Quora上的问答。为了方便叙述，一些符号跟这篇帖子的符号保持一致。假设有如下带L1正则化项的代价函数：</p>
+<p>$F(x)=f(x)+\lambda|x|_{1}$</p>
+<p>其中$x$是要估计的参数，相当于上文中提到的$w$以及$\theta$。 注意到L1正则化在某些位置是不可导的，当$\lambda$足够大时可以使得$F(x) $在$x=0$时取到最小值。如下图：</p>
+<p><img src="https://i.loli.net/2019/03/17/5c8e48d1a7a02.png" alt=""></p>
+<p>分别取$\lambda$ = 0.5和$\lambda$=2，可以看到越大的$\lambda$越容易使$F(x) $在$x=0$时取到最小值.</p>
+<h2 id="L2正则化参数"><a href="#L2正则化参数" class="headerlink" title="L2正则化参数"></a>L2正则化参数</h2><p>从公式5可以看到，$\lambda$越大，$\theta_j$衰减得越快。另一个理解可以参考图2，$\lambda$越大，L2圆的半径越小，最后求得代价函数最值时各参数也会变得很小。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+    
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="XuHejun 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/18/用强化学习为图论组合优化问题寻找“元算法”/" rel="next" title="用强化学习为图论组合优化问题寻找“元算法”">
+                <i class="fa fa-chevron-left"></i> 用强化学习为图论组合优化问题寻找“元算法”
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/22/《剑指offer》week1/" rel="prev" title="《剑指offer》week1">
+                《剑指offer》week1 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/image/xu.jpg" alt="XuHejun">
+            
+              <p class="site-author-name" itemprop="name">XuHejun</p>
+              <p class="site-description motion-element" itemprop="description">Stay hungry,stay foolish</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/MuMaXu" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/xu-he-jun-24" target="_blank" title="Zhihu">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Zhihu</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/MuMaXu2" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Twitter</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/5307894956" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Weibo</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#正则化（Regularization）"><span class="nav-number">1.</span> <span class="nav-text">正则化（Regularization）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#稀疏模型与特征选择"><span class="nav-number">2.</span> <span class="nav-text">稀疏模型与特征选择</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#L1和L2正则化的直观理解"><span class="nav-number">3.</span> <span class="nav-text">L1和L2正则化的直观理解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#L1正则化和特征选择"><span class="nav-number">3.1.</span> <span class="nav-text">L1正则化和特征选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#L2正则化和过拟合"><span class="nav-number">3.2.</span> <span class="nav-text">L2正则化和过拟合</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#正则化参数的选择"><span class="nav-number">4.</span> <span class="nav-text">正则化参数的选择</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#L1正则化参数"><span class="nav-number">4.1.</span> <span class="nav-text">L1正则化参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#L2正则化参数"><span class="nav-number">4.2.</span> <span class="nav-text">L2正则化参数</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">XuHejun</span>
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+  
+</body>
+</html>

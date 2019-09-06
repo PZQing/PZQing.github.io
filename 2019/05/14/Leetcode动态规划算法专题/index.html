@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="问题一：Triangle问题描述给定一个三角形，找到从上到下的最小路径和，在每一步可以移动到下一行的相邻数字。 Bonus: 只使用$O(n)$额外空间，其中n是三角形的总行数 样例    [       [2],      [3,4],     [6,5,7],    [4,1,8,3]    ]    输出11 (2 + 3 + 5 + 1 = 11). 问题分析动态规划 时间$O(n2)$空">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Leetcode动态规划算法专题">
+<meta property="og:url" content="http://yoursite.com/2019/05/14/Leetcode动态规划算法专题/index.html">
+<meta property="og:site_name" content="MuMaXu&#39;s Blog">
+<meta property="og:description" content="问题一：Triangle问题描述给定一个三角形，找到从上到下的最小路径和，在每一步可以移动到下一行的相邻数字。 Bonus: 只使用$O(n)$额外空间，其中n是三角形的总行数 样例    [       [2],      [3,4],     [6,5,7],    [4,1,8,3]    ]    输出11 (2 + 3 + 5 + 1 = 11). 问题分析动态规划 时间$O(n2)$空">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.loli.net/2019/05/14/5cda6d3c58baf46922.png">
+<meta property="og:image" content="https://i.loli.net/2019/05/14/5cda6d6eedee343799.png">
+<meta property="og:updated_time" content="2019-08-20T03:03:16.397Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Leetcode动态规划算法专题">
+<meta name="twitter:description" content="问题一：Triangle问题描述给定一个三角形，找到从上到下的最小路径和，在每一步可以移动到下一行的相邻数字。 Bonus: 只使用$O(n)$额外空间，其中n是三角形的总行数 样例    [       [2],      [3,4],     [6,5,7],    [4,1,8,3]    ]    输出11 (2 + 3 + 5 + 1 = 11). 问题分析动态规划 时间$O(n2)$空">
+<meta name="twitter:image" content="https://i.loli.net/2019/05/14/5cda6d3c58baf46922.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/14/Leetcode动态规划算法专题/">
+
+
+
+
+
+  <title>Leetcode动态规划算法专题 | MuMaXu's Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">MuMaXu's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Hello,world!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/14/Leetcode动态规划算法专题/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="XuHejun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/image/xu.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MuMaXu's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Leetcode动态规划算法专题</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-14T08:49:00+08:00">
+                2019-05-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">Leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Leetcode/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C++</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="问题一：Triangle"><a href="#问题一：Triangle" class="headerlink" title="问题一：Triangle"></a>问题一：Triangle</h1><h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>给定一个三角形，找到从上到下的最小路径和，在每一步可以移动到下一行的相邻数字。</p>
+<p>Bonus: 只使用$O(n)$额外空间，其中n是三角形的总行数</p>
+<p><strong>样例</strong><br>    [<br>       [2],<br>      [3,4],<br>     [6,5,7],<br>    [4,1,8,3]<br>    ]<br>    输出11 (2 + 3 + 5 + 1 = 11).</p>
+<h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><p>动态规划 时间$O(n2)$空间$O(1)$</p>
+<p>点$(i,j)$的下一行的相邻数字是$(i+1,j)$和$(i+1,j+1)$。</p>
+<p>$f(i,j)$表示从<strong>下往上走</strong>到位置$(i,j)$时的最小路径和，计算方式/状态转移方程是</p>
+<p>$f(i,j)=minf(i+1,j),f(i+1,j+1)+(i,j)$</p>
+<p>之所以要从下往上走的原因是因为最上面只有一个元素，就可以直接表示为我们的最终组织，如果是取最底下一行的话，还要进行判断。</p>
+<p><strong>复杂度分析：</strong></p>
+<p>直接把$f(i,j)$存在位置$(i,j)$处，不使用额外空间，因此空间复杂度为$O(1)$。</p>
+<p>两层for loop，第一次竖着遍历，第二次横着遍历，时间复杂度为$O(n^2)$。</p>
+<p>样例：</p>
+<p>输入<br>    [<br>         [2],<br>        [3,4],<br>       [6,5,7],<br>      [4,1,8,3]<br>    ]<br> 更新后</p>
+<pre><code>[
+     [11],
+    [9,10],
+   [7,6,10],
+  [4,1,8,3]
+]
+</code></pre><h2 id="C-代码"><a href="#C-代码" class="headerlink" title="C++代码"></a>C++代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minimumTotal</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; triangle)</span> </span>&#123;</span><br><span class="line">    	<span class="keyword">int</span> m=triangle.size();</span><br><span class="line">    	<span class="keyword">int</span> n=triangle[<span class="number">0</span>].size();</span><br><span class="line">    	<span class="keyword">for</span>(<span class="keyword">int</span> i=m<span class="number">-2</span>;i&gt;=<span class="number">0</span>;i--)</span><br><span class="line">    		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;triangle[i].size;j++)</span><br><span class="line">    		&#123;</span><br><span class="line">  				triangle[i][j]=max(triangle[i+<span class="number">1</span>][j],triangle[i+<span class="number">1</span>][j+<span class="number">1</span>])+triangle[i][j];</span><br><span class="line">			&#125;</span><br><span class="line">		<span class="keyword">return</span> triangle[<span class="number">0</span>][<span class="number">0</span>];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="问题二：Unique-Paths-II"><a href="#问题二：Unique-Paths-II" class="headerlink" title="问题二：Unique Paths II"></a>问题二：Unique Paths II</h1><h2 id="问题描述-1"><a href="#问题描述-1" class="headerlink" title="问题描述"></a>问题描述</h2><p>是62题Unique Paths的进阶版，考虑在网格中加入了障碍，在网格图中，0该网格是空的，1表示该网格有障碍，例如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  [0,0,0],</span><br><span class="line">  [0,1,0],</span><br><span class="line">  [0,0,0]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>这样一个网格，不能经过中间的格子，从左上角到右下角的路线数目为2.</p>
+<p><strong>样例</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">输入：网格的0 1矩阵</span><br><span class="line">[</span><br><span class="line">  [0,0,0],</span><br><span class="line">  [0,1,0],</span><br><span class="line">  [0,0,0]</span><br><span class="line">]</span><br><span class="line">输出：2</span><br><span class="line">解释：不能经过中间的格子，从左上角到右下角的路线数目为2</span><br></pre></td></tr></table></figure>
+<h2 id="问题分析-1"><a href="#问题分析-1" class="headerlink" title="问题分析"></a>问题分析</h2><p><strong>(动态规划)</strong>$ O(mn)$</p>
+<p>类似于62题Unique Paths，每一个网格都可以由该网格左边或上边的网格转移过来，因此到达某一点的路径数等于到达它上一点的路径数与它左边的路径数之和，不同的是，当某个网格有障碍时，到达该网格的路径数为0。这还是一个递推问题，考虑用动态规划。动态规划数组<code>dp[i][j]</code>= 起点到点(i, j)的路径总数。于是我们就得到递推关系式：当网格为0时，<code>dp[i][j] = dp[i][j-1] + dp[i-1][j]</code>；当网格为1（说明该网格是障碍物），<code>dp[i][j]=0</code>。</p>
+<h2 id="C-代码-1"><a href="#C-代码-1" class="headerlink" title="C++代码"></a>C++代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">uniquePathsWithObstacles</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">      	<span class="keyword">if</span>(nums.empty()) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    	<span class="keyword">int</span> m=nums.size();</span><br><span class="line">    	<span class="keyword">int</span> n=nums[<span class="number">0</span>].size();</span><br><span class="line">    	<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; f(m,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(n));</span><br><span class="line">    	f[<span class="number">0</span>][<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">    	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;m;i++)</span><br><span class="line">    		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;n;j++)&#123;</span><br><span class="line">  				<span class="keyword">if</span>(dp[i][j]==<span class="number">0</span>)&#123;</span><br><span class="line">  					<span class="keyword">if</span>(i) f[i][j]+=f[i<span class="number">-1</span>][j];</span><br><span class="line">  					<span class="keyword">if</span>(j) f[i][j]+=f[i][j<span class="number">-1</span>];</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">else</span></span><br><span class="line">					f[i][j]=<span class="number">0</span></span><br><span class="line">			&#125;</span><br><span class="line">		<span class="keyword">return</span> f[m<span class="number">-1</span>][n<span class="number">-1</span>];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="问题三：Russian-Doll-Envelopes"><a href="#问题三：Russian-Doll-Envelopes" class="headerlink" title="问题三：Russian Doll Envelopes"></a>问题三：Russian Doll Envelopes</h1><h2 id="问题描述-2"><a href="#问题描述-2" class="headerlink" title="问题描述"></a>问题描述</h2><p>你有一堆信封，并且已知它们的宽和长<code>(w, h)</code>。如果一个信封的长和宽都小于另一个信封，那就可以将这个信封放到那个信封中。</p>
+<p>现在以俄罗斯套娃的方式将这些信封装起来，问最多可以装几层？</p>
+<p><strong>样例</strong></p>
+<p>给定信封：[[5,4],[6,4],[6,7],[2,3]]，<br>则最多可以套3层。<br>解释：[2,3] =&gt; [5,4] =&gt; [6,7]</p>
+<h2 id="问题分析-2"><a href="#问题分析-2" class="headerlink" title="问题分析"></a>问题分析</h2><p><strong>(动态规划)</strong> $O(n^2)$</p>
+<p>先将所有信封按宽的长度从小到大排序，然后问题变成从左到右找一条最长的<code>h</code>严格单调递增的子序列，同时满足<code>w</code>也是严格单调递增的。</p>
+<p>类似于最长上升序列问题，可以用动态规划解决。</p>
+<p>状态表示：<code>f[i]</code> 表示以第<code>i</code>个信封为结尾的单调序列的最大长度。<br>状态转移：对于<code>f[i]</code>，枚举<code>j=0∼i−1</code>，如果第 <code>j</code>个信封的长和宽都小于第<code>i</code>个信封，则用 <code>f[j]+1</code>更新<code>f[i]</code>。</p>
+<p>时间复杂度分析：排序部分的时间复杂度是<code>O(nlogn)</code>。动态规划部分一共有<code>n</code>个状态，每个状态进行转移的计算量是<code>O(n)</code>，所以动态规划的时间复杂度是$O(n^2)$。总时间复杂度是$O(n^2+nlogn)=O(n^2)$。</p>
+<h2 id="C-代码-2"><a href="#C-代码-2" class="headerlink" title="C++代码"></a>C++代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bool</span> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxEnvelopes</span><span class="params">(<span class="built_in">vector</span>&lt;pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt;&gt;&amp; envelopes)</span> </span>&#123;</span><br><span class="line">    	sort(envelopes.begin(),envelopes.end());</span><br><span class="line">    	<span class="keyword">int</span> m=envelopes.size();</span><br><span class="line">    	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; f(m);</span><br><span class="line">    	<span class="keyword">int</span> res=<span class="number">0</span>;</span><br><span class="line">    	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;m;i++)</span><br><span class="line">    		f[i]=<span class="number">1</span>;</span><br><span class="line">    		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;i;j++)&#123;</span><br><span class="line">    			<span class="keyword">if</span>(envelopes[i].first&gt;envelopes[j].first&amp;&amp;</span><br><span class="line">    			envelopes[i].second&gt;envelopes[i].second)&#123;</span><br><span class="line">  					f[i]=max(f[i],f[j]+<span class="number">1</span>);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			res=max(res,f[i]);</span><br><span class="line">		<span class="keyword">return</span> res;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在动态规划中一定要满足后面的状态可以从前面的状态中推得出来，这里也就是说状态的转移要具有顺序性</p>
+<p>在这个题目中有条件j&lt;i就可以满足顺序性，是由前面所有的状态递推此刻的状态，然后取极值。</p>
+<h1 id="问题四：Counting-Bits"><a href="#问题四：Counting-Bits" class="headerlink" title="问题四：Counting Bits"></a>问题四：Counting Bits</h1><h2 id="问题描述-3"><a href="#问题描述-3" class="headerlink" title="问题描述"></a>问题描述</h2><p>给定一个非负整数$num$，对于所有的$i$，$0≤i≤num$，计算出$i$的二进制表示中1的个数。</p>
+<p>进一步：</p>
+<ul>
+<li>计算量是$O(nlogn)$的算法很简单，你能否想出计算量是$O(n)$ 的算法?</li>
+</ul>
+<ul>
+<li>空间复杂度只能是$O(n)$；</li>
+</ul>
+<ul>
+<li>不可以使用C++中的__builtin_popcount等内建函数；</li>
+</ul>
+<p><strong>样例</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：5</span><br><span class="line">输出：[0,1,1,2,1,2]。</span><br></pre></td></tr></table></figure>
+<h2 id="问题分析-3"><a href="#问题分析-3" class="headerlink" title="问题分析"></a>问题分析</h2><p><strong>(动态规划)</strong> $O(n)$</p>
+<p>令<code>f[i]</code>表示 <code>i</code>的二进制表示中1的个数。</p>
+<p>则<code>f[i]</code>可以由<code>f[i/2]</code>转移过来，<code>i</code>的二进制表示和<code>⌊i/2⌋</code>的二进制表示除了最后一位都一样，所以<code>f[i] = f[i/2] + (i&amp;1)</code>;</p>
+<p><strong>时间复杂度分析</strong>：总共有<code>n</code>个状态，每个状态进行转移的计算量是<code>O(1)</code>，所以总时间复杂度是<code>O(n)</code>。</p>
+<h2 id="C-代码-3"><a href="#C-代码-3" class="headerlink" title="C++代码"></a>C++代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; countBits(<span class="keyword">int</span> num) &#123;</span><br><span class="line">    	<span class="keyword">int</span> m=num.size();</span><br><span class="line">    	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; f(m);</span><br><span class="line">    	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;m;i++)&#123;</span><br><span class="line">  			f[i]=f[i/<span class="number">2</span>]+(i&amp;<span class="number">1</span>);   <span class="comment">//如果i为奇数的话，那么i的二进制表示的数最后一位一定为0，右移后一定会少一个0</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> f;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="问题五：Longest-Increasing-Path-in-a-Matrix"><a href="#问题五：Longest-Increasing-Path-in-a-Matrix" class="headerlink" title="问题五：Longest Increasing Path in a Matrix"></a>问题五：Longest Increasing Path in a Matrix</h1><h2 id="问题描述-4"><a href="#问题描述-4" class="headerlink" title="问题描述"></a>问题描述</h2><p>给定一个整数矩阵，请找到最长的上升路径。</p>
+<p>对于矩阵中的每个格子，你每次可以走到上下左右四个方向，不能斜着走，也不能走出边界。</p>
+<p><strong>样例1</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">输入：nums = </span><br><span class="line">[</span><br><span class="line">  [9,9,4],</span><br><span class="line">  [6,6,8],</span><br><span class="line">  [2,1,1]</span><br><span class="line">] </span><br><span class="line">输出：4 </span><br><span class="line">解释：最长的上升路径是：[1, 2, 6, 9].</span><br></pre></td></tr></table></figure>
+<p><strong>样例2</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">输入：nums = </span><br><span class="line">[</span><br><span class="line">  [3,4,5],</span><br><span class="line">  [3,2,6],</span><br><span class="line">  [2,2,1]</span><br><span class="line">] </span><br><span class="line">输出：4 </span><br><span class="line">解释：最长的上升路径是：[3, 4, 5, 6]. 不能斜着走。</span><br></pre></td></tr></table></figure>
+<h2 id="问题分析-4"><a href="#问题分析-4" class="headerlink" title="问题分析"></a>问题分析</h2><p><strong>(记忆化搜索，动态规划)</strong>$ O(n2)$</p>
+<p>这是动态规划里非常经典的一道题目，几乎是所有学编程的同学都会遇到的一道题目。</p>
+<p>假设我们从最低点开始走，每次只能往更高的格子走。<br>状态表示：<code>f[i][j]</code>表示走到(i,j)这个格子时的最大长度。<br>状态转移：枚举上下左右四个格子，如果某个格子(a,b)比当前格子低，则用该格子更新当前格子的最大长度：$f[i][j] = max(f[i][j], dp(a, b) + 1)$。</p>
+<p>由于这道题目的状态依赖关系比较复杂，不容易用循环来求每个状态的值，所以可以用记忆化搜索来做：<strong>如果某个状态还没计算过，则递归计算该状态的值。</strong></p>
+<p>时间复杂度分析：假设矩阵的边长是 $n$。则总共有$n^2$个状态，状态转移的计算量是常数，所以总时间复杂度是 $O(n2)$。</p>
+<h2 id="C-代码-4"><a href="#C-代码-4" class="headerlink" title="C++代码"></a>C++代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> n, m;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; f, g;</span><br><span class="line">    <span class="keyword">int</span> dx[<span class="number">4</span>] = &#123;<span class="number">-1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>&#125;, dy[<span class="number">4</span>] = &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">-1</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">dp</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (f[x][y] != <span class="number">-1</span>) <span class="keyword">return</span> f[x][y];</span><br><span class="line">        f[x][y] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i ++ )</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> a = x + dx[i], b = y + dy[i];</span><br><span class="line">            <span class="keyword">if</span> (a &gt;= <span class="number">0</span> &amp;&amp; a &lt; n &amp;&amp; b &gt;= <span class="number">0</span> &amp;&amp; b &lt; m &amp;&amp; g[a][b] &lt; g[x][y])</span><br><span class="line">                f[x][y] = max(f[x][y], dp(a, b) + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> f[x][y];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">longestIncreasingPath</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; matrix)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (matrix.empty()) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        g = matrix;</span><br><span class="line">        n = g.size(), m = g[<span class="number">0</span>].size();</span><br><span class="line">        f = <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;(n, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(m, <span class="number">-1</span>));</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i ++ )</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; m; j ++ )</span><br><span class="line">                res = max(res, dp(i, j));</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="问题六：Coin-Change"><a href="#问题六：Coin-Change" class="headerlink" title="问题六：Coin Change"></a>问题六：Coin Change</h1><h2 id="问题描述-5"><a href="#问题描述-5" class="headerlink" title="问题描述"></a>问题描述</h2><p>给定 n 种不同硬币的面值，以及需要凑出的总面值 total。请写一个函数，求最少需要多少硬币，可以凑出 total的钱。<br>如果不存在任何一种拼凑方案，则返回-1。</p>
+<p>注意：<br>你可以假定所有硬币都有无限多个。</p>
+<p><strong>样例1</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：coins = [1, 2, 5], amount = 11</span><br><span class="line">输出：3 </span><br><span class="line">解释：11 = 5 + 5 + 1</span><br></pre></td></tr></table></figure>
+<p><strong>样例2</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：coins = [2], amount = 3</span><br><span class="line">输出：-1</span><br></pre></td></tr></table></figure>
+<h2 id="问题分析-5"><a href="#问题分析-5" class="headerlink" title="问题分析"></a>问题分析</h2><p><strong>(动态规划)</strong> $O(nm)$</p>
+<p>完全背包问题。</p>
+<p>相当于有$n$种物品，每种物品的体积是硬币面值，价值是1。问装满背包最少需要多少价值的物品？</p>
+<p>状态表示：$f[i]$ 表示凑出$ i$价值的钱，最少需要多少个硬币。</p>
+<p>第一层循环枚举不同硬币，第二层循环从大到小枚举所有价值（由于每种硬币有无限多个，所以要从小到大枚举），然后用第$ i$种硬币更新 $f[i]：f[i] = min(f[i], f[i - coins[i]] + 1)$。</p>
+<p>时间复杂度分析：令$n$表示硬币种数，$m$表示总价钱，则总共两层循环，所以时间复杂度是$O(nm)$。</p>
+<h2 id="C-代码-5"><a href="#C-代码-5" class="headerlink" title="C++代码"></a>C++代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">coinChange</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; coins, <span class="keyword">int</span> amount)</span> </span>&#123;</span><br><span class="line">    	<span class="keyword">int</span> n=coins.size();</span><br><span class="line">    	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; f(amount+<span class="number">1</span>,amount+<span class="number">1</span>);</span><br><span class="line">    	f[<span class="number">0</span>]=<span class="number">0</span>;   <span class="comment">//边界情况，当需要兑换的金额为0时</span></span><br><span class="line">    	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=amount;i++)</span><br><span class="line">    		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;n;j++)</span><br><span class="line">    			<span class="keyword">if</span>(i&gt;=coins[j])&#123;</span><br><span class="line">  					f[i]=min(f[i],f[i-coins[j]+<span class="number">1</span>);</span><br><span class="line">				&#125;</span><br><span class="line">		<span class="keyword">return</span> (f[amount]&gt;amount)? <span class="number">-1</span>:f[amount];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="问题七：Maximal-Square"><a href="#问题七：Maximal-Square" class="headerlink" title="问题七：Maximal Square"></a>问题七：Maximal Square</h1><h2 id="问题描述-6"><a href="#问题描述-6" class="headerlink" title="问题描述"></a>问题描述</h2><p>在一个只包含0和1的二维矩阵中，找到最大的正方形，使得正方形只包含1，返回正方形的面积。</p>
+<p><strong>样例</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">输入：二维01矩阵，如</span><br><span class="line">[</span><br><span class="line">    [1 0 1 0 0],</span><br><span class="line">    [1 0 1 1 1],</span><br><span class="line">    [1 1 1 1 1],</span><br><span class="line">    [1 0 0 1 0]</span><br><span class="line">]</span><br><span class="line">输出：4</span><br><span class="line">解释：可以看到最大的只包含1的正方形面积为4</span><br></pre></td></tr></table></figure>
+<h2 id="问题分析-6"><a href="#问题分析-6" class="headerlink" title="问题分析"></a>问题分析</h2><p><strong>(动态规划)</strong> $O(n^2)$</p>
+<p>其实这道题可以是一个动态规划问题，用<code>dp[i][j]</code>记录到达<code>(i,j)</code>位置所能组成的最大正方形的边长。</p>
+<p>我们首先来考虑边界情况，也就是当i或j为0的情况，那么在首行或者首列中，必定有一个方向长度为1，那么就无法组成长度超过1的正方形，最多能组成长度为1的正方形，条件是当前位置为1。</p>
+<p>而对于递推公式，对于任意一点<code>dp[i][j]</code>，由于该点是正方形的右下角，所以该点的右边，下边，右下边都不用考虑，关心的就是左边，上边，和左上边，只有当前<code>(i, j)</code>位置为1，<code>dp[i][j]</code>才有可能大于0，否则<code>dp[i][j]</code>一定为0。当<code>(i, j)</code>位置为1，此时要看<code>dp[i-1][j-1], dp[i][j-1]</code>，和<code>dp[i-1][j]</code>这三个位置，我们找其中最小的值，并加上1，就是<code>dp[i][j]</code>的当前值了，这个并不难想，毕竟不能有0存在，所以只能取交集，最后再用<code>dp[i][j]</code>的值来更新结果res的值即可。</p>
+<p>时间复杂度分析：$O(n^2)$</p>
+<h2 id="C-代码-6"><a href="#C-代码-6" class="headerlink" title="C++代码"></a>C++代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maximalSquare</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt;&amp; matrix)</span> </span>&#123;</span><br><span class="line">    	<span class="keyword">int</span> m=matrix.size();</span><br><span class="line">    	<span class="keyword">int</span> n=matrix[<span class="number">0</span>].size</span><br><span class="line">    	<span class="keyword">if</span>(matrix.empty()) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    	<span class="keyword">int</span> res=<span class="number">0</span>;</span><br><span class="line">    	<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; f(m,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(n));</span><br><span class="line">    	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;m;i++)</span><br><span class="line">    		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;n;j++)&#123;</span><br><span class="line">    			<span class="keyword">if</span>(matrix[i][j]==<span class="string">'0'</span>)</span><br><span class="line">    				f[i][j]=<span class="number">0</span>;</span><br><span class="line">    			<span class="keyword">else</span>&#123;</span><br><span class="line">    				f[i][j]=<span class="number">1</span>;</span><br><span class="line">  					<span class="keyword">if</span>(i&amp;&amp;j)&#123;</span><br><span class="line">  						f[i][j]+=min(f[i<span class="number">-1</span>][j],min(f[i<span class="number">-1</span>][j<span class="number">-1</span>],f[i][j<span class="number">-1</span>]));		</span><br><span class="line">					&#125;</span><br><span class="line">				res=max(res,f[i][j]);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		<span class="keyword">return</span> res;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="问题八：Out-of-Boundary-Paths"><a href="#问题八：Out-of-Boundary-Paths" class="headerlink" title="问题八：Out of Boundary Paths"></a>问题八：Out of Boundary Paths</h1><h2 id="问题描述-7"><a href="#问题描述-7" class="headerlink" title="问题描述"></a>问题描述</h2><p>在一个<code>m x n</code>的网格上有一个球，给定球的起点坐标<code>(i, j)</code>，你每次可以将这个球移动到四个方向（上下左右）相邻的格子上或者移出网格边界。然而，你最多可以移动<code>N</code>次。求出所有可以将球移出网格边界的路径数量。答案数可能很大，返回模$10^9+7$ 后的结果。</p>
+<p><strong>样例</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: m = 2, n = 2, N = 2, i = 0, j = 0</span><br><span class="line">输出: 6</span><br></pre></td></tr></table></figure>
+<p>解释:</p>
+<p><img src="https://i.loli.net/2019/05/14/5cda6d3c58baf46922.png" alt=""></p>
+<p>输入: m = 1, n = 3, N = 3, i = 0, j = 1<br>输出: 12</p>
+<p><img src="https://i.loli.net/2019/05/14/5cda6d6eedee343799.png" alt=""></p>
+<p><strong>注意</strong></p>
+<ul>
+<li>一旦将球移出网格边界，不可再移动回来。</li>
+</ul>
+<ul>
+<li>网格长和宽在 [1, 50] 的范围内。</li>
+</ul>
+<ul>
+<li>N 在 [0, 50] 的范围内。</li>
+</ul>
+<h2 id="问题分析-7"><a href="#问题分析-7" class="headerlink" title="问题分析"></a>问题分析</h2><p><strong>(动态规划)</strong> $O(N⋅m⋅n)$</p>
+<p>定义状态$f(k,x,y)$表示从网格边界格子经过$k$步，到达格子$(x, y)$的方案数。</p>
+<p>初始时，每个位于边界的格子$(x, y)$，其$f(0,x,y)=1$；转移时，每个点可以从四个相邻的格子（如果存在）进行累加转移。</p>
+<p>最终答案为，$f(0,i,j)+f(1,i,j)+…+f(N−1,i,j)$。由于规定边界的格子步数为 0，所以最多只能统计到 $N−1$步。</p>
+<p><strong>时间复杂度</strong></p>
+<p>状态数为$O(N⋅m⋅n)$，每个状态的转移数为$O(1)$，故总时间复杂度为$ O(N⋅m⋅n)$。</p>
+<h2 id="C-代码-7"><a href="#C-代码-7" class="headerlink" title="C++代码"></a>C++代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&gt; f;</span><br><span class="line">	<span class="keyword">int</span> mod=<span class="number">1000000007</span>;</span><br><span class="line">	<span class="keyword">int</span> dx[<span class="number">4</span>]=&#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">-1</span>,<span class="number">1</span>&#125;,dy[<span class="number">4</span>]=&#123;<span class="number">1</span>,<span class="number">-1</span>,<span class="number">0</span>,<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">findPaths</span><span class="params">(<span class="keyword">int</span> m, <span class="keyword">int</span> n, <span class="keyword">int</span> N, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span> </span>&#123;</span><br><span class="line">		f=<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&gt;(m,<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;(n,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(N,<span class="number">-1</span>)));</span><br><span class="line">		<span class="keyword">return</span> dp(N,i,j);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">dp</span><span class="params">(<span class="keyword">int</span> k,<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">  		<span class="keyword">int</span> &amp;v=f[x][y][k];</span><br><span class="line">  		<span class="keyword">if</span>(v!=<span class="number">-1</span>) <span class="keyword">return</span> v;</span><br><span class="line">  		<span class="keyword">if</span>(k==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  		v=<span class="number">0</span>;</span><br><span class="line">  		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">4</span>;i++)&#123;</span><br><span class="line">  			<span class="keyword">int</span> a=x+dx[i],b=y+dy[i];   <span class="comment">//下一坐标</span></span><br><span class="line">  			<span class="keyword">if</span>(a&lt;<span class="number">0</span>||a&gt;=m||b&lt;<span class="number">0</span>||b&gt;=n)   <span class="comment">//下一坐标能够出界</span></span><br><span class="line">  				v++;</span><br><span class="line">  			<span class="keyword">else</span></span><br><span class="line">  				v+=dp(k<span class="number">-1</span>,a,b);        <span class="comment">//下一坐标不能够出界</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> v;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="问题九：Decode-Ways"><a href="#问题九：Decode-Ways" class="headerlink" title="问题九：Decode Ways"></a>问题九：Decode Ways</h1><h2 id="问题描述-8"><a href="#问题描述-8" class="headerlink" title="问题描述"></a>问题描述</h2><p>一个只包含 A-Z 的消息可以用如下方式编码成数字：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&apos;A&apos; -&gt; 1</span><br><span class="line">&apos;B&apos; -&gt; 2</span><br><span class="line">...</span><br><span class="line">&apos;Z&apos; -&gt; 26</span><br></pre></td></tr></table></figure>
+<p>给定一个只包含数字的非空字符串，返回共有多少种解码方案。</p>
+<p><strong>样例1</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：&quot;12&quot;</span><br><span class="line">输出：2</span><br><span class="line">解释：它可以被解码成 &quot;AB&quot; (1 2) 或者 &quot;L&quot; (12)。</span><br></pre></td></tr></table></figure>
+<p><strong>样例2</strong></p>
+<pre><code>输入：&quot;226&quot;
+输出：3
+解释：它可以被解码成 &quot;BZ&quot; (2 26), &quot;VF&quot; (22 6),
+    或者 &quot;BBF&quot; (2 2 6)。
+</code></pre><h2 id="问题分析-8"><a href="#问题分析-8" class="headerlink" title="问题分析"></a>问题分析</h2><p><strong>(动态规划)</strong>$ O(n)$</p>
+<p>这道题目可以用动态规划来做。</p>
+<p>状态表示：$f[i]$表示前$ i$个数字共有多少种解码方式。</p>
+<p>初始化：<strong>0个数字解码的方案数1</strong>，即$f[0]=1$。</p>
+<p>状态转移：$f[i]$可以表示成如下两部分的和：</p>
+<ul>
+<li>如果第 $i$个数字不是0，则 $i$个数字可以单独解码成一个字母，此时的方案数等于用前$i−1$个数字解码的方案数，即$ f[i−1]$；</li>
+</ul>
+<ul>
+<li>如果第$i−1$个数字和第$ i$个数字组成的两位数在$10$ 到$26$ 之间，则可以将这两位数字解码成一个字符，此时的方案数等于用前$ i−2$数字解码的方案数，即$ f[i−2]$；</li>
+</ul>
+<p>时间复杂度分析：状态数是$ n$个，状态转移的时间复杂度是 $O(1)$所以总时间复杂度是 $O(n)$。</p>
+<h2 id="C-代码-8"><a href="#C-代码-8" class="headerlink" title="C++代码"></a>C++代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">numDecodings</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">      	<span class="keyword">if</span>(s.empty()) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    	<span class="keyword">int</span> m=s.size();</span><br><span class="line">    	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; f(m+<span class="number">1</span>);</span><br><span class="line">    	f[<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">    	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;i++)&#123;</span><br><span class="line">  			<span class="keyword">if</span>(s[i]!=<span class="string">'0'</span>)</span><br><span class="line">  				f[i]+=f[i<span class="number">-1</span>];</span><br><span class="line">          	<span class="keyword">if</span>(i&gt;<span class="number">1</span>)&#123;</span><br><span class="line">  				<span class="keyword">int</span> t=(s[i<span class="number">-2</span>]-<span class="string">'0'</span>)*<span class="number">10</span>+s[i<span class="number">-1</span>]-<span class="string">'0'</span>;</span><br><span class="line">              	<span class="keyword">if</span>(t&gt;=<span class="number">10</span>&amp;&amp;t&lt;=<span class="number">26</span>)</span><br><span class="line">                  	f[i]+=f[i+<span class="number">2</span>];</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">      	<span class="keyword">return</span> f[m];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="问题十：Ugly-Number-II"><a href="#问题十：Ugly-Number-II" class="headerlink" title="问题十：Ugly Number II"></a>问题十：Ugly Number II</h1><h2 id="问题描述-9"><a href="#问题描述-9" class="headerlink" title="问题描述"></a>问题描述</h2><p>找出第n大的“丑数”(ugly number)，其中，丑数是指质因数只有2、3、5的正整数。</p>
+<p><strong>样例</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：10</span><br><span class="line">输出：12</span><br><span class="line">说明：从小到大列出丑数序列：1, 2, 3, 4, 5, 6, 8, 9, 10, 12...，其中12是第10个丑数，所以输出12</span><br></pre></td></tr></table></figure>
+<h2 id="问题分析-9"><a href="#问题分析-9" class="headerlink" title="问题分析"></a>问题分析</h2><p><strong>（动态规划 指针）</strong>$O(n)$</p>
+<p>由于丑数的因子也必定是丑数，它一定是某个丑数乘2、3、5得到的，因此我们可以采用动态规划的思想，利用前面已经得到的丑数序列来得到之后的丑数，而问题的关键在于如何确定状态转移方程。由于小的丑数乘5不一定比大的丑数乘2要小，我们没法直接使用目前最大的丑数来乘2、3、5顺序得到更大的丑数。不过，我们可以确定的是，小的丑陋数乘2，肯定小于大的丑陋数乘2。所以我们使用三个指针，分别记录乘2、3、5得出的目前最大丑陋数，而新的丑数就是这三个目前最大丑数中最小的那个，那么就需要更新被选中的丑数的指针，获得新的三个目前最大丑数，依次类推，从而得到最终结果。</p>
+<p>时间复杂度分析：需要维护3个指针，从1到n遍历，复杂度为$O(n)$。</p>
+<h2 id="C-代码-9"><a href="#C-代码-9" class="headerlink" title="C++代码"></a>C++代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">nthUglyNumber</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; f(n);</span><br><span class="line">    	f.push_back(<span class="number">1</span>);</span><br><span class="line">    	<span class="keyword">int</span> i=<span class="number">0</span>,j=<span class="number">0</span>,k=<span class="number">0</span>;</span><br><span class="line">    	<span class="keyword">while</span>(--n)&#123;</span><br><span class="line">  			<span class="keyword">int</span> t=min(f[i]*<span class="number">2</span>,min(f[j]*<span class="number">3</span>,f[k]*<span class="number">5</span>));</span><br><span class="line">  			f.push_back(t);</span><br><span class="line">  			<span class="keyword">if</span>(f[i]*<span class="number">2</span>==t) i++;</span><br><span class="line">  			<span class="keyword">if</span>(f[j]*<span class="number">3</span>==t) j++;</span><br><span class="line">  			<span class="keyword">if</span>(f[k]*<span class="number">5</span>==t) k++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> f.back();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="问题十一：Distinct-Subsequences"><a href="#问题十一：Distinct-Subsequences" class="headerlink" title="问题十一：Distinct Subsequences"></a>问题十一：Distinct Subsequences</h1><h2 id="问题描述-10"><a href="#问题描述-10" class="headerlink" title="问题描述"></a>问题描述</h2><p>给定字符串 $S$ 和 $T$，统计$S$中有多少个不同的子序列和$T$相等。</p>
+<p>字符串的子序列是指：将原字符串删掉若干字符后，其余字符相对顺序不改变，所得到的新串（例如：”ACE”是”ABCDE”的子序列，而”AEC”不是）</p>
+<p><strong>样例1</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">输入：S = &quot;rabbbit&quot;, T = &quot;rabbit&quot;</span><br><span class="line">输出：3</span><br><span class="line">解释：如下所示，共有3种方案。</span><br><span class="line">&apos;^&apos; 表示选择的字符</span><br><span class="line"></span><br><span class="line">rabbbit</span><br><span class="line">^^^^ ^^</span><br><span class="line">rabbbit</span><br><span class="line">^^ ^^^^</span><br><span class="line">rabbbit</span><br><span class="line">^^^ ^^^</span><br></pre></td></tr></table></figure>
+<p><strong>样例2</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">输入：S = &quot;babgbag&quot;, T = &quot;bag&quot;</span><br><span class="line">输出：5</span><br><span class="line">解释：如下所示，共有5种方案。</span><br><span class="line">&apos;^&apos; 表示选择的字符</span><br><span class="line"></span><br><span class="line">babgbag</span><br><span class="line">^^ ^</span><br><span class="line">babgbag</span><br><span class="line">^^    ^</span><br><span class="line">babgbag</span><br><span class="line">^    ^^</span><br><span class="line">babgbag</span><br><span class="line">  ^  ^^</span><br><span class="line">babgbag</span><br><span class="line">    ^^^</span><br></pre></td></tr></table></figure>
+<h2 id="问题分析-10"><a href="#问题分析-10" class="headerlink" title="问题分析"></a>问题分析</h2><p><strong>(动态规划)</strong> $O(nm)$</p>
+<p>可以换一种考虑问题的方式：用中的字符，按顺序匹配$T$中的字符，问有多少种方式可以匹配完$T$中的所有字符。</p>
+<p>可以用动态规划来做：<br><code>f[i][j]</code>表示用$S$的前$i$个字符，能匹配完$T$的前$j$ 个字符的方案数。<br>初始化：因为$S$可以从任意一个字符开始匹配，所以<code>f[i][0]=1,∀i∈[0,len(S)]</code>。<br>状态转移：</p>
+<ul>
+<li>如果 <code>S[i−1]≠T[j−1]</code>，则 <code>S[i−1]</code> 不能匹配<code>T[j−1]</code>，所以<code>f[i][j]=f[i−1][j]</code>；</li>
+</ul>
+<ul>
+<li>如果<code>S[i−1]=T[j−1]</code>，则 <code>S[i−1]</code>既可以匹配 <code>T[j−1]</code>，也可以不匹配 <code>T[j−1]</code>，所以 <code>f[i][j]=f[i−1][j]+f[i−1][j−1]</code>；</li>
+</ul>
+<p>边界情况：如果T为空串S不为空串，那么结果为1，如果T为空串S也为空串，那么结果也为1。</p>
+<p>时间复杂度分析：假设 $S$的长度是 $n$ ，$T$的长度是 $m$，则共有$nm$个状态，状态转移的复杂度是 $O(1)$，所以总时间复杂度是$ O(nm)$</p>
+<h2 id="C-代码-10"><a href="#C-代码-10" class="headerlink" title="C++代码"></a>C++代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">numDistinct</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">string</span> t)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> m=s.size();</span><br><span class="line">    <span class="keyword">int</span> n=t.size();</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; f(m+<span class="number">1</span>,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(n+<span class="number">1</span>));</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;=m;i++) f[i][<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;i++)</span><br><span class="line">    	<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=n;j++)&#123;</span><br><span class="line">  			f[i][j]=f[i<span class="number">-1</span>][j];</span><br><span class="line">  			<span class="keyword">if</span>(s[i<span class="number">-1</span>]==s[j<span class="number">-1</span>])</span><br><span class="line">  				f[i][j]+=f[i<span class="number">-1</span>][j<span class="number">-1</span>];</span><br><span class="line">		&#125;</span><br><span class="line">	<span class="keyword">return</span> f[m][n];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="问题十二：Palindrome-Partitioning-II"><a href="#问题十二：Palindrome-Partitioning-II" class="headerlink" title="问题十二：Palindrome Partitioning II"></a>问题十二：Palindrome Partitioning II</h1><h2 id="问题描述-11"><a href="#问题描述-11" class="headerlink" title="问题描述"></a>问题描述</h2><p>给定一个字符串<code>s</code>，请将它划分成若干部分，使得每一部分都是回文串。<br>求最少需要切几刀。</p>
+<p><strong>样例</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：&quot;aab&quot;</span><br><span class="line">输出：1</span><br><span class="line">解释：可以划分成：[&quot;aa&quot;,&quot;b&quot;]，所以只用切1刀。</span><br></pre></td></tr></table></figure>
+<h2 id="问题分析-11"><a href="#问题分析-11" class="headerlink" title="问题分析"></a>问题分析</h2><p><strong>(动态规划)</strong> $O(n^2)$</p>
+<p>一共进行两次动态规划。</p>
+<p>第一次动规：计算出每个子串是否是回文串。</p>
+<p>状态表示：<code>st[i][j]</code>表示 <code>s[i…j]</code>是否是回文串;<br>转移方程：<code>s[i…j]</code>是回文串当且仅当 <code>s[i]</code>等于<code>s[j]</code>并且 <code>s[i+1…j−1]</code>是回文串；<br>边界情况：如果<code>s[i…j]</code>的长度小于等于2，则<code>st[i][j]=(s[i]==s[j])</code>;</p>
+<p>在第一次动规的基础上，我们进行第二次动规。</p>
+<p>状态表示：$f[i]$ 表示把前 $i$个字符划分成回文串，最少划分成几部分；<br>状态转移：枚举最后一段回文串的起点$j$，然后利用$ st[j][i]$可知 $s[j…i]$是否是回文串，如果是回文串，则$f[i] $可以从$ f[j−1]+1$ 转移；</p>
+<p>边界情况：0个字符可以划分成0部分，所以 $f[0]=0$。</p>
+<p>题目让我们求最少切几刀，所以答案是 $f[n]−1$。</p>
+<p>时间复杂度分析：两次动规都是两重循环，所以时间复杂度是 $O(n^2)$。</p>
+<h2 id="C-代码-11"><a href="#C-代码-11" class="headerlink" title="C++代码"></a>C++代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minCut</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">    	<span class="keyword">int</span> m=s.size();</span><br><span class="line">    	<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt;&gt; st(m,<span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt;(m));</span><br><span class="line">    	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i ++ )</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = i; j &gt;= <span class="number">0</span>; j -- )</span><br><span class="line">                <span class="keyword">if</span> (i - j &lt;= <span class="number">1</span>) st[j][i] = s[j] == s[i];</span><br><span class="line">                <span class="keyword">else</span> st[j][i] = s[j] == s[i] &amp;&amp; st[j + <span class="number">1</span>][i - <span class="number">1</span>];</span><br><span class="line">    	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; f(m+<span class="number">1</span>);</span><br><span class="line">    	f[<span class="number">0</span>]=<span class="number">0</span>;</span><br><span class="line">    	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;i++)&#123;</span><br><span class="line">  			f[i]=INT_MAX;</span><br><span class="line">  			<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;i;j++)&#123;</span><br><span class="line">  				<span class="keyword">if</span>(st[j][i<span class="number">-1</span>])</span><br><span class="line">  					f[i]=min(f[i],f[j]+<span class="number">1</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		</span><br><span class="line">		&#125;</span><br><span class="line">      	<span class="keyword">return</span> f[m]<span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="问题十三：-Predict-the-Winner"><a href="#问题十三：-Predict-the-Winner" class="headerlink" title="问题十三： Predict the Winner"></a>问题十三： Predict the Winner</h1><h2 id="问题描述-12"><a href="#问题描述-12" class="headerlink" title="问题描述"></a>问题描述</h2><p>给定一个非负整数的数组代表得分。有两个玩家 A 和 B，玩家 A 先开始玩，可以从数组两端取出一个数作为自己的得分，然后玩家 B 接着从数组两端取出一个数作为自己的得分，再然后是玩家 A ，以此类推。每一次一个玩家取出一个数后，这个数就会消失。交替游戏知道所有的数字都被取走，得分高的玩家获胜。</p>
+<p>给定一个数组，预测玩家 A 是否能获胜。假设两个玩家都采用最优策略。</p>
+<p><strong>样例</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Input: [1, 5, 2]</span><br><span class="line">Output: False</span><br><span class="line">解释: 初始时，玩家 A 可以在 1 和 2 中选择。</span><br><span class="line">如果他选择了 2 （或 1），则玩家B可以选择 1 （或 2）或者 5。如果玩家 B 选择了 5，则玩家A只剩下 1 （或 2）可以选。</span><br><span class="line">所以，最终玩家 A 的得分是 1 + 2 = 3，玩家 B 是 5。</span><br><span class="line">因此，玩家 A 永远都不可能获胜，应该返回 False。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Input: [1, 5, 233, 7]</span><br><span class="line">Output: True</span><br><span class="line">解释: 玩家 A 首先选择 1。接着玩家 B 只能在 5 和 7 之间选择。无论玩家B选择哪个数字，玩家 A 都可以选择 233。</span><br><span class="line">最终，玩家 A (234) 比玩家 B (12) 有更多的分数，所以需要返回 True 代表玩家 A 可以获胜。</span><br></pre></td></tr></table></figure>
+<p>注意</p>
+<blockquote>
+<ul>
+<li>1 &lt;= 数组长度 &lt;= 20。</li>
+<li>数组中的非负整数不超过 10^7。</li>
+<li>如果最后两个玩家得分相同，则玩家 A 也是赢家。</li>
+</ul>
+</blockquote>
+<h2 id="问题分析-12"><a href="#问题分析-12" class="headerlink" title="问题分析"></a>问题分析</h2><p><strong>(动态规划)</strong> $O(n2)$</p>
+<p>从最简单的问题开始考虑，假设只有一个数字，则只能玩家 A 选择这个数字。<br>接着，问题的规模开始扩大，扩大后，两个玩家会有两种决策，一种是选择数组头部，一种是选择数组尾部，而这两种情况下的子问题都可以提前计算出。至此，动态规划的思路已经很明显。<br>令 <code>f(i,j)</code>表示闭区间<code>[i,j][i,j]</code>下玩家 A 所能获得的最大分数。<br>每次 f(i,j)f(i,j) 转移有两种情况：</p>
+<ul>
+<li>当这一次是玩家 A 取数时，<code>f(i,j)=max(f(i+1,j)+nums[i],f(i,j−1)+nums[j])</code>表示从头部取或者从尾部取，二者最优；</li>
+<li>当这一次是玩家 B 取数时，玩家B肯定希望自己的得分最大，这必然会导致玩家 A 的得分变小，故此时<code>f(i,j)=min(f(i+1,j),f(i,j−1))</code>。</li>
+</ul>
+<p>初始时，若最后一次是玩家 A 取数，则<code>f(i,i)=nums[i]</code>；否则<code>f(i,i)=0</code>。<br>最后玩家 A 能获得的最大得分就是<code>f(0,n−1)</code>。</p>
+<h2 id="C-代码-12"><a href="#C-代码-12" class="headerlink" title="C++代码"></a>C++代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">PredictTheWinner</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = nums.size();</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; f(n, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(n, <span class="number">0</span>));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> turn = n &amp; <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (turn)</span><br><span class="line">                f[i][i] = nums[i];</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                f[i][i] = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> len = <span class="number">2</span>; len &lt;= n; len++) &#123;</span><br><span class="line">            turn ^= <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n - len + <span class="number">1</span>; i++) &#123;</span><br><span class="line">                <span class="keyword">int</span> j = i + len - <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">if</span> (turn)</span><br><span class="line">                    f[i][j] = max(f[i + <span class="number">1</span>][j] + nums[i], f[i][j - <span class="number">1</span>] + nums[j]);</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    f[i][j] = min(f[i + <span class="number">1</span>][j], f[i][j - <span class="number">1</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="number">2</span> * f[<span class="number">0</span>][n - <span class="number">1</span>] &gt;= accumulate(nums.begin(), nums.end(), <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+    
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="XuHejun 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/10/神经网络和深度学习—优化算法/" rel="next" title="神经网络和深度学习—优化算法">
+                <i class="fa fa-chevron-left"></i> 神经网络和深度学习—优化算法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/11/Leetcode常见题型/" rel="prev" title="Leetcode常见题型">
+                Leetcode常见题型 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/image/xu.jpg" alt="XuHejun">
+            
+              <p class="site-author-name" itemprop="name">XuHejun</p>
+              <p class="site-description motion-element" itemprop="description">Stay hungry,stay foolish</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/MuMaXu" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/xu-he-jun-24" target="_blank" title="Zhihu">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Zhihu</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/MuMaXu2" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Twitter</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/5307894956" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Weibo</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#问题一：Triangle"><span class="nav-number">1.</span> <span class="nav-text">问题一：Triangle</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题描述"><span class="nav-number">1.1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题分析"><span class="nav-number">1.2.</span> <span class="nav-text">问题分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-代码"><span class="nav-number">1.3.</span> <span class="nav-text">C++代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题二：Unique-Paths-II"><span class="nav-number">2.</span> <span class="nav-text">问题二：Unique Paths II</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题描述-1"><span class="nav-number">2.1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题分析-1"><span class="nav-number">2.2.</span> <span class="nav-text">问题分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-代码-1"><span class="nav-number">2.3.</span> <span class="nav-text">C++代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题三：Russian-Doll-Envelopes"><span class="nav-number">3.</span> <span class="nav-text">问题三：Russian Doll Envelopes</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题描述-2"><span class="nav-number">3.1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题分析-2"><span class="nav-number">3.2.</span> <span class="nav-text">问题分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-代码-2"><span class="nav-number">3.3.</span> <span class="nav-text">C++代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.4.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题四：Counting-Bits"><span class="nav-number">4.</span> <span class="nav-text">问题四：Counting Bits</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题描述-3"><span class="nav-number">4.1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题分析-3"><span class="nav-number">4.2.</span> <span class="nav-text">问题分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-代码-3"><span class="nav-number">4.3.</span> <span class="nav-text">C++代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题五：Longest-Increasing-Path-in-a-Matrix"><span class="nav-number">5.</span> <span class="nav-text">问题五：Longest Increasing Path in a Matrix</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题描述-4"><span class="nav-number">5.1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题分析-4"><span class="nav-number">5.2.</span> <span class="nav-text">问题分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-代码-4"><span class="nav-number">5.3.</span> <span class="nav-text">C++代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题六：Coin-Change"><span class="nav-number">6.</span> <span class="nav-text">问题六：Coin Change</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题描述-5"><span class="nav-number">6.1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题分析-5"><span class="nav-number">6.2.</span> <span class="nav-text">问题分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-代码-5"><span class="nav-number">6.3.</span> <span class="nav-text">C++代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题七：Maximal-Square"><span class="nav-number">7.</span> <span class="nav-text">问题七：Maximal Square</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题描述-6"><span class="nav-number">7.1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题分析-6"><span class="nav-number">7.2.</span> <span class="nav-text">问题分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-代码-6"><span class="nav-number">7.3.</span> <span class="nav-text">C++代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题八：Out-of-Boundary-Paths"><span class="nav-number">8.</span> <span class="nav-text">问题八：Out of Boundary Paths</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题描述-7"><span class="nav-number">8.1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题分析-7"><span class="nav-number">8.2.</span> <span class="nav-text">问题分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-代码-7"><span class="nav-number">8.3.</span> <span class="nav-text">C++代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题九：Decode-Ways"><span class="nav-number">9.</span> <span class="nav-text">问题九：Decode Ways</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题描述-8"><span class="nav-number">9.1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题分析-8"><span class="nav-number">9.2.</span> <span class="nav-text">问题分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-代码-8"><span class="nav-number">9.3.</span> <span class="nav-text">C++代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题十：Ugly-Number-II"><span class="nav-number">10.</span> <span class="nav-text">问题十：Ugly Number II</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题描述-9"><span class="nav-number">10.1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题分析-9"><span class="nav-number">10.2.</span> <span class="nav-text">问题分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-代码-9"><span class="nav-number">10.3.</span> <span class="nav-text">C++代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题十一：Distinct-Subsequences"><span class="nav-number">11.</span> <span class="nav-text">问题十一：Distinct Subsequences</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题描述-10"><span class="nav-number">11.1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题分析-10"><span class="nav-number">11.2.</span> <span class="nav-text">问题分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-代码-10"><span class="nav-number">11.3.</span> <span class="nav-text">C++代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题十二：Palindrome-Partitioning-II"><span class="nav-number">12.</span> <span class="nav-text">问题十二：Palindrome Partitioning II</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题描述-11"><span class="nav-number">12.1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题分析-11"><span class="nav-number">12.2.</span> <span class="nav-text">问题分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-代码-11"><span class="nav-number">12.3.</span> <span class="nav-text">C++代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题十三：-Predict-the-Winner"><span class="nav-number">13.</span> <span class="nav-text">问题十三： Predict the Winner</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题描述-12"><span class="nav-number">13.1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题分析-12"><span class="nav-number">13.2.</span> <span class="nav-text">问题分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-代码-12"><span class="nav-number">13.3.</span> <span class="nav-text">C++代码</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">XuHejun</span>
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+  
+</body>
+</html>

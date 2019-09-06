@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="题目一：判断一棵二叉树是否是完全二叉树题目分析层序遍历 将所有的结点加入队列（包括空结点）。当遇到空结点时，查看其后面是否有空结点。若有，则二叉树不是完全二叉树。如果是满二叉树或者完全二叉树，这些空结点应该是在广度优先遍历的末尾，所以，当我们遍历到空洞的时候，整个二叉树就遍历完了。但如果是非完全二叉树，当遍历到空结点时，空结点后面还有非空结点。 C++代码123456789101112131415">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构算法题总结">
+<meta property="og:url" content="http://yoursite.com/2019/04/22/数据结构算法题总结/index.html">
+<meta property="og:site_name" content="MuMaXu&#39;s Blog">
+<meta property="og:description" content="题目一：判断一棵二叉树是否是完全二叉树题目分析层序遍历 将所有的结点加入队列（包括空结点）。当遇到空结点时，查看其后面是否有空结点。若有，则二叉树不是完全二叉树。如果是满二叉树或者完全二叉树，这些空结点应该是在广度优先遍历的末尾，所以，当我们遍历到空洞的时候，整个二叉树就遍历完了。但如果是非完全二叉树，当遍历到空结点时，空结点后面还有非空结点。 C++代码123456789101112131415">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.loli.net/2019/04/23/5cbeaefdc15d6.png">
+<meta property="og:image" content="https://i.loli.net/2019/04/23/5cbeb068eb6db.png">
+<meta property="og:updated_time" content="2019-08-20T13:47:28.948Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据结构算法题总结">
+<meta name="twitter:description" content="题目一：判断一棵二叉树是否是完全二叉树题目分析层序遍历 将所有的结点加入队列（包括空结点）。当遇到空结点时，查看其后面是否有空结点。若有，则二叉树不是完全二叉树。如果是满二叉树或者完全二叉树，这些空结点应该是在广度优先遍历的末尾，所以，当我们遍历到空洞的时候，整个二叉树就遍历完了。但如果是非完全二叉树，当遍历到空结点时，空结点后面还有非空结点。 C++代码123456789101112131415">
+<meta name="twitter:image" content="https://i.loli.net/2019/04/23/5cbeaefdc15d6.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/04/22/数据结构算法题总结/">
+
+
+
+
+
+  <title>数据结构算法题总结 | MuMaXu's Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">MuMaXu's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Hello,world!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/22/数据结构算法题总结/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="XuHejun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/image/xu.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MuMaXu's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">数据结构算法题总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-22T16:23:00+08:00">
+                2019-04-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/《剑指offer》/" itemprop="url" rel="index">
+                    <span itemprop="name">《剑指offer》</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="题目一：判断一棵二叉树是否是完全二叉树"><a href="#题目一：判断一棵二叉树是否是完全二叉树" class="headerlink" title="题目一：判断一棵二叉树是否是完全二叉树"></a>题目一：判断一棵二叉树是否是完全二叉树</h1><h2 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h2><p><strong>层序遍历</strong></p>
+<p>将所有的结点加入队列（包括空结点）。当遇到空结点时，查看其后面是否有空结点。若有，则二叉树不是完全二叉树。如果是满二叉树或者完全二叉树，这些空结点应该是在广度优先遍历的末尾，所以，当我们遍历到空洞的时候，整个二叉树就遍历完了。但如果是非完全二叉树，当遍历到空结点时，空结点后面还有非空结点。</p>
+<h2 id="C-代码"><a href="#C-代码" class="headerlink" title="C++代码"></a>C++代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">IsComplete</span><span class="params">(TreeNode* root)</span></span>&#123;</span><br><span class="line">	<span class="built_in">queue</span>&lt;<span class="keyword">int</span>&gt; q;</span><br><span class="line">	q.push(root);</span><br><span class="line">	<span class="keyword">if</span>(!root)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span>(!q.isempty())&#123;</span><br><span class="line">  		<span class="keyword">auto</span> p=q.front();</span><br><span class="line">  		q.pop();</span><br><span class="line">  		<span class="keyword">if</span>(p)&#123;</span><br><span class="line">  			q.push(p-&gt;left);</span><br><span class="line">  			q.push(p-&gt;right);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">  			<span class="keyword">while</span>(!q.isempty())&#123;</span><br><span class="line">  				<span class="keyword">auto</span> m=q.front();</span><br><span class="line">  				<span class="keyword">if</span>(m!=<span class="literal">NULL</span>)</span><br><span class="line">  					<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="题目二：计算二叉树双分支结点个数"><a href="#题目二：计算二叉树双分支结点个数" class="headerlink" title="题目二：计算二叉树双分支结点个数"></a>题目二：计算二叉树双分支结点个数</h1><h2 id="题目分析-1"><a href="#题目分析-1" class="headerlink" title="题目分析"></a>题目分析</h2><p>计算一棵二叉树中的所有双分支结点个数的递归模型$f(b)$如下：</p>
+<p>$f(b)=0$                                                                               若b=NULL</p>
+<p>$f(b)=f(b-&gt;left)+f(b-&gt;right)+1$                   若*b为双分支结点</p>
+<p>$f(b)=f(b-&gt;left)+f(b-&gt;right$)                           其他情况（*b为单分支结点或者为叶子结点）                      </p>
+<h2 id="C-代码-1"><a href="#C-代码-1" class="headerlink" title="C++代码"></a>C++代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">double</span><span class="params">(TreeNode* root)</span></span>&#123;</span><br><span class="line">  	<span class="keyword">if</span>(root==<span class="literal">NULL</span>)</span><br><span class="line">  		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  	<span class="keyword">if</span>(root-&gt;left&amp;&amp;root-&gt;right)</span><br><span class="line">  		<span class="keyword">return</span> <span class="keyword">double</span>(root-&gt;left)+<span class="keyword">double</span>(root-&gt;right)+<span class="number">1</span>;</span><br><span class="line">  	<span class="keyword">else</span></span><br><span class="line">  		<span class="keyword">return</span> <span class="keyword">double</span>(root-&gt;left)+<span class="keyword">double</span>(root-&gt;right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="题目三：访问先序遍历第k个节点"><a href="#题目三：访问先序遍历第k个节点" class="headerlink" title="题目三：访问先序遍历第k个节点"></a>题目三：访问先序遍历第k个节点</h1><h2 id="题目分析-2"><a href="#题目分析-2" class="headerlink" title="题目分析"></a>题目分析</h2><p><strong>递归</strong></p>
+<h2 id="C-代码-2"><a href="#C-代码-2" class="headerlink" title="C++代码"></a>C++代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">TreeNode* <span class="title">dfs</span><span class="params">(TreeNode* root,<span class="keyword">int</span> &amp;k)</span></span>&#123;</span><br><span class="line">  	<span class="keyword">if</span>(k==<span class="number">1</span>)</span><br><span class="line">  		<span class="keyword">return</span> root;</span><br><span class="line">  	dfs(root-&gt;left,k--);</span><br><span class="line">  	dfs(root-&gt;right,k--);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="题目四：打印某个结点的所有祖先"><a href="#题目四：打印某个结点的所有祖先" class="headerlink" title="题目四：打印某个结点的所有祖先"></a>题目四：打印某个结点的所有祖先</h1><h2 id="题目分析-3"><a href="#题目分析-3" class="headerlink" title="题目分析"></a>题目分析</h2><p><strong>递归</strong></p>
+<h2 id="C-代码-3"><a href="#C-代码-3" class="headerlink" title="C++代码"></a>C++代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">printAncestor</span><span class="params">(TreeNode* root,<span class="keyword">int</span> target)</span></span>&#123;</span><br><span class="line">  	<span class="keyword">if</span>(root)</span><br><span class="line">  	<span class="keyword">if</span>(root-&gt;val==target)</span><br><span class="line">  		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  	<span class="keyword">if</span>(printAncestor(root-&gt;left,target)||printAncestor(root-&gt;right,target))&#123;</span><br><span class="line">  		count&lt;&lt;root-&gt;val&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">  		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="题目五：求二叉树的宽度"><a href="#题目五：求二叉树的宽度" class="headerlink" title="题目五：求二叉树的宽度"></a>题目五：求二叉树的宽度</h1><h2 id="题目分析-4"><a href="#题目分析-4" class="headerlink" title="题目分析"></a>题目分析</h2><p><strong>层序遍历</strong></p>
+<h2 id="C-代码-4"><a href="#C-代码-4" class="headerlink" title="C++代码"></a>C++代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">TreeWidth</span><span class="params">(TreeNode* root)</span></span>&#123;</span><br><span class="line">  	<span class="built_in">queue</span>&lt;<span class="keyword">int</span>&gt; q;</span><br><span class="line">  	q.push(root);</span><br><span class="line">  	<span class="keyword">auto</span> last=root;</span><br><span class="line">  	<span class="keyword">int</span> level=<span class="number">0</span>;</span><br><span class="line">  	<span class="keyword">int</span> max=<span class="number">0</span>;</span><br><span class="line">  	<span class="keyword">int</span> width=<span class="number">0</span>;</span><br><span class="line">  	<span class="keyword">while</span>(!q.empty())&#123;</span><br><span class="line">  		<span class="keyword">auto</span> t=q.front();</span><br><span class="line">  		width++;</span><br><span class="line">  		<span class="keyword">if</span>(t-&gt;left)</span><br><span class="line">  			q.push(t-&gt;left);</span><br><span class="line">  		<span class="keyword">if</span>(t-&gt;right)</span><br><span class="line">  			q.push(t-&gt;right);</span><br><span class="line">  		<span class="keyword">if</span>(t=last)&#123;</span><br><span class="line">  			last=q.back();</span><br><span class="line">  			level++;</span><br><span class="line">  			<span class="keyword">if</span>(width&gt;max)</span><br><span class="line">  				max=width;</span><br><span class="line">  			width=<span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> max;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="题目六：KMP算法"><a href="#题目六：KMP算法" class="headerlink" title="题目六：KMP算法"></a>题目六：KMP算法</h1><h2 id="求next数组"><a href="#求next数组" class="headerlink" title="求next数组"></a><strong>求next数组</strong></h2><p>next[j]表示当模式串匹配到T[j]遇到失败时，在模式串中需要重新和主串匹配的位置。换言之，next数组的求解实际是对每个位置找到最长的公共前缀下面按照递推的思想总结一下求解next[]数组：</p>
+<ul>
+<li>根据定义next[1]=0，假设next[j]=k, 即P[1…k-1]==P[j-k,j-1]</li>
+</ul>
+<ul>
+<li>若P[j]==P[k]，则有P[1..k]==P[j-k,j]，很显然，如果next[j]=k; 则next[j+1]=next[j]+1=k+1;否则next[j+1]=k+1!=next[j]+1;</li>
+<li>若P[j]!=P[k]，则可以把其看做模式匹配的问题，即匹配失败的时候，k值如何移动，显然k=next[k]。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">get_next</span><span class="params">(<span class="keyword">char</span> T[],<span class="keyword">int</span> next[])</span></span>&#123;   </span><br><span class="line">	<span class="keyword">int</span> n=T.size();</span><br><span class="line">    next[<span class="number">0</span>]=<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">int</span> k=<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;n;i++)&#123;</span><br><span class="line">    	<span class="keyword">while</span>(j&gt;<span class="number">-1</span>&amp;&amp;s[j]!=s[k+<span class="number">1</span>]) k=next[k];   <span class="comment">//寻找到k的合适位置</span></span><br><span class="line">        <span class="keyword">if</span>(s[j]==s[k+<span class="number">1</span>]) k++;</span><br><span class="line">        next[j]=k;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">next[j]=k表示当P[j] != T[i]时，j指针的下一步移动位置。</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<h2 id="KMP算法"><a href="#KMP算法" class="headerlink" title="KMP算法"></a>KMP算法</h2><p><strong>时间复杂度O(m+n)</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">KMP</span><span class="params">(String ts, String ps)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>; <span class="comment">// 主串的位置</span></span><br><span class="line">    <span class="keyword">int</span> j = <span class="number">0</span>; <span class="comment">// 模式串的位置</span></span><br><span class="line">    <span class="keyword">int</span>[] next = getNext(ps);</span><br><span class="line">    <span class="keyword">while</span> (i &lt; t.length &amp;&amp; j &lt; p.length) &#123;</span><br><span class="line">       <span class="keyword">if</span> (j == <span class="number">-1</span> || t[i] == p[j]) &#123; <span class="comment">// 当j为-1时，要移动的是i，当然j也要归0</span></span><br><span class="line">           i++;</span><br><span class="line">           j++;</span><br><span class="line">       &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">           <span class="comment">// i不需要回溯了</span></span><br><span class="line">           <span class="comment">// i = i - j + 1;</span></span><br><span class="line">           j = next[j]; <span class="comment">// j回到指定位置</span></span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (j == p.length) &#123;</span><br><span class="line">       <span class="keyword">return</span> i - j;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="题目七：排序算法"><a href="#题目七：排序算法" class="headerlink" title="题目七：排序算法"></a>题目七：排序算法</h1><h2 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h2><p>基本思想：每次将一个待排序的记录，按其关键字大小插入到前面已经排好序的子序列中，直到全部记录插入完成</p>
+<h3 id="直接插入排序"><a href="#直接插入排序" class="headerlink" title="直接插入排序"></a>直接插入排序</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InsertSort</span><span class="params">(<span class="keyword">int</span> A[],<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  	<span class="keyword">int</span> i,j;</span><br><span class="line">  	<span class="keyword">for</span>(i=<span class="number">2</span>;i&lt;=n;i++)&#123;</span><br><span class="line">  		<span class="keyword">if</span>(A[i]&lt;A[i<span class="number">-1</span>])&#123;</span><br><span class="line">  			A[<span class="number">0</span>]=A[i];   <span class="comment">//复制为哨兵，A[0]不存放元素</span></span><br><span class="line">  			<span class="keyword">for</span>(j=i<span class="number">-1</span>;A[<span class="number">0</span>]&lt;A[j];j--)</span><br><span class="line">  				A[j+<span class="number">1</span>]=A[j];   <span class="comment">//向后挪位</span></span><br><span class="line">  			A[j+<span class="number">1</span>]=A[<span class="number">0</span>];   <span class="comment">//复制到插入位置</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>设置哨兵的作用：避免数组下标出界</p>
+<p>直接插入排序是边查找边移动</p>
+<h3 id="折半插入排序"><a href="#折半插入排序" class="headerlink" title="折半插入排序"></a>折半插入排序</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InsertSort</span><span class="params">(<span class="keyword">int</span> A[],<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  	<span class="keyword">int</span> i,j,low,high;</span><br><span class="line">  	<span class="keyword">for</span>(i=<span class="number">2</span>;i&lt;=n;i++)&#123;</span><br><span class="line">  		low=<span class="number">1</span>;</span><br><span class="line">  		high=i<span class="number">-1</span>;</span><br><span class="line">  		A[<span class="number">0</span>]=A[i];</span><br><span class="line">  		<span class="keyword">while</span>(low&lt;high)&#123;</span><br><span class="line">  			middle=low+high&gt;&gt;<span class="number">1</span>;</span><br><span class="line">  			<span class="keyword">if</span>(A[middle]&lt;A[<span class="number">0</span>]) low=middle+<span class="number">1</span>;</span><br><span class="line">  			<span class="keyword">else</span> r=middle;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span>(j=i<span class="number">-1</span>;j&gt;=low;j--)&#123;</span><br><span class="line">  			A[j+<span class="number">1</span>]=A[j];</span><br><span class="line">		&#125;</span><br><span class="line">		A[low]=A[<span class="number">0</span>];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>折半插入排序是先查找再移动</p>
+<h3 id="希尔排序"><a href="#希尔排序" class="headerlink" title="希尔排序"></a>希尔排序</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">void shellsort1(int a[], int n)</span><br><span class="line">&#123;</span><br><span class="line">	int i, j, gap;</span><br><span class="line"> </span><br><span class="line">	for (gap = n / 2; gap &gt; 0; gap /= 2) //步长</span><br><span class="line">		for (i = 0; i &lt; gap; i++)        //直接插入排序</span><br><span class="line">		&#123;</span><br><span class="line">			for (j = i + gap; j &lt; n; j += gap) </span><br><span class="line">				if (a[j] &lt; a[j - gap])</span><br><span class="line">				&#123;</span><br><span class="line">					int temp = a[j];</span><br><span class="line">					int k = j - gap;</span><br><span class="line">					while (k &gt;= 0 &amp;&amp; a[k] &gt; temp)</span><br><span class="line">					&#123;</span><br><span class="line">						a[k + gap] = a[k];</span><br><span class="line">						k -= gap;</span><br><span class="line">					&#125;</span><br><span class="line">					a[k + gap] = temp;</span><br><span class="line">				&#125;</span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="交换排序"><a href="#交换排序" class="headerlink" title="交换排序"></a>交换排序</h2><h3 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">BubbleSort</span><span class="params">(<span class="keyword">int</span> A[],<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n<span class="number">-1</span>;i++)&#123;   <span class="comment">//共要进行n-1趟排序</span></span><br><span class="line">  		flag=<span class="literal">false</span>;     <span class="comment">//表示本趟冒泡是否发生交换的标志</span></span><br><span class="line">  		<span class="keyword">for</span>(j=n<span class="number">-1</span>;j&gt;i;j--)&#123;     <span class="comment">//一趟冒泡排序</span></span><br><span class="line">  			<span class="keyword">if</span>(A[j<span class="number">-1</span>]&gt;A[j])&#123;    <span class="comment">//若为逆序</span></span><br><span class="line">  				swap(A[j<span class="number">-1</span>],A[j]);   <span class="comment">//发生交换</span></span><br><span class="line">  				<span class="literal">false</span>=<span class="literal">true</span>;   </span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(flag==<span class="literal">false</span>)   <span class="comment">//若本趟便利后没有发生交换，说明已经有序</span></span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Partition</span><span class="params">(<span class="keyword">int</span> A[],<span class="keyword">int</span> low,<span class="keyword">int</span> high)</span></span>&#123;</span><br><span class="line">  	<span class="keyword">int</span> pivot=A[low];   <span class="comment">//将当前表中的第一个元素设置为枢纽值，对表进行划分</span></span><br><span class="line">  	<span class="keyword">while</span>(low&lt;high)&#123;</span><br><span class="line">  		<span class="keyword">while</span>(low&lt;high&amp;&amp;A[high]&gt;=pivot) high--;</span><br><span class="line">  		A[low]=A[high];   <span class="comment">//将比枢纽值小的值移动到左端</span></span><br><span class="line">  		<span class="keyword">while</span>(low&lt;high&amp;&amp;A[low]&lt;=pivot) low++;</span><br><span class="line">  		A[high]=A[low];   <span class="comment">//将比枢纽值大的值移动到右端</span></span><br><span class="line">	&#125;</span><br><span class="line">	A[low]=pivot;    <span class="comment">//将枢纽元素放到最终的位置</span></span><br><span class="line">	<span class="keyword">return</span> low;   <span class="comment">//返回枢纽最终的位置</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">QuickSort</span><span class="params">(<span class="keyword">int</span> A[],<span class="keyword">int</span> low,<span class="keyword">int</span> high)</span></span>&#123;</span><br><span class="line">  	<span class="keyword">if</span>(low&lt;high)&#123;</span><br><span class="line">  		<span class="keyword">int</span> pivotpos=Partition(A,low,high);    <span class="comment">//划分</span></span><br><span class="line">      	QuickSort(A,low,pivotpos<span class="number">-1</span>);   <span class="comment">//依次对两个子表进行排序</span></span><br><span class="line">      	QuickSort(A,pivotpos+<span class="number">1</span>,high);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>空间效率：由于快速排序是递归的，需要借助一个递归栈来保存每一层递归调用的必要信息，其容量与递归调用的最大深度一致。最好的情况下为$log_2(n+1)$；最坏情况下，因为要进行n-1次递归调用，所以栈的深度为$O(n)$；平均情况下，栈的深度为$O(log_2n)$</p>
+<h3 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h3><h4 id="双向冒泡排序"><a href="#双向冒泡排序" class="headerlink" title="双向冒泡排序"></a>双向冒泡排序</h4><p>奇数趟的时候，从前往后比较相邻元素的关键字，遇到逆序即交换，直到把序列中关键字最大的元素移动到序列尾部。偶数趟时，从后往前比较相邻元素的关键字，遇到逆序即交换，直到把序列中关键字最小的元素移动到序列前端。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">BubbleSort</span><span class="params">(<span class="keyword">int</span> A[],<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  	<span class="keyword">int</span> low=<span class="number">0</span>;</span><br><span class="line">  	<span class="keyword">int</span> high=n<span class="number">-1</span>;</span><br><span class="line">  	<span class="keyword">bool</span> flag=<span class="literal">true</span>;</span><br><span class="line">  	<span class="keyword">while</span>(low&lt;high&amp;&amp;flag)&#123;</span><br><span class="line">  		flag=<span class="literal">false</span>;   <span class="comment">//每一趟初始的时候将flag置为false</span></span><br><span class="line">  		<span class="keyword">for</span>(<span class="keyword">int</span> i=low;i&lt;high;i++)&#123;   <span class="comment">//从前往后遍历</span></span><br><span class="line">  			<span class="keyword">if</span>(A[i]&gt;A[i+<span class="number">1</span>])&#123;</span><br><span class="line">  				swap(A[i],A[i+<span class="number">1</span>]);</span><br><span class="line">  				flag=<span class="literal">false</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		high--;   <span class="comment">//更新上界</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=high;j&gt;low;j--)&#123;    <span class="comment">//从后往前遍历</span></span><br><span class="line">  			<span class="keyword">if</span>(A[j]&lt;A[j<span class="number">-1</span>])&#123;</span><br><span class="line">  				swap(A[j],A[j<span class="number">-1</span>]);</span><br><span class="line">  				flag=<span class="literal">false</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		low++;   <span class="comment">//更新下界</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="寻找数组中第k小的元素"><a href="#寻找数组中第k小的元素" class="headerlink" title="寻找数组中第k小的元素"></a>寻找数组中第k小的元素</h4><p>从数组L[1…n]中选择枢纽pivot(随机地或者直接取第一个)进行和快速排序一样的划分操作后，表L[1…n]被划分为L[1…m-1]和L[m+1…n]，其中L[m]=pivot</p>
+<p>讨论m与k的大小关系：</p>
+<ul>
+<li>当m=k时，显然pivot就是要寻找到的元素，直接返回pivot就可以</li>
+<li>当m&lt;k时，则要寻找的元素一定是在L[m+1…n]中，从而可以对L[m+1…n]递归地查找第k-m小的元素</li>
+<li>当m&gt;k时，则要寻找的元素一定是在L[1…m-1]中，从而可以对L[1…m-1]递归地找第k小的元素</li>
+</ul>
+<p>该算法的时间复杂度在平均的情况下可以达到O(n)</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">kth_elem</span><span class="params">(<span class="keyword">int</span> A[],<span class="keyword">int</span> low,<span class="keyword">int</span> high)</span></span>&#123;</span><br><span class="line">  	<span class="keyword">int</span> pivot=A[low];</span><br><span class="line">  	<span class="keyword">int</span> low_temp=low;</span><br><span class="line">  	<span class="keyword">int</span> high_temp=high;</span><br><span class="line">  	<span class="keyword">while</span>(low&lt;high)&#123;</span><br><span class="line">  		<span class="keyword">while</span>(low&lt;high&amp;&amp;A[high]&gt;=pivot) high--;</span><br><span class="line">  		A[low]=A[high];</span><br><span class="line">  		<span class="keyword">while</span>(low&lt;high&amp;&amp;A[low]&lt;=pivot) low++;</span><br><span class="line">  		A[high]=A[low];</span><br><span class="line">	&#125;</span><br><span class="line">	A[low]=pivot;</span><br><span class="line">	<span class="keyword">if</span>(low==k)</span><br><span class="line">	<span class="keyword">return</span> pivot;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(low&gt;k)</span><br><span class="line">		<span class="keyword">return</span> kth_elem(A,low_temp,low<span class="number">-1</span>,k);</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">return</span> kth_elem(A,low+<span class="number">1</span>,high_temp,k-m);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><p>每一趟（例如第<code>i</code>趟）在后面<code>n-i+1</code>(i=1,2,..,n-1)个待排序元素中选取关键字最小的元素，作为有序子序列的第<code>i</code>个元素</p>
+<h3 id="简单选择排序"><a href="#简单选择排序" class="headerlink" title="简单选择排序"></a>简单选择排序</h3><p>基本思想：假设排序表为<code>L[1...n]</code>，第<code>i</code>趟排序即从<code>L[i...n]</code>中选择关键字最小的元素与<code>L[i]</code>交换，每一趟排序可以确定一个元素的最终位置，这样经过<code>n-1</code>趟就可以使得整个排序表有序</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Selectsort</span><span class="params">(<span class="keyword">int</span> A[],<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n<span class="number">-1</span>;i++)&#123;   <span class="comment">//一共进行n-1趟</span></span><br><span class="line">  		min=i;   <span class="comment">//记录最小元素位置</span></span><br><span class="line">  		<span class="keyword">for</span>(<span class="keyword">int</span> j=i+<span class="number">1</span>;j&lt;n;j++)&#123;       </span><br><span class="line">  			<span class="keyword">if</span>(A[j]&lt;A[min])</span><br><span class="line">  				min=j;</span><br><span class="line">  			<span class="keyword">if</span>(min!=i) swap(A[i],A[min]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">priority_queue&lt;<span class="keyword">int</span>&gt; heap_max;     <span class="comment">//定义大根堆</span></span><br><span class="line">priority_queue&lt;<span class="keyword">int</span>,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;,greater&lt;<span class="keyword">int</span>&gt;&gt; heap_min;    <span class="comment">//定义小根堆</span></span><br><span class="line">heap.push(x);   <span class="comment">//入堆</span></span><br><span class="line">heap.pop();    <span class="comment">//出堆</span></span><br><span class="line">heap.top();    <span class="comment">//堆顶元素</span></span><br></pre></td></tr></table></figure>
+<h2 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h2><p>归并排序（MERGE-SORT）是利用<strong>归并</strong>的思想实现的排序方法，该算法采用经典的<strong>分治</strong>（divide-and-conquer）策略（分治法将问题<strong>分</strong>(divide)成一些小的问题然后递归求解，而<strong>治(conquer)</strong>的阶段则将分的阶段得到的各答案”修补”在一起，即分而治之)。</p>
+<p><img src="https://i.loli.net/2019/04/23/5cbeaefdc15d6.png" alt=""></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; B;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Merge</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; A,<span class="keyword">int</span> low,<span class="keyword">int</span> mid,<span class="keyword">int</span> high)</span></span>&#123;   <span class="comment">//A[low...mid]和A[mid+1...high]有序，将它们合并</span></span><br><span class="line">  	<span class="keyword">for</span>(<span class="keyword">int</span> i=low;i&lt;=high;i++)</span><br><span class="line">  		B.push_back(A[i]);</span><br><span class="line">  	<span class="keyword">for</span>(<span class="keyword">int</span> i=low,j=mid+<span class="number">1</span>,k=i;i&lt;=mid&amp;&amp;j&lt;=high;k++)&#123;</span><br><span class="line">  		<span class="keyword">if</span>(B[i]&lt;=B[j])   <span class="comment">//比较B的左右两端中的元素</span></span><br><span class="line">  			A[k]=B[i++];  <span class="comment">//将较小的复制到A中</span></span><br><span class="line">  		<span class="keyword">else</span></span><br><span class="line">  			A[k]=B[j++];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">while</span>(i&lt;=mid) A[k++]=B[i++];</span><br><span class="line">	<span class="keyword">while</span>(j&lt;=high) A[K++]=B[j++];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MergeSort</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; A,<span class="keyword">int</span> low,<span class="keyword">int</span> high)</span></span>&#123;</span><br><span class="line">  	<span class="keyword">while</span>(low&lt;high)&#123;</span><br><span class="line">  		mid=low+high&gt;&gt;<span class="number">1</span>;   <span class="comment">//从中间划分两个子序列</span></span><br><span class="line">      	MergeSort(A,low,mid);   <span class="comment">//对左侧子序列进行递归排序</span></span><br><span class="line">      	MergeSort(A,mid+<span class="number">1</span>,high);   <span class="comment">//对右侧子序列进行递归</span></span><br><span class="line">      	Merge(A,low,mid,high);   <span class="comment">//归并</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="各种排序算法的性质"><a href="#各种排序算法的性质" class="headerlink" title="各种排序算法的性质"></a>各种排序算法的性质</h2><p><img src="https://i.loli.net/2019/04/23/5cbeb068eb6db.png" alt=""></p>
+<h2 id="非递归访问数"><a href="#非递归访问数" class="headerlink" title="非递归访问数"></a>非递归访问数</h2><h3 id="前序非递归遍历"><a href="#前序非递归遍历" class="headerlink" title="前序非递归遍历"></a>前序非递归遍历</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">preOrder2</span><span class="params">(BinTree *root)</span>     <span class="comment">//非递归前序遍历 </span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">stack</span>&lt;BinTree*&gt; s;</span><br><span class="line">    BinTree *p=root;</span><br><span class="line">    <span class="keyword">while</span>(p!=<span class="literal">NULL</span>||!s.empty())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span>(p!=<span class="literal">NULL</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">cout</span>&lt;&lt;p-&gt;data&lt;&lt;<span class="string">""</span>;</span><br><span class="line">            s.push(p);</span><br><span class="line">            p=p-&gt;lchild;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(!s.empty())</span><br><span class="line">        &#123;</span><br><span class="line">            p=s.top();</span><br><span class="line">            s.pop();</span><br><span class="line">            p=p-&gt;rchild;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="中序非递归遍历"><a href="#中序非递归遍历" class="headerlink" title="中序非递归遍历"></a>中序非递归遍历</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InOrder</span><span class="params">(BiTree *T)</span></span>&#123;</span><br><span class="line">  	InitStack(S);</span><br><span class="line">  	BiTree p=T;</span><br><span class="line">  	<span class="keyword">while</span>(p||!isEmpty(S))&#123;</span><br><span class="line">  		<span class="keyword">if</span>(p)&#123;</span><br><span class="line">  			push(S,p);</span><br><span class="line">  			p=p-&gt;lchild;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">  			pop(S,p);</span><br><span class="line">  			visit(p);</span><br><span class="line">  			p=p-&gt;lchild;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="后续非递归遍历"><a href="#后续非递归遍历" class="headerlink" title="后续非递归遍历"></a>后续非递归遍历</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//strcut TreeNode &#123;</span></span><br><span class="line"><span class="comment">//  ElemType data;</span></span><br><span class="line"><span class="comment">//  TreeNode *left, *right;</span></span><br><span class="line"><span class="comment">//  TreeNode() &#123;</span></span><br><span class="line"><span class="comment">//      left = right = NULL;</span></span><br><span class="line"><span class="comment">//  &#125;</span></span><br><span class="line"><span class="comment">//&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">PostOrder</span><span class="params">(TreeNode *root)</span> </span>&#123;</span><br><span class="line">    TreeNode *p = root, *r = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="built_in">stack</span>&lt;TreeNode*&gt; s;</span><br><span class="line">    <span class="keyword">while</span> (p || !s.empty()) &#123;</span><br><span class="line">        <span class="keyword">if</span> (p) &#123;<span class="comment">//走到最左边</span></span><br><span class="line">            s.push(p);</span><br><span class="line">            p = p-&gt;left;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            p = s.top();</span><br><span class="line">            <span class="keyword">if</span> (p-&gt;right &amp;&amp; p-&gt;right != r)&#123;<span class="comment">//右子树存在，未被访问</span></span><br><span class="line">                p = p-&gt;right;</span><br><span class="line">              	s.push(p);</span><br><span class="line">              	p=p-&gt;lchild;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                s.pop();</span><br><span class="line">                visit(p-&gt;val);</span><br><span class="line">                r = p;<span class="comment">//记录最近访问过的节点</span></span><br><span class="line">                p = <span class="literal">NULL</span>;<span class="comment">//节点访问完后，重置p指针</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="comment">//else</span></span><br><span class="line">    &#125;<span class="comment">//while</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">因为后序非递归遍历二叉树的顺序是先访问左子树，再访问右子树，最后访问根节点。当用堆栈来存储节点，必须分清返回根节点时，是从左子树返回的，还从右子树返回的。所以，使用辅助指针r，其指向最近访问过的节点。也可以在节点中增加一个标志域，记录是否已被访问。</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+    
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="XuHejun 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/19/为什么要用交叉熵作为代价函数/" rel="next" title="为什么要用交叉熵作为代价函数">
+                <i class="fa fa-chevron-left"></i> 为什么要用交叉熵作为代价函数
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/26/DeepWalk/" rel="prev" title="DeepWalk论文阅读学习笔记">
+                DeepWalk论文阅读学习笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/image/xu.jpg" alt="XuHejun">
+            
+              <p class="site-author-name" itemprop="name">XuHejun</p>
+              <p class="site-description motion-element" itemprop="description">Stay hungry,stay foolish</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/MuMaXu" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/xu-he-jun-24" target="_blank" title="Zhihu">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Zhihu</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/MuMaXu2" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Twitter</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/5307894956" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Weibo</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#题目一：判断一棵二叉树是否是完全二叉树"><span class="nav-number">1.</span> <span class="nav-text">题目一：判断一棵二叉树是否是完全二叉树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目分析"><span class="nav-number">1.1.</span> <span class="nav-text">题目分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-代码"><span class="nav-number">1.2.</span> <span class="nav-text">C++代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#题目二：计算二叉树双分支结点个数"><span class="nav-number">2.</span> <span class="nav-text">题目二：计算二叉树双分支结点个数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目分析-1"><span class="nav-number">2.1.</span> <span class="nav-text">题目分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-代码-1"><span class="nav-number">2.2.</span> <span class="nav-text">C++代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#题目三：访问先序遍历第k个节点"><span class="nav-number">3.</span> <span class="nav-text">题目三：访问先序遍历第k个节点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目分析-2"><span class="nav-number">3.1.</span> <span class="nav-text">题目分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-代码-2"><span class="nav-number">3.2.</span> <span class="nav-text">C++代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#题目四：打印某个结点的所有祖先"><span class="nav-number">4.</span> <span class="nav-text">题目四：打印某个结点的所有祖先</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目分析-3"><span class="nav-number">4.1.</span> <span class="nav-text">题目分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-代码-3"><span class="nav-number">4.2.</span> <span class="nav-text">C++代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#题目五：求二叉树的宽度"><span class="nav-number">5.</span> <span class="nav-text">题目五：求二叉树的宽度</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目分析-4"><span class="nav-number">5.1.</span> <span class="nav-text">题目分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-代码-4"><span class="nav-number">5.2.</span> <span class="nav-text">C++代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#题目六：KMP算法"><span class="nav-number">6.</span> <span class="nav-text">题目六：KMP算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#求next数组"><span class="nav-number">6.1.</span> <span class="nav-text">求next数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#KMP算法"><span class="nav-number">6.2.</span> <span class="nav-text">KMP算法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#题目七：排序算法"><span class="nav-number">7.</span> <span class="nav-text">题目七：排序算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#插入排序"><span class="nav-number">7.1.</span> <span class="nav-text">插入排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#直接插入排序"><span class="nav-number">7.1.1.</span> <span class="nav-text">直接插入排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#折半插入排序"><span class="nav-number">7.1.2.</span> <span class="nav-text">折半插入排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#希尔排序"><span class="nav-number">7.1.3.</span> <span class="nav-text">希尔排序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#交换排序"><span class="nav-number">7.2.</span> <span class="nav-text">交换排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#冒泡排序"><span class="nav-number">7.2.1.</span> <span class="nav-text">冒泡排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快速排序"><span class="nav-number">7.2.2.</span> <span class="nav-text">快速排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用"><span class="nav-number">7.2.3.</span> <span class="nav-text">应用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#双向冒泡排序"><span class="nav-number">7.2.3.1.</span> <span class="nav-text">双向冒泡排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#寻找数组中第k小的元素"><span class="nav-number">7.2.3.2.</span> <span class="nav-text">寻找数组中第k小的元素</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#选择排序"><span class="nav-number">7.3.</span> <span class="nav-text">选择排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单选择排序"><span class="nav-number">7.3.1.</span> <span class="nav-text">简单选择排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#堆排序"><span class="nav-number">7.3.2.</span> <span class="nav-text">堆排序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#归并排序"><span class="nav-number">7.4.</span> <span class="nav-text">归并排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#各种排序算法的性质"><span class="nav-number">7.5.</span> <span class="nav-text">各种排序算法的性质</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非递归访问数"><span class="nav-number">7.6.</span> <span class="nav-text">非递归访问数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前序非递归遍历"><span class="nav-number">7.6.1.</span> <span class="nav-text">前序非递归遍历</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中序非递归遍历"><span class="nav-number">7.6.2.</span> <span class="nav-text">中序非递归遍历</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后续非递归遍历"><span class="nav-number">7.6.3.</span> <span class="nav-text">后续非递归遍历</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">XuHejun</span>
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+  
+</body>
+</html>

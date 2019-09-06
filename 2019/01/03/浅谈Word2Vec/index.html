@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="NLP,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="什么是Word2VecWord2Vec是从大量文本语料中以有监督的方式学习语义知识的一种模型，它被大量地用在自然语言处理（NLP）中。那么它是如何帮助我们做自然语言处理呢？Word2Vec其实就是通过学习文本来用词向量的方式表征词的语义信息，即通过一个嵌入空间使得语义上相似的单词在该空间内距离很近。Embedding其实就是一个映射，将单词从原先所属的空间映射到新的多维空间中，也就是把原先词所在空">
+<meta name="keywords" content="NLP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅谈Word2Vec">
+<meta property="og:url" content="http://yoursite.com/2019/01/03/浅谈Word2Vec/index.html">
+<meta property="og:site_name" content="MuMaXu&#39;s Blog">
+<meta property="og:description" content="什么是Word2VecWord2Vec是从大量文本语料中以有监督的方式学习语义知识的一种模型，它被大量地用在自然语言处理（NLP）中。那么它是如何帮助我们做自然语言处理呢？Word2Vec其实就是通过学习文本来用词向量的方式表征词的语义信息，即通过一个嵌入空间使得语义上相似的单词在该空间内距离很近。Embedding其实就是一个映射，将单词从原先所属的空间映射到新的多维空间中，也就是把原先词所在空">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.loli.net/2019/01/03/5c2da7240a566.png">
+<meta property="og:image" content="https://i.loli.net/2019/01/03/5c2dae0394efc.png">
+<meta property="og:image" content="https://i.loli.net/2019/01/01/5c2b35ad4d2ad.png">
+<meta property="og:image" content="https://i.loli.net/2019/01/01/5c2b41f1242fc.png">
+<meta property="og:image" content="https://i.loli.net/2019/01/01/5c2b428a1584d.png">
+<meta property="og:image" content="https://i.loli.net/2019/01/01/5c2b42e0beb07.png">
+<meta property="og:image" content="https://i.loli.net/2019/01/01/5c2b43a3c953b.png">
+<meta property="og:image" content="https://i.loli.net/2019/01/03/5c2db739db60c.png">
+<meta property="og:image" content="https://i.loli.net/2019/01/03/5c2dc035a13c8.png">
+<meta property="og:image" content="https://i.loli.net/2019/01/01/5c2b4781140f0.png">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=w_i">
+<meta property="og:image" content="https://i.loli.net/2019/01/03/5c2dca9d5da8e.png">
+<meta property="og:updated_time" content="2019-06-22T08:57:19.176Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="浅谈Word2Vec">
+<meta name="twitter:description" content="什么是Word2VecWord2Vec是从大量文本语料中以有监督的方式学习语义知识的一种模型，它被大量地用在自然语言处理（NLP）中。那么它是如何帮助我们做自然语言处理呢？Word2Vec其实就是通过学习文本来用词向量的方式表征词的语义信息，即通过一个嵌入空间使得语义上相似的单词在该空间内距离很近。Embedding其实就是一个映射，将单词从原先所属的空间映射到新的多维空间中，也就是把原先词所在空">
+<meta name="twitter:image" content="https://i.loli.net/2019/01/03/5c2da7240a566.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/01/03/浅谈Word2Vec/">
+
+
+
+
+
+  <title>浅谈Word2Vec | MuMaXu's Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">MuMaXu's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Hello,world!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/03/浅谈Word2Vec/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="XuHejun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/image/xu.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MuMaXu's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">浅谈Word2Vec</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-03T13:20:00+08:00">
+                2019-01-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="什么是Word2Vec"><a href="#什么是Word2Vec" class="headerlink" title="什么是Word2Vec"></a>什么是Word2Vec</h1><p>Word2Vec是从大量文本语料中以有监督的方式学习语义知识的一种模型，它被大量地用在自然语言处理（NLP）中。那么它是如何帮助我们做自然语言处理呢？<strong>Word2Vec其实就是通过学习文本来用词向量的方式表征词的语义信息，即通过一个嵌入空间使得语义上相似的单词在该空间内距离很近。Embedding其实就是一个映射，将单词从原先所属的空间映射到新的多维空间中，也就是把原先词所在空间嵌入到一个新的空间中去。</strong></p>
+<p>我们从直观角度上来理解一下，cat这个单词和kitten属于语义上很相近的词，而dog和kitten则不是那么相近，iphone这个单词和kitten的语义就差的更远了。通过对词汇表中单词进行这种数值表示方式的学习（也就是将单词转换为词向量），能够让我们基于这样的数值进行向量化的操作从而得到一些有趣的结论。比如说，如果我们对词向量kitten、cat以及dog执行这样的操作：kitten - cat + dog，那么最终得到的嵌入向量（embedded vector）将与puppy这个词向量十分相近。</p>
+<h1 id="为何不采one-hot-向量"><a href="#为何不采one-hot-向量" class="headerlink" title="为何不采one-hot 向量"></a>为何不采one-hot 向量</h1><p>回忆一下，假设词典中不同词的数量（词典大小）为N，每个词可以和从0 到N-1的连续整数一一对应。这些与词对应的整数叫做词的索引。假设⼀个词的索引为i，为了得到该词的one-hot 向量表示，我们创建一个全0 的长为N 的向量，并将其第i 位设成1。这样一来，每个词就表示成了一个长度为N 的向量，可以直接被神经网络使用。</p>
+<p>虽然one-hot 词向量构造起来很容易，但通常并不是一个好选择。一个主要的原因是，one-hot 词向量无法准确表达不同词之间的相似度，例如我们常常使用的余弦相似度。对于向量$x , y \in \mathbb { R } ^ { d }$ ，它们的余弦相似度是它们之间夹角的余弦值</p>
+<p>$\frac { \boldsymbol { x } ^ { \top } \boldsymbol { y } } { | \boldsymbol { x } | | \boldsymbol { y } | } \in [ - 1,1 ]$</p>
+<p>由于任何两个不同词的one-hot 向量的余弦相似度都为0，多个不同词之间的相似度难以通过one-hot 向量准确地体现出来。</p>
+<p><strong>Word2vec 工具</strong>的提出正是为了解决上面这个问题。它将每个词表示成一个定长的向量，并使得这些向量能较好地表达不同词之间的相似和类比关系。Word2vec工具包含了<strong>两个模型</strong>：跳字模型（skip-gram）和连续词袋模型（continuous bag of words，简称CBOW）。接下来让我们分别介绍这两个模型以及它们的训练方法。</p>
+<h1 id="跳字模型"><a href="#跳字模型" class="headerlink" title="跳字模型"></a>跳字模型</h1><h2 id="什么是Skip-gram算法"><a href="#什么是Skip-gram算法" class="headerlink" title="什么是Skip-gram算法"></a>什么是Skip-gram算法</h2><p>Skip-gram算法就是在给出目标单词（中心单词）的情况下，预测它的上下文单词（除中心单词外窗口内的其他单词，这里的窗口大小是2，也就是左右各两个单词）。</p>
+<p>以下图为例：</p>
+<p><img src="https://i.loli.net/2019/01/03/5c2da7240a566.png" alt=""></p>
+<p>图中的love是目标单词，其他是上下文单词，那么我们就是求 $P \left( w _ { y o u } | w _ { l o v e } \right)$、$P \left( w _ { D o } | w _ { l o v e } \right) $、$P \left( w _ { d e e p } | w _ { l o v e } \right) $、$ P \left( w _ { l e a r n i n g } | w _ { l o v e } \right)$</p>
+<h2 id="目标是什么"><a href="#目标是什么" class="headerlink" title="目标是什么"></a>目标是什么</h2><p>理解了Skip-gram算法的定义，我们很容易得出：我们的目标是计算在给定单词的条件下，其他单词出现的概率！</p>
+<p>问题来了，在实践中，怎么计算这个概率？</p>
+<p>接下来让我们一步一步理解这个过程，首先从定义表示法开始。</p>
+<h2 id="定义表示法"><a href="#定义表示法" class="headerlink" title="定义表示法"></a>定义表示法</h2><h3 id="one-hot向量"><a href="#one-hot向量" class="headerlink" title="one-hot向量"></a>one-hot向量</h3><p>one-hot向量就是利用一个$R ^ { | V | \times 1 }$向量来表示单词。|V|是词汇表中单词的数量。</p>
+<p>一个单词在英文词汇表中的索引位置是多少，那么相对应的那一行元素就是1，其他元素都是0。</p>
+<p>$w ^ {$word$} = \left| \begin{array} { c } { 0 } \\ { 0 } \\ { 0 } \\ { 0 } \\ { \vdots } \\ { 1 } \\ { \vdots } \\ { 0 } \end{array} \right|$</p>
+<p>还是以我们的例句”Do you love deep learning”为例。</p>
+<p>love的one-hot向量就是：</p>
+<p>$w ^ { l o v e } = \left| \begin{array} { l } { 0 } \\ { 0 } \\ { 1 } \\ { 0 } \\ { 0 } \end{array} \right|$</p>
+<p>由于我们只有5个单词，因此，ong-hot向量的行数是5，love是第3个单词，因此索引3位置的数是1。我们用$w_c$ 来表示目标单词的one-hot向量。</p>
+<h3 id="词向量（word-vector）"><a href="#词向量（word-vector）" class="headerlink" title="词向量（word vector）"></a>词向量（word vector）</h3><p>词向量就是用一组d维的向量代表单词，如下：</p>
+<p>$v ^ { c } = \left| \begin{array} { c } { 0.2 } \\ { 0.4 } \\ { 1.3 } \\ { \vdots } \\ { 0.9 } \end{array} \right|$</p>
+<p>注意这是个d维的向量。这里我们用$v_c$表示目标单词的词向量</p>
+<h3 id="单词矩阵（word-matrix）"><a href="#单词矩阵（word-matrix）" class="headerlink" title="单词矩阵（word matrix）"></a>单词矩阵（word matrix）</h3><p><strong>单词矩阵是所有单词的词向量的集合。</strong></p>
+<p>注意，我们这里要用到两个单词矩阵，一个是目标单词的词向量组成的矩阵，用$W$表示。$W$的尺寸是$d \times V$。</p>
+<p>另外一个矩阵是由除目标单词外的其他单词的<strong>词向量的转置</strong>组成的矩阵，用$W ^ { \prime }$表示，尺寸是$ V\times d$ ，注意这里与上一个W的尺寸相反，至于为什么我们后面解释。</p>
+<h3 id="单词相似度"><a href="#单词相似度" class="headerlink" title="单词相似度"></a>单词相似度</h3><p>我们先考虑这个问题：怎么表示两个单词之间的相似度？一个简单方法就是：两个单词间的词向量求内积！这里，我们用$v_c$代表目标单词的词向量，$u_x$代表除目标单词外窗口内第$x$个单词的词向量。那么求内积： $u _ { x } ^ { T } v _ { c }$就是两个单词的相似度。因为两个单词的内积越大，说明两个单词的相似程度越高。</p>
+<p>另外需要说明的是，由于每一个单词都有可能作为目标单词或其他单词，因此，实际上这两个矩阵是分别包含所有单词的词向量的。</p>
+<h3 id="softmax函数"><a href="#softmax函数" class="headerlink" title="softmax函数"></a>softmax函数</h3><p>我们需要知道的是softmax函数就是能够把输入转换为概率分布，也就是说使输入的实数变成分数。除此之外的内容我们暂不讨论。softmax函数的公式如下：</p>
+<p>$\sigma ( \mathbf { z_ { j } } )  = \frac { e ^ { z _ { j } } } { \sum _ { k = 1 } ^ { K } e ^ { z _ { k } } } \quad$ $for$ $j = 1 , \dots , K$</p>
+<p>这里面的z就是我们的相似度$u _ { x } ^ { T } v _ { c }$。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>$w _ { c }$表示目标单词的one-hot向量。</p>
+<p>$v_c$表示目标单词的词向量。</p>
+<p>$u _ { x }$表示除目标单词外第x个单词的词向量。</p>
+<p>$W$表示目标单词矩阵。</p>
+<p>$W^{‘}$表示其他单词矩阵。</p>
+<p>词向量的维度是d。</p>
+<p>词汇表的维度是V。</p>
+<h2 id="理解算法过程"><a href="#理解算法过程" class="headerlink" title="理解算法过程"></a>理解算法过程</h2><p>求相似度$u _ { x } ^ { T } v _ { c }$总共分几步？</p>
+<p>第一步：求$v_c$</p>
+<p>$v _ { c } = W w _ { c }$，这里W是$d \times V$的矩阵， $w _ { c }$ 是 $V \times 1$的矩阵，因此$v_c$是$d\times1$的向量。</p>
+<p>直观理解：<strong>矩阵与one-hot向量的内积，相当于把one-hot向量中索引为1在向量矩阵中对应的那一列提取出来。</strong></p>
+<p>第二步：求$u _ { x } ^ { T } v _ { c }$组成的向量。</p>
+<p>这个向量就是$W ^ { \prime } v _ { c }$，这里的$W ^ { \prime }$是$V\times d$ 的矩阵，$v_c$是$d\times1$ 的向量，因此$u _ { x } ^ { T } v _ { c }$是$V\times1$ 的向量。直观理解：**下面要说的很重要！用$W ^ { \prime }$与$\boldsymbol { v } _ { \mathcal { C } }$相乘，相当于$v_c$和词汇表中的所有词向量的转置都分别求内积，得到的结果组成了一个向量！</p>
+<p><strong>下图是直观描述。</strong></p>
+<p><img src="https://i.loli.net/2019/01/03/5c2dae0394efc.png" alt=""></p>
+<p>第三步：求softmax</p>
+<p>这步比较简单，把得到的相似度矩阵代入softmax公式，就得到了一个满足概率分布的矩阵。</p>
+<h2 id="算法公式表达"><a href="#算法公式表达" class="headerlink" title="算法公式表达"></a>算法公式表达</h2><p>在跳字模型中，每个词被表示成两个d 维向量用来计算条件概率。假设这个词在词典中索引为i，当它为中心词时向量表示为$\boldsymbol { v } _ { i } \in \mathbb { R } ^ { d }$，而为背景词时向量表示为$\boldsymbol { u } _ { i } \in \mathbb { R } ^ { d }$设中心词$w _ { c }$在词典中索引为c，背景词$w _ { o }$在词典中索引为o，给定中心词生成背景词的条件概率可以通过对向量内积做softmax 运算而得到：</p>
+<p>$\mathbb { P } \left( w _ { o } | w _ { c } \right) = \frac { \exp \left( \boldsymbol { u } _ { o } ^ { \top } \boldsymbol { v } _ { c } \right) } { \sum _ { i \in \mathcal { V } } \exp \left( \boldsymbol { u } _ { i } ^ { \top } \boldsymbol { v } _ { c } \right) }$</p>
+<p>其中词典索引集$\mathcal { V } = \{ 0,1 , \ldots , | \mathcal { V } | - 1 \}$。假设给定一个长度为T 的文本序列，设时间步t 的词为$w ^ { ( t ) }$。假设给定中心词的情况下背景词的生成相互独立，当背景窗口大小为m 时，跳字模型的似然函数即给定任一中心词生成所有背景词的概率</p>
+<p>$\prod _ { t = 1 } ^ { T } \prod _ { j \leq m , j \neq 0 } \mathbb { P } \left( w ^ { ( t + j ) } | w ^ { ( t ) } \right)$</p>
+<p>这里小于1 和大于T 的时间步可以忽略。</p>
+<h2 id="跳字模型训练"><a href="#跳字模型训练" class="headerlink" title="跳字模型训练"></a>跳字模型训练</h2><h3 id="数学基础表达式"><a href="#数学基础表达式" class="headerlink" title="数学基础表达式"></a>数学基础表达式</h3><p>跳字模型的参数是每个词所对应的中心词向量和背景词向量。训练中我们通过最大化似然函数来学习模型参数，即最大似然估计。这等价于最小化以下损失函数：</p>
+<p>$- \sum _ { t = 1 } ^ { T } \sum _ { - m \leq j \leq m , j \neq 0 } \log \mathbb { P } \left( w ^ { ( t + j ) } | w ^ { ( t ) } \right)$</p>
+<p>如果使用随机梯度下降，那么在每一次迭代里我们随机采样一个较短的子序列来计算有关该子序列的损失，然后计算梯度来更新模型参数。梯度计算的关键是对数条件概率有关中心词向量和背景词向量的梯度。根据定义，首先看到</p>
+<p>$\log \mathbb { P } \left( w _ { o } | w _ { c } \right) = \boldsymbol { u } _ { o } ^ { \top } v _ { c } - \log \left( \sum _ { i \in \mathcal { V } } \exp \left( \boldsymbol { u } _ { i } ^ { \top } \boldsymbol { v } _ { c } \right) \right)$</p>
+<p>通过微分，我们可以得到上式中$v_c$的梯度</p>
+<p>$\begin{aligned} \frac { \partial \log \mathbb { P } \left( w _ { o } | w _ { c } \right) } { \partial v _ { c } } &amp; = u _ { o } - \frac { \sum _ { j \in \mathcal { V } } \exp \left( \boldsymbol { u } _ { j } ^ { \top } \boldsymbol { v } _ { c } \right) \boldsymbol { u } _ { j } } { \sum _ { i \in \mathcal { V } } \exp \left( \boldsymbol { u } _ { i } ^ { \top } \boldsymbol { v } _ { c } \right) } \\ &amp; = \boldsymbol { u } _ { o } - \sum _ { j \in \mathcal { V } } \left( \frac { \exp \left( \boldsymbol { u } _ { j } ^ { \top } \boldsymbol { v } _ { c } \right) } { \sum _ { i \in \mathcal { V } } \exp \left( \boldsymbol { u } _ { i } ^ { \top } \boldsymbol { v } _ { c } \right) } \right) u _ { j } \\ &amp; = \boldsymbol { u } _ { o } - \sum _ { j \in \mathcal { V } } \mathbb { P } \left( w _ { j } | w _ { c } \right) \boldsymbol { u } _ { j } \end{aligned}$</p>
+<p>它的计算需要词典中所有词以$w_c$为中心词的条件概率。有关其他词向量的梯度同理可得。训练结束后，对于词典中的任意索引为i 的词，我们均得到该词作为中心词和背景词的两组词向量$v_i$和$u_i$。在自然语言处理应用中，一般使用跳字模型的中心词向量作为词的表征向量。</p>
+<h3 id="训练过程"><a href="#训练过程" class="headerlink" title="训练过程"></a>训练过程</h3><h4 id="训练集"><a href="#训练集" class="headerlink" title="训练集"></a>训练集</h4><p>假设我们有一个很大的文本库，在这个文本库中有这么一段话<strong>“The dog barked at the mailman”。</strong></p>
+<p>首先我们选句子中间的一个词作为我们的输入词，例如我们选取“dog”作为input word。有了input word以后，我们再定义一个叫做skip_window的参数，它代表着我们从当前input word的一侧（左边或右边）选取词的数量。如果我们设置skip_window=2，那么我们最终获得窗口中的词（包括input word在内）就是<strong>[‘The’, ‘dog’，’barked’, ‘at’]</strong>。skip_window=2代表着选取左input word左侧2个词和右侧2个词进入我们的窗口，所以整个窗口大小$span=2\times2$。另一个参数叫num_skips，它代表着我们从整个窗口中选取多少个不同的词作为我们的output word，当skip_window=2，num_skip2=2时，我们将会得到两组 (input word, output word) 形式的训练数据，即 <strong>(‘dog’, ‘barked’)，(‘dog’, ‘the’)</strong>。</p>
+<p><img src="https://i.loli.net/2019/01/01/5c2b35ad4d2ad.png" alt=""></p>
+<center>The quick brown fox jumps over lazy dog</center>
+
+<h4 id="模型细节"><a href="#模型细节" class="headerlink" title="模型细节"></a>模型细节</h4><p>我们如何来表示这些单词呢？</p>
+<p>首先，我们都知道神经网络只能接受数值输入，我们不可能把一个单词字符串作为输入，因此我们得想个办法来表示这些单词。最常用的办法就是基于训练文档来构建我们自己的词汇表（vocabulary）再对单词进行<strong>one-hot</strong>编码。</p>
+<p>假设从我们的训练文档中抽取出10000个唯一不重复的单词组成词汇表。我们对这10000个单词进行one-hot编码，得到的每个单词都是一个10000维的向量，向量每个维度的值只有0或者1，假如单词ants在词汇表中的出现位置为第3个，那么ants的向量就是一个第三维度取值为1，其他维都为0的10000维的向量(ants=[0,0,0,1,…,0])。</p>
+<p>还是上面的例子，“The dog barked at the mailman”，那么我们基于这个句子，可以构建一个大小为5的词汇表（忽略大小写和标点符号）：(“the”, “dog”, “barked”, “at”, “mailman”)，我们对这个词汇表的单词进行编号0-4。那么”dog“就可以被表示为一个5维向量[0, 1, 0, 0, 0]。</p>
+<p><strong>模型的输入如果为一个10000维的向量，那么输出也是一个10000维度（词汇表的大小）的向量，它包含了10000个概率，每一个概率代表着当前词是输入样本中output word的概率大小。</strong></p>
+<p>下图是我们神经网络的结构：</p>
+<p><img src="https://i.loli.net/2019/01/01/5c2b41f1242fc.png" alt=""></p>
+<p>隐层没有使用任何激活函数，但是输出层使用了sotfmax。</p>
+<p>我们基于成对的单词来对神经网络进行训练，训练样本是 ( input word, output word ) 这样的单词对，input word和output word都是one-hot编码的向量。最终模型的输出是一个概率分布。</p>
+<h4 id="隐层"><a href="#隐层" class="headerlink" title="隐层"></a>隐层</h4><p>说完单词的编码和训练样本的选取，我们来看下我们的隐层。如果我们现在想用300个特征来表示一个单词（即每个词可以被表示为300维的向量）。那么<strong>隐层的权重矩阵应该为10000行，300列（隐层有300个结点）</strong>。Google在最新发布的基于Google news数据集训练的模型中使用的就是300个特征的词向量。词向量的维度是一个可以调节的超参数（在Python的gensim包中封装的Word2Vec接口默认的词向量大小为100， window_size为5）。看下面的图片，左右两张图分别从不同角度代表了输入层-隐层的权重矩阵。<strong>左图中每一列代表一个10000维的词向量和隐层单个神经元连接的权重向量。从右边的图来看，每一行实际上代表了每个单词的词向量。</strong></p>
+<p><img src="https://i.loli.net/2019/01/01/5c2b428a1584d.png" alt=""></p>
+<p>所以我们最终的目标就是学习这个隐层的权重矩阵。</p>
+<p>我们现在回来接着通过模型的定义来训练我们的这个模型。</p>
+<p>上面我们提到，input word和output word都会被我们进行one-hot编码。仔细想一下，我们的输入被one-hot编码以后大多数维度上都是0（实际上仅有一个位置为1），所以这个向量相当稀疏，那么会造成什么结果呢。如果我们将一个1 x 10000的向量和10000 x 300的矩阵相乘，它会消耗相当大的计算资源，为了高效计算，它仅仅会选择矩阵中对应的向量中维度值为1的索引行（这句话很绕），看图就明白。</p>
+<p><img src="https://i.loli.net/2019/01/01/5c2b42e0beb07.png" alt=""></p>
+<p>我们来看一下上图中的矩阵运算，左边分别是1 x 5和5 x 3的矩阵，结果应该是1 x 3的矩阵，按照矩阵乘法的规则，结果的第一行第一列元素为$0\times 17 + 0\times 23 + 0\times 4 + 1\times 10 + 0\times 11 = 10$，同理可得其余两个元素为12，19。如果10000个维度的矩阵采用这样的计算方式是十分低效的。<br>为了有效地进行计算，这种稀疏状态下不会进行矩阵乘法计算，可以看到矩阵的计算的结果实际上是矩阵对应的向量中值为1的索引，上面的例子中，左边向量中取值为1的对应维度为3（下标从0开始），那么计算结果就是矩阵的第3行（下标从0开始）—— [10, 12, 19]，这样模型中的隐层权重矩阵便成了一个”查找表“（lookup table），进行矩阵计算时，直接去查输入向量中取值为1的维度下对应的那些权重值。隐层的输出就是每个输入单词的“嵌入词向量”。</p>
+<h4 id="输出层"><a href="#输出层" class="headerlink" title="输出层"></a>输出层</h4><p>经过神经网络隐层的计算，ants这个词会从一个1 x 10000的向量变成1 x 300的向量，再被输入到输出层。输出层是一个softmax回归分类器，它的每个结点将会输出一个0-1之间的值（概率），这些所有输出层神经元结点的概率之和为1。</p>
+<p>下面是一个例子，训练样本为 (input word: “ants”， output word: “car”) 的计算示意图。</p>
+<h3 id=""><a href="#" class="headerlink" title=""></a><img src="https://i.loli.net/2019/01/01/5c2b43a3c953b.png" alt=""></h3><h4 id="直觉上的理解"><a href="#直觉上的理解" class="headerlink" title="直觉上的理解"></a>直觉上的理解</h4><p>下面我们将通过直觉来进行一些思考。<br>如果两个不同的单词有着非常相似的“上下文”（也就是窗口单词很相似，比如“Kitty climbed the tree”和“Cat climbed the tree”），那么通过我们的模型训练，这两个单词的嵌入向量将非常相似。那么两个单词拥有相似的“上下文”到底是什么含义呢？比如对于同义词“intelligent”和“smart”，我们觉得这两个单词应该拥有相同的“上下文”。而例如”engine“和”transmission“这样相关的词语，可能也拥有着相似的上下文。<br>实际上，这种方法实际上也可以帮助你进行词干化（stemming），例如，神经网络对”ant“和”ants”两个单词会习得相似的词向量。词干化（stemming）就是去除词缀得到词根的过程。</p>
+<h1 id="连续词袋模型"><a href="#连续词袋模型" class="headerlink" title="连续词袋模型"></a>连续词袋模型</h1><h2 id="数学基础表达式-1"><a href="#数学基础表达式-1" class="headerlink" title="数学基础表达式"></a>数学基础表达式</h2><p>连续词袋模型与跳字模型类似。与跳字模型最大的不同在于，连续词袋模型假设基于某中心词在文本序列前后的背景词来生成该中心词。在同样的文本序列“the”、“man”、“loves”、“his”和“son”里，以“loves”作为中心词，且背景窗口大小为2 时，连续词袋模型关⼼的是，给定背景词“the”、“man”、“his”和“son”生成中心词“loves”的条件概率（如下图所示）也就是</p>
+<p>$\mathbb { P }$$(“love”|”the”,”man”,”his”,”son”)$</p>
+<p><img src="https://i.loli.net/2019/01/03/5c2db739db60c.png" alt=""></p>
+<p>因为连续词袋模型的背景词有多个，我们将这些背景词向量取平均，然后使用和跳字模型一样的方法来计算条件概率。设$\boldsymbol { v } _ { \boldsymbol { i } } \in \mathbb { R } ^ { d }$和$\boldsymbol { u } _ { \boldsymbol { i } } \in \mathbb { R } ^ { d }$分别表示词典中索引为i 的词作为背景词和中心词的向量（注意符号和跳字模型中是相反的）。设中心词$w_c$在词典中索引为$c$ ，背景词$w _ { o _ { 1 } } , \dots , w _ { o _ { 2 m } }$在词典中索引为$o _ { 1 } , \dots , o _ { 2 m }$，那么给定背景词生成中心词的条件概率</p>
+<p>$\mathbb { P } \left( w _ { c } | w _ { o _ { 1 } } , \ldots , w _ { o _ { 2 m } } \right) = \frac { \exp \left( \frac { 1 } { 2 m } u _ { c } ^ { \top } \left( v _ { o _ { 1 } } + \ldots + v _ { o _ { 2 m } } \right) \right) } { \sum _ { i \in \mathcal { V } } \exp \left( \frac { 1 } { 2 m } u _ { i } ^ { \top } \left( v _ { o _ { 1 } } + \ldots + v _ { o _ { 2 m } } \right) \right) }$</p>
+<p>为了让符号更加简单，我们记$W _ { o } = \left\{ w _ { o _ { 1 } } , \dots , w _ { o _ { 2 m } } \right\}$，且$\overline { v } _ { o } = \left( v _ { o _ { 1 } } + \ldots + v _ { o _ { 2 m } } \right) / ( 2 m )$，那么上式可以简写成</p>
+<p>$\mathbb { P } \left( w _ { c } | \mathcal { W } _ { o } \right) = \frac { \exp \left( \boldsymbol { u } _ { c } ^ { \top } \overline { \boldsymbol { v } } _ { o } \right) } { \sum _ { i \in \mathcal { V } } \exp \left( \boldsymbol { u } _ { i } ^ { \top } \overline { \boldsymbol { v } } _ { o } \right) }$</p>
+<p>给定一个长度为T 的文本序列，设时间步$t$的词为$w^{(t)}$，背景窗口大小为m。连续词袋模型的似然函数为由背景词生成任一中心词的概率</p>
+<p>$\prod _ { t = 1 } ^ { T } \mathbb { P } \left( w ^ { ( t ) } | w ^ { ( t - m ) } , \ldots , w ^ { ( t - 1 ) } , w ^ { ( t + 1 ) } , \ldots , w ^ { ( t + m ) } \right)$</p>
+<h2 id="连续词袋模型训练"><a href="#连续词袋模型训练" class="headerlink" title="连续词袋模型训练"></a>连续词袋模型训练</h2><p>连续词袋模型训练同跳字模型训练基本一致。连续词袋模型的最大似然估计等价于最小化损失函数</p>
+<p>$- \sum _ { t = 1 } ^ { T } \log \mathbb { P } \left( w ^ { ( t ) } | w ^ { ( t - m ) } , \ldots , w ^ { ( t - 1 ) } , w ^ { ( t + 1 ) } , \ldots , w ^ { ( t + m ) } \right)$</p>
+<p>注意到</p>
+<p>$\log \mathbb { P } \left( w _ { c } | \mathcal { W } _ { o } \right) = \boldsymbol { u } _ { c } ^ { \top } \overline { \boldsymbol { v } } _ { o } - \log \left( \sum _ { i \in \mathcal { V } } \exp \left( u _ { i } ^ { \top } \overline { v } _ { o } \right) \right)$</p>
+<p>通过微分，我们可以计算出上式中条件概率的对数有关任一背景词向量$v _ { o _ { i } } ( i = 1 , \dots , 2 m )$的梯度</p>
+<p>$\frac { \partial \log \mathbb { P } \left( w _ { c } | \mathcal { W } _ { o } \right) } { \partial v _ { o _ { i } } } = \frac { 1 } { 2 m } \left( \boldsymbol { u } _ { c } - \sum _ { j \in \mathcal { V } } \frac { \exp \left( \boldsymbol { u } _ { j } ^ { \top } \overline { \boldsymbol { v } } _ { o } \right) \boldsymbol { u } _ { j } } { \sum _ { i \in \mathcal { V } } \exp \left( \boldsymbol { u } _ { i } ^ { \top } \overline { \boldsymbol { v } } _ { o } \right) } \right) = \frac { 1 } { 2 m } \left( \boldsymbol { u } _ { c } - \sum _ { j \in \mathcal { V } } \mathbb { P } \left( w _ { j } | \mathcal { W } _ { o } \right) \boldsymbol { u } _ { j } \right)$</p>
+<p>有关其他词向量的梯度同理可得。同跳字模型不一样的一点在于，我们一般使用连续词袋模型的背景词向量作为词的表征向量。</p>
+<h2 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h2><p>在cbow方法中，是用周围词预测中心词，从而利用中心词的预测结果情况，使用GradientDesent方法，不断的去调整周围词的向量。当训练完成之后，每个词都会作为中心词，把周围词的词向量进行了调整，这样也就获得了整个文本里面所有词的词向量。</p>
+<p>要注意的是， cbow的对周围词的调整是统一的：求出的gradient的值会同样的作用到每个周围词的词向量当中去。</p>
+<p>可以看到，cbow预测行为的次数跟整个文本的词数几乎是相等的（每次预测行为才会进行一次backpropgation, 而往往这也是最耗时的部分），复杂度大概是O(V)。</p>
+<p>而skip-gram是用中心词来预测周围的词。在skip-gram中，会利用周围的词的预测结果情况，使用GradientDecent来不断的调整中心词的词向量，最终所有的文本遍历完毕之后，也就得到了文本所有词的词向量。</p>
+<p>可以看出，skip-gram进行预测的次数是要多于cbow的：因为每个词在作为中心词时，都要使用周围词进行预测一次。这样相当于比cbow的方法多进行了K次（假设K为窗口大小），因此时间的复杂度为O(KV)，训练时间要比cbow要长。</p>
+<p>但是在skip-gram当中，每个词都要收到周围的词的影响，每个词在作为中心词的时候，都要进行K次的预测、调整。因此， 当数据量较少，或者词为生僻词出现次数较少时， 这种多次的调整会使得词向量相对的更加准确。因为尽管cbow从另外一个角度来说，某个词也是会受到多次周围词的影响（多次将其包含在内的窗口移动），进行词向量的跳帧，但是他的调整是跟周围的词一起调整的，grad的值会平均分到该词上， 相当于该生僻词没有收到专门的训练，它只是沾了周围词的光而已。</p>
+<p>因此，从更通俗的角度来说：</p>
+<p>在skip-gram里面，每个词在作为中心词的时候，实际上是 1个学生 VS K个老师，K个老师（周围词）都会对学生（中心词）进行“专业”的训练，这样学生（中心词）的“能力”（向量结果）相对就会扎实（准确）一些，但是这样肯定会使用更长的时间；</p>
+<p>cbow是 1个老师 VS K个学生，K个学生（周围词）都会从老师（中心词）那里学习知识，但是老师（中心词）是一视同仁的，教给大家的一样的知识。至于你学到了多少，还要看下一轮（假如还在窗口内），或者以后的某一轮，你还有机会加入老师的课堂当中（再次出现作为周围词），跟着大家一起学习，然后进步一点。因此相对skip-gram，你的业务能力肯定没有人家强，但是对于整个训练营（训练过程）来说，这样肯定效率高，速度更快。</p>
+<h1 id="训练技巧"><a href="#训练技巧" class="headerlink" title="训练技巧"></a>训练技巧</h1><p>我们会发现Word2Vec模型是一个超级大的神经网络（权重矩阵规模非常大）。</p>
+<p>举个栗子，我们拥有10000个单词的词汇表，我们如果想嵌入300维的词向量，那么我们的<strong>输入-隐层权重矩阵</strong>和<strong>隐层-输出层的权重矩阵</strong>都会有 10000 x 300 = 300万个权重，在如此庞大的神经网络中进行梯度下降是相当慢的。更糟糕的是，你需要大量的训练数据来调整这些权重并且避免过拟合。百万数量级的权重矩阵和亿万数量级的训练样本意味着训练这个模型将会是个灾难（太凶残了）。</p>
+<p>Word2Vec的作者在它的第二篇论文中强调了这些问题，下面是作者在第二篇论文中的三个创新：</p>
+<p>1、将常见的单词组合（word pairs）或者词组作为单个“words”来处理。</p>
+<p>2、对高频次单词进行抽样来减少训练样本的个数。</p>
+<p>3、对优化目标采用“negative sampling”方法，这样每个训练样本的训练只会更新一小部分的模型权重，从而降低计算负担。</p>
+<p>事实证明，对常用词抽样并且对优化目标采用“negative sampling”不仅降低了训练过程中的计算负担，还提高了训练的词向量的质量。</p>
+<h2 id="Word-pairs-and-“phases”"><a href="#Word-pairs-and-“phases”" class="headerlink" title="Word pairs and “phases”"></a>Word pairs and “phases”</h2><p>论文的作者指出，一些单词组合（或者词组）的含义和拆开以后具有完全不同的意义。比如“Boston Globe”是一种报刊的名字，而单独的“Boston”和“Globe”这样单个的单词却表达不出这样的含义。因此，在文章中只要出现“Boston Globe”，我们就应该把它作为一个单独的词来生成其词向量，而不是将其拆开。同样的例子还有“New York”，“United Stated”等。</p>
+<p>在Google发布的模型中，它本身的训练样本中有来自Google News数据集中的1000亿的单词，但是除了单个单词以外，单词组合（或词组）又有3百万之多。</p>
+<p>如果你对模型的词汇表感兴趣，可以点击<a href="http://link.zhihu.com/?target=http%3A//mccormickml.com/2016/04/12/googles-pretrained-word2vec-model-in-python/" target="_blank" rel="noopener">这里</a>，你还可以直接浏览这个<a href="http://link.zhihu.com/?target=https%3A//github.com/chrisjmccormick/inspect_word2vec/tree/master/vocabulary" target="_blank" rel="noopener">词汇表</a>。</p>
+<p>如果想了解这个模型如何进行文档中的词组抽取，可以看<a href="http://link.zhihu.com/?target=http%3A//arxiv.org/pdf/1310.4546.pdf" target="_blank" rel="noopener">论文</a>中“Learning Phrases”这一章，对应的代码word2phrase.c被发布在<a href="http://link.zhihu.com/?target=https%3A//code.google.com/archive/p/word2vec/" target="_blank" rel="noopener">这里</a>。</p>
+<h2 id="对高频词抽样"><a href="#对高频词抽样" class="headerlink" title="对高频词抽样"></a>对高频词抽样</h2><p>在第一部分的讲解中，我们展示了训练样本是如何从原始文档中生成出来的，这里我再重复一次。我们的原始文本为“The quick brown fox jumps over the laze dog”，如果我使用大小为2的窗口，那么我们可以得到图中展示的那些训练样本。</p>
+<p><img src="https://i.loli.net/2019/01/03/5c2dc035a13c8.png" alt=""></p>
+<p>但是对于“the”这种常用高频单词，这样的处理方式会存在下面两个问题：<br>1、当我们得到成对的单词训练样本时，(“fox”, “the”) 这样的训练样本并不会给我们提供关于“fox”更多的语义信息，因为“the”在每个单词的上下文中几乎都会出现。<br>2、由于在文本中“the”这样的常用词出现概率很大，因此我们将会有大量的（”the“，…）这样的训练样本，而这些样本数量远远超过了我们学习“the”这个词向量所需的训练样本数。</p>
+<p>Word2Vec通过“抽样”模式来解决这种高频词问题。它的基本思想如下：对于我们在训练原始文本中遇到的每一个单词，它们都有一定概率被我们从文本中删掉，而这个被删除的概率与单词的频率有关。</p>
+<p>如果我们设置窗口大小$span=10$（即skip windows=10），并且从我们的文本中删除所有的“the”，那么会有下面的结果：</p>
+<p>1、由于我们删除了文本中所有的“the”，那么在我们的训练样本中，“the”这个词永远也不会出现在我们的上下文窗口中。<br>2、当“the”作为input word时，我们的训练样本数至少会减少10个。</p>
+<p>这句话应该这么理解，假如我们的文本中仅出现了一个“the”，那么当这个“the”作为input word时，我们设置span=10，此时会得到10个训练样本 (“the”, …) ，如果删掉这个“the”，我们就会减少10个训练样本。实际中我们的文本中不止一个“the”，因此当“the”作为input word的时候，至少会减少10个训练样本。</p>
+<p>上面提到的这两个影响结果实际上就帮助我们解决了高频词带来的问题。</p>
+<h2 id="抽样率"><a href="#抽样率" class="headerlink" title="抽样率"></a>抽样率</h2><p>word2vec的C语言代码实现了一个计算在词汇表中保留某个词概率的公式。</p>
+<p>$w _ { i }$ 是一个单词，$Z \left( w _ { i } \right)$是$w _ { i }$这个单词在所有语料中出现的频次。举个栗子，如果单词“peanut”在10亿规模大小的语料中出现了1000次，那么</p>
+<p>$Z ( “ peanut “ ) = 1000 / 1000000000 = 1 e - 6$</p>
+<p>在代码中还有一个参数叫“sample”，这个参数代表一个阈值，默认值为0.001<strong>（在gensim包中的Word2Vec类说明中，这个参数默认为0.001，文档中对这个参数的解释为“ threshold</strong>for configuring which higher-frequency words are randomly downsampled”）。这个值越小意味着这个单词被保留下来的概率越小（即有越大的概率被我们删除）。</p>
+<p>$P \left( w _ { i } \right)$代表着保留某个单词的概率：</p>
+<p>$P \left( w _ { i } \right) = \left( \sqrt { \frac { Z \left( w _ { i } \right) } { 0.001 } } + 1 \right) \times \frac { 0.001 } { Z \left( w _ { i } \right) }$</p>
+<p><img src="https://i.loli.net/2019/01/01/5c2b4781140f0.png" alt=""></p>
+<p>图中x轴代表着$Z \left( w _ { i } \right)$，即单词<img src="https://www.zhihu.com/equation?tex=w_i" alt="w_i">在语料中出现频率，y轴代表某个单词被保留的概率。对于一个庞大的语料来说，单个单词的出现频率不会很大，即使是常用词，也不可能特别大。</p>
+<p>从这个图中，我们可以看到，随着单词出现频率的增高，它被采样保留的概率越来越小，我们还可以看到一些有趣的结论：</p>
+<p>当$Z \left( w _ { i } \right)\le0.0026$时，$P \left( w _ { i } \right) = 1.0$当单词在语料中出现的频率小于0.0026时，它是100%被保留的，这意味着只有那些在语料中出现频率超过0.26%的单词才会被采样。</p>
+<p>当$Z \left( w _ { i } \right) = 0.00746$时，$P \left( w _ { i } \right) = 0.5$，意味着这一部分的单词有50%的概率被保留。</p>
+<p>当$Z \left( w _ { i } \right) = 1.0$时，$P \left( w _ { i } \right) = 0.033$，意味着这部分单词以3.3%的概率被保留。</p>
+<p>如果你去看那篇论文的话，你会发现作者在论文中对函数公式的定义和在C语言代码的实现上有一些差别，但我认为C语言代码的公式实现是更权威的一个版本。</p>
+<h2 id="负采样（negative-sampling）"><a href="#负采样（negative-sampling）" class="headerlink" title="负采样（negative sampling）"></a>负采样（negative sampling）</h2><h3 id="为什么要用负采样"><a href="#为什么要用负采样" class="headerlink" title="为什么要用负采样"></a>为什么要用负采样</h3><p>训练一个神经网络意味着要输入训练样本并且不断调整神经元的权重，从而不断提高对目标的准确预测。每当神经网络经过一个训练样本的训练，它的权重就会进行一次调整。</p>
+<p>正如我们上面所讨论的，vocabulary的大小决定了我们的Skip-Gram神经网络将会拥有大规模的权重矩阵，所有的这些权重需要通过我们数以亿计的训练样本来进行调整，这是非常消耗计算资源的，并且实际中训练起来会非常慢。</p>
+<h3 id="什么是负采样"><a href="#什么是负采样" class="headerlink" title="什么是负采样"></a>什么是负采样</h3><p><strong>负采样（negative sampling）</strong>解决了这个问题，它是用来提高训练速度并且改善所得到词向量的质量的一种方法。不同于原本每个训练样本更新所有的权重，负采样每次让一个训练样本仅仅更新一小部分的权重，这样就会降低梯度下降过程中的计算量。</p>
+<p>当我们用训练样本 ( input word: “fox”，output word: “quick”) 来训练我们的神经网络时，“ fox”和“quick”都是经过one-hot编码的。如果我们的vocabulary大小为10000时，在输出层，我们期望对应“quick”单词的那个神经元结点输出1，其余9999个都应该输出0。在这里，这9999个我们期望输出为0的神经元结点所对应的单词我们称为“negative” word。</p>
+<p>当使用负采样时，我们将随机选择一小部分的negative words（比如选5个negative words）来更新对应的权重。我们也会对我们的“positive” word进行权重更新（在我们上面的例子中，这个单词指的是”quick“）。</p>
+<p>在论文中，作者指出指出对于小规模数据集，选择5-20个negative words会比较好，对于大规模数据集可以仅选择2-5个negative words。</p>
+<p>回忆一下我们的隐层-输出层拥有300 x 10000的权重矩阵。如果使用了负采样的方法我们仅仅去更新我们的positive word-“quick”的和我们选择的其他5个negative words的结点对应的权重，共计6个输出神经元，相当于每次只更新$300\times6=1800$个权重。对于3百万的权重来说，相当于只计算了0.06%的权重，这样计算效率就大幅度提高。</p>
+<h3 id="如何选择negative-words"><a href="#如何选择negative-words" class="headerlink" title="如何选择negative words"></a>如何选择negative words</h3><p>我们使用“一元模型分布（unigram distribution）”来选择“negative words”。</p>
+<p>要注意的一点是，一个单词被选作negative sample的概率跟它出现的频次有关，出现频次越高的单词越容易被选作negative words。</p>
+<p>在word2vec的C语言实现中，你可以看到对于这个概率的实现公式。每个单词被选为“negative words”的概率计算公式与其出现的频次有关。</p>
+<p>代码中的公式实现如下：</p>
+<p>$P \left( w _ { i } \right) = \frac { f \left( w _ { i } \right) ^ { 3 / 4 } } { \sum _ { j = 0 } ^ { n } \left( f \left( w _ { j } \right) ^ { 3 / 4 } \right) }$</p>
+<p>每个单词被赋予一个权重，即$f \left( w _ { i } \right)$， 它代表着单词出现的频次。</p>
+<p>公式中开3/4的根号完全是基于经验的，论文中提到这个公式的效果要比其它公式更加出色。你可以在google的搜索栏中输入“plot y = x^(3/4) and y = x”，然后看到这两幅图（如下图），仔细观察x在[0,1]区间内时y的取值，$x ^ { 3 / 4 }$有一小段弧形，取值在$y=x$函数之上。</p>
+<h3 id="负采样的数学基础表达式"><a href="#负采样的数学基础表达式" class="headerlink" title="负采样的数学基础表达式"></a>负采样的数学基础表达式</h3><p>负采样修改了原来的目标函数。给定中心词$w_c$的一个背景窗口，我们把背景词$w_o$出现在该背景<br>窗口看作一个事件，并将该事件的概率计算为</p>
+<p>$\mathbb { P } ( D = 1 | w _ { c } , w _ { o } ) = \sigma \left( \boldsymbol { u } _ { o } ^ { \top } \boldsymbol { v } _ { c } \right)$</p>
+<p>其中的$\sigma$函数与sigmoid 激活函数的定义相同：</p>
+<p>$\sigma ( x ) = \frac { 1 } { 1 + \exp ( - x ) }$</p>
+<p>我们先考虑最大化文本序列中所有该事件的联合概率来训练词向量。具体来说，给定一个长度为T 的文本序列，设时间步t 的词为w(t) 且背景窗口大小为m，考虑最大化联合概率</p>
+<p>$\prod _ { t = 1 } ^ { T } \prod _ { - m \leq m , j \neq 0 } \mathbb { P } ( D = 1 | w ^ { ( t ) } , w ^ { ( t + j ) } )$</p>
+<p>然而，以上模型中包含的事件仅考虑了正类样本。这导致当所有词向量相等且值为无穷大时，以上的联合概率才被最大化为1。很明显，这样的词向量毫无意义。负采样通过采样并添加负类样本使目标函数更有意义。设背景词$w_o$出现在中心词$w_c$的一个背景窗口为事件P，我们根据分布$\mathbb { P } ( w )$采样K 个未出现在该背景窗口中的词，即噪音词。设噪音词$w _ { k } ( k = 1 , \dots , K )$不出现在中心词$w_c$的该背景窗口为事件$N_k$。假设同时含有正类样本和负类样本的事件$P , N _ { 1 } , \dots , N _ { K }$相互独立，负采样将以上需要最大化的仅考虑正类样本的联合概率改写为</p>
+<p>$\prod _ { t = 1 } ^ { T } \prod _ { - m , j \neq 0 } \mathbb { P } \left( w ^ { ( t + j ) } | w ^ { ( t ) } \right)$</p>
+<p>其中条件概率被近似表示为</p>
+<p>$\mathbb { P } \left( w ^ { ( t + j ) } | w ^ { ( t ) } \right) = \mathbb { P } ( D = 1 | w ^ { ( t ) } , w ^ { ( t + j ) } ) \prod _ { k = 1 , w _ { k } \sim \mathbb { P } ( w ) } \mathbb { P } ( D = 0 | w ^ { ( t ) } , w _ { k } )$</p>
+<p>设文本序列中时间步t 的词$w^{(t)}$在词典中的索引为$i_t$，噪声词$w_k$在词典中的索引为$h_k$。有关以上条件概率的对数损失为</p>
+<p>$\begin{aligned} - \log \mathbb { P } \left( w ^ { ( t + j ) } | w ^ { ( t ) } \right) &amp; = - \log \mathbb { P } ( D = 1 | w ^ { ( t ) } , w ^ { ( t + j ) } ) - \sum _ { k = 1 } ^ { K } \log \mathbb { P } ( D = 0 | w ^ { ( t ) } , w _ { k } ) \\ &amp; = - \log \sigma \left( u _ { i _ { t + j } } ^ { \top } v _ { i _ { t } } \right) - \sum _ { k = 1 , w _ { k } \sim \mathbb { P } ( w ) } ^ { K } \log \left( 1 - \sigma \left( u _ { h _ { k } } ^ { \top } v _ { i _ { t } } \right) \right) \\ &amp; = - \log \sigma \left( u _ { i _ { t + j } } ^ { \top } v _ { i _ { t } } \right) - \sum _ { k = 1 , w _ { k } \sim \mathbb { P } ( w ) } \log \sigma \left( - u _ { h _ { k } } ^ { \top } v _ { i _ { t } } \right) \end{aligned}$</p>
+<p>回忆上节内容。跳字模型的核x心在于使用$softmax$运算得到给定中⼼词$w_c$来生成背景词$w_o$的条件概率</p>
+<p>$\mathbb { P } \left( w _ { o } | w _ { c } \right) = \frac { \exp \left( \boldsymbol { u } _ { o } ^ { \top } \boldsymbol { v } _ { c } \right) } { \sum _ { i \in \mathcal { V } } \exp \left( \boldsymbol { u } _ { i } ^ { \top } \boldsymbol { v } _ { c } \right) }$</p>
+<p>该条件概率相应的对数损失</p>
+<h2 id="层序SoftMax"><a href="#层序SoftMax" class="headerlink" title="层序SoftMax"></a>层序SoftMax</h2><p>使用层序$softmax$分类器（相当于一个树型分类器，每个节点都是可能是一个二分类器），其计算复杂度是前面的$log|v|$级别。在构造分级$softmax$分类器时，一般常用的词会放在树的顶部位置，而不常用的词则会放在树的更深处，其并不是一个平衡的二叉树。</p>
+<p><img src="https://i.loli.net/2019/01/03/5c2dca9d5da8e.png" alt=""></p>
+<p>假设$L(w)$为从二叉树的根节点到词w 的叶子节点的路径（包括根和叶子节点）上的节点数。设$n(w,j)$为该路径上第j个节点，并设该节点的背景词向量为$\mathbf { u } _ { n ( w , j ) }$。以上图为例，$L(w_3) = 4$。层序softmax 将跳字模型中的条件概率近似表示为：</p>
+<p>$\mathbb { P } \left( w _ { o } | w _ { c } \right) = \prod _ { j = 1 } ^ { L \left( w _ { o } \right) - 1 } \sigma \left( \left[ n \left( w _ { o } , j + 1 \right) = \operatorname { leftchild } \left( n \left( w _ { o } , j \right) \right) \right] \cdot \mathbf { u } _ { n \left( w _ { o } , j \right) } ^ { \top } \mathbf { v } _ { c } \right)$</p>
+<p>其中$\sigma$函数与$sigmoid$激活函数的定义相同，$leftChild(n)$是节点n 的左孩子节点：如果判断x为真，$[ x ] = 1$；反之$[ x ] = -1$。让我们计算上图中给定词$w_c$生成词$w_3$的条件概率。我们需要将$w_c$的词向量$v_c$和根节点到$w_3$路径上的非叶子节点向量一一求内积。由于在二叉树中由根节点到叶子节点$w_3$的路径上需要向左、向右、再向左地遍历（图中加粗的路径），我们得到</p>
+<p>$\mathbb { P } \left( w _ { 3 } | w _ { c } \right) = \sigma \left( \mathbf { u } _ { n \left( w _ { 3 } , 1 \right) } ^ { \top } \mathbf { v } _ { c } \right) \cdot \sigma \left( - \mathbf { u } _ { n \left( w _ { 3 } , 2 \right) } ^ { \top } \mathbf { v } _ { c } \right) \cdot \sigma \left( \mathbf { u } _ { n \left( w _ { 3 } , 3 \right) } ^ { T }v_c)\right.$</p>
+<p>由于 $\sigma ( x ) + \sigma ( - x ) = 1$，给定中心词$w_c$ 生成词典$\mathcal { V }$中任⼀词的条件概率之和为1 这一条件也将满足：</p>
+<p>$\sum _ { w \in \mathcal { V } } \mathbb { P } ( w | w _ { c } ) = 1$</p>
+<p>此外，由于$L \left( w _ { o } \right) - 1$的数量级为$\mathcal { O } \left( \log _ { 2 } | \mathcal { V } | \right)$，当词典$\mathcal { V }$很大时，层序softmax 在训练中每一步的梯度计算开销相较未使用近似训练时大幅降低。</p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><p><a href="https://zhuanlan.zhihu.com/p/27234078" target="_blank" rel="noopener">理解 Word2Vec 之 Skip-Gram 模型</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/37477611" target="_blank" rel="noopener">cbow 与 skip-gram的比较</a></p>
+<h1 id="学习资料"><a href="#学习资料" class="headerlink" title="学习资料"></a>学习资料</h1><p>网盘地址：<a href="https://pan.baidu.com/s/12FoxbbAKTyskCRscLy4y-Q" target="_blank" rel="noopener">李沐《动手学深度学习》</a></p>
+<p>提取码：5bpp</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+    
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="XuHejun 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NLP/" rel="tag"># NLP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/24/吴恩达序列模型/" rel="next" title="吴恩达序列模型————循环序列模型">
+                <i class="fa fa-chevron-left"></i> 吴恩达序列模型————循环序列模型
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/17/一步步推导SVM公式/" rel="prev" title="一步步推导SVM公式">
+                一步步推导SVM公式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/image/xu.jpg" alt="XuHejun">
+            
+              <p class="site-author-name" itemprop="name">XuHejun</p>
+              <p class="site-description motion-element" itemprop="description">Stay hungry,stay foolish</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/MuMaXu" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/xu-he-jun-24" target="_blank" title="Zhihu">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Zhihu</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/MuMaXu2" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Twitter</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/5307894956" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Weibo</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是Word2Vec"><span class="nav-number">1.</span> <span class="nav-text">什么是Word2Vec</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为何不采one-hot-向量"><span class="nav-number">2.</span> <span class="nav-text">为何不采one-hot 向量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#跳字模型"><span class="nav-number">3.</span> <span class="nav-text">跳字模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是Skip-gram算法"><span class="nav-number">3.1.</span> <span class="nav-text">什么是Skip-gram算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目标是什么"><span class="nav-number">3.2.</span> <span class="nav-text">目标是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定义表示法"><span class="nav-number">3.3.</span> <span class="nav-text">定义表示法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#one-hot向量"><span class="nav-number">3.3.1.</span> <span class="nav-text">one-hot向量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#词向量（word-vector）"><span class="nav-number">3.3.2.</span> <span class="nav-text">词向量（word vector）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单词矩阵（word-matrix）"><span class="nav-number">3.3.3.</span> <span class="nav-text">单词矩阵（word matrix）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单词相似度"><span class="nav-number">3.3.4.</span> <span class="nav-text">单词相似度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#softmax函数"><span class="nav-number">3.3.5.</span> <span class="nav-text">softmax函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">3.3.6.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#理解算法过程"><span class="nav-number">3.4.</span> <span class="nav-text">理解算法过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法公式表达"><span class="nav-number">3.5.</span> <span class="nav-text">算法公式表达</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#跳字模型训练"><span class="nav-number">3.6.</span> <span class="nav-text">跳字模型训练</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数学基础表达式"><span class="nav-number">3.6.1.</span> <span class="nav-text">数学基础表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#训练过程"><span class="nav-number">3.6.2.</span> <span class="nav-text">训练过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#训练集"><span class="nav-number">3.6.2.1.</span> <span class="nav-text">训练集</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模型细节"><span class="nav-number">3.6.2.2.</span> <span class="nav-text">模型细节</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#隐层"><span class="nav-number">3.6.2.3.</span> <span class="nav-text">隐层</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#输出层"><span class="nav-number">3.6.2.4.</span> <span class="nav-text">输出层</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#"><span class="nav-number">3.6.3.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#直觉上的理解"><span class="nav-number">3.6.3.1.</span> <span class="nav-text">直觉上的理解</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#连续词袋模型"><span class="nav-number">4.</span> <span class="nav-text">连续词袋模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数学基础表达式-1"><span class="nav-number">4.1.</span> <span class="nav-text">数学基础表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#连续词袋模型训练"><span class="nav-number">4.2.</span> <span class="nav-text">连续词袋模型训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结-1"><span class="nav-number">4.3.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#训练技巧"><span class="nav-number">5.</span> <span class="nav-text">训练技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Word-pairs-and-“phases”"><span class="nav-number">5.1.</span> <span class="nav-text">Word pairs and “phases”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对高频词抽样"><span class="nav-number">5.2.</span> <span class="nav-text">对高频词抽样</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#抽样率"><span class="nav-number">5.3.</span> <span class="nav-text">抽样率</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#负采样（negative-sampling）"><span class="nav-number">5.4.</span> <span class="nav-text">负采样（negative sampling）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么要用负采样"><span class="nav-number">5.4.1.</span> <span class="nav-text">为什么要用负采样</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是负采样"><span class="nav-number">5.4.2.</span> <span class="nav-text">什么是负采样</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何选择negative-words"><span class="nav-number">5.4.3.</span> <span class="nav-text">如何选择negative words</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#负采样的数学基础表达式"><span class="nav-number">5.4.4.</span> <span class="nav-text">负采样的数学基础表达式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#层序SoftMax"><span class="nav-number">5.5.</span> <span class="nav-text">层序SoftMax</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考链接"><span class="nav-number">6.</span> <span class="nav-text">参考链接</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#学习资料"><span class="nav-number">7.</span> <span class="nav-text">学习资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">XuHejun</span>
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+  
+</body>
+</html>

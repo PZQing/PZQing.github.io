@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="问题一：找出数组中重复的数题目描述给定一个长度为$n$的整数数组 nums，数组中所有的数字都在 $0∼n−1$的范围内。 数组中某些数字是重复的，但不知道有几个数字重复了，也不知道每个数字重复了几次。 请找出数组中任意一个重复的数字。 注意：如果某些数字不在 $0∼n−1$的范围内，或数组中不包含重复数字，则返回 -1； 样例 123给定 nums = [2, 3, 5, 4, 3, 2, 6,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《剑指offer》week1">
+<meta property="og:url" content="http://yoursite.com/2019/03/22/《剑指offer》week1/index.html">
+<meta property="og:site_name" content="MuMaXu&#39;s Blog">
+<meta property="og:description" content="问题一：找出数组中重复的数题目描述给定一个长度为$n$的整数数组 nums，数组中所有的数字都在 $0∼n−1$的范围内。 数组中某些数字是重复的，但不知道有几个数字重复了，也不知道每个数字重复了几次。 请找出数组中任意一个重复的数字。 注意：如果某些数字不在 $0∼n−1$的范围内，或数组中不包含重复数字，则返回 -1； 样例 123给定 nums = [2, 3, 5, 4, 3, 2, 6,">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.loli.net/2019/03/22/5c94de406fc19.png">
+<meta property="og:image" content="https://i.loli.net/2019/03/22/5c94ef59205cf.png">
+<meta property="og:image" content="https://img-blog.csdn.net/20180605195842322">
+<meta property="og:image" content="https://i.loli.net/2019/03/26/5c9a0db42e0f9.png">
+<meta property="og:updated_time" content="2019-08-19T06:32:54.384Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《剑指offer》week1">
+<meta name="twitter:description" content="问题一：找出数组中重复的数题目描述给定一个长度为$n$的整数数组 nums，数组中所有的数字都在 $0∼n−1$的范围内。 数组中某些数字是重复的，但不知道有几个数字重复了，也不知道每个数字重复了几次。 请找出数组中任意一个重复的数字。 注意：如果某些数字不在 $0∼n−1$的范围内，或数组中不包含重复数字，则返回 -1； 样例 123给定 nums = [2, 3, 5, 4, 3, 2, 6,">
+<meta name="twitter:image" content="https://i.loli.net/2019/03/22/5c94de406fc19.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/03/22/《剑指offer》week1/">
+
+
+
+
+
+  <title>《剑指offer》week1 | MuMaXu's Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">MuMaXu's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Hello,world!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/22/《剑指offer》week1/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="XuHejun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/image/xu.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MuMaXu's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">《剑指offer》week1</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-22T19:48:25+08:00">
+                2019-03-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/《剑指offer》/" itemprop="url" rel="index">
+                    <span itemprop="name">《剑指offer》</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/《剑指offer》/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C++</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="问题一：找出数组中重复的数"><a href="#问题一：找出数组中重复的数" class="headerlink" title="问题一：找出数组中重复的数"></a>问题一：找出数组中重复的数</h1><h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给定一个长度为$n$的整数数组 <code>nums</code>，数组中所有的数字都在 $0∼n−1$的范围内。</p>
+<p>数组中某些数字是重复的，但不知道有几个数字重复了，也不知道每个数字重复了几次。</p>
+<p>请找出数组中<strong>任意一个重复</strong>的数字。</p>
+<p><strong>注意</strong>：如果某些数字不在 $0∼n−1$的范围内，或数组中不包含重复数字，则返回 -1；</p>
+<p><strong>样例</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">给定 nums = [2, 3, 5, 4, 3, 2, 6, 7]。</span><br><span class="line"></span><br><span class="line">返回 2 或 3。</span><br></pre></td></tr></table></figure>
+<h2 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h2><p><strong>(数组遍历)</strong> $O(n)$</p>
+<p>首先遍历一遍数组，如果存在某个数不在0到n-1的范围内，则返回-1。</p>
+<p>下面的算法的主要思想是<strong>把每个数放到对应的位置上，即让 nums[i] = i</strong>。</p>
+<p>从前往后遍历数组中的所有数，假设当前遍历到的数是$nums[i]=x$，那么：</p>
+<p>如果x != i &amp;&amp; nums[x] == x，则说明$x$出现了多次，直接返回$x$即可；</p>
+<p>如果nums[x] != x，那我们就把$x$交换到正确的位置上，即 swap(nums[x], nums[i])，交换完之后如果nums[i] != i，则重复进行该操作。由于每次交换都会将一个数放在正确的位置上，所以swap操作最多会进行$n$次，不会发生死循环。<br>循环结束后，如果没有找到任何重复的数，则返回-1。</p>
+<h2 id="时间复杂度分析"><a href="#时间复杂度分析" class="headerlink" title="时间复杂度分析"></a>时间复杂度分析</h2><p>每次swap操作都会将一个数放在正确的位置上，一共只有$n$个数和$n$个位置，所以swap最多会进行$n$次。所以总时间复杂度是$O(n)$。</p>
+<h2 id="C-代码"><a href="#C-代码" class="headerlink" title="C++代码"></a>C++代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">duplicateInArray</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">    	<span class="keyword">int</span> n=nums.size();</span><br><span class="line">        <span class="keyword">if</span>(nums.empty()) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> x:nums)&#123;</span><br><span class="line">        	<span class="keyword">if</span>(x&gt;n&amp;&amp;x&lt;<span class="number">0</span>) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">    	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i!=nums[i]&amp;&amp;nums[nums[i]]==nums[i])</span><br><span class="line">            	<span class="keyword">return</span> nums[i];    <span class="comment">//也就是说当前扫描到的数和和这个数应该所在的位置的数是一个数</span></span><br><span class="line">         	<span class="keyword">if</span>(i!=nums[i]&amp;&amp;nums[i]!=nums[nums[i]])</span><br><span class="line">            	swap(nums[i],nums[nums[i]]);   <span class="comment">//这一步就是把当前扫描到的数放到应该放到的位置</span></span><br><span class="line">		&#125;</span><br><span class="line">      <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这个题目的思想就是充分利用题目给的条件，也就是数组中的数只是在$0∼n−1$之间，刚好有$n$个数，我们只要将每一数根据它的数值大小放到它应该所在的位置上（<code>swap(nums[i],nums[nums[i]])</code>），其实这就是相当于提前占坑，如果后面也有一个数和这个数相等，就会发现这个坑已经被别人占<code>nums[i]!=i&amp;&amp;nums[i]==nums[nums[i]]</code>，就直接返回这个数就行。</p>
+<h1 id="问题二：不修改数组找出重复的数字"><a href="#问题二：不修改数组找出重复的数字" class="headerlink" title="问题二：不修改数组找出重复的数字"></a>问题二：不修改数组找出重复的数字</h1><h2 id="题目描述-1"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h2><p>给定一个长度为 $n+1$的数组<code>nums</code>，数组中所有的数均在 $1∼n$的范围内，其中$n≥1$。</p>
+<p>请找出数组中任意一个重复的数，但不能修改输入的数组。</p>
+<p><strong>样例</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">给定 nums = [2, 3, 5, 4, 3, 2, 6, 7]。</span><br><span class="line"></span><br><span class="line">返回 2 或 3。</span><br></pre></td></tr></table></figure>
+<p><strong>思考题</strong>：如果只能使用 $O(1)$的额外空间，该怎么做呢？</p>
+<h2 id="题目分析-1"><a href="#题目分析-1" class="headerlink" title="题目分析"></a>题目分析</h2><p><strong>(分治，抽屉原理)</strong> $O(nlogn)$</p>
+<p>这道题目主要应用了<strong>抽屉原理和分治的思想</strong>。</p>
+<blockquote>
+<p>抽屉原理：n+1 个苹果放在 n 个抽屉里，那么至少有一个抽屉中会放两个苹果。</p>
+</blockquote>
+<p>用在这个题目中就是，一共有 n+1 个数，每个数的取值范围是1到n，所以至少会有一个数出现两次。</p>
+<p>然后我们采用分治的思想，将每个数的取值的区间[1, n]划分成[1, n/2]和[n/2+1, n]两个子区间，然后分别统计两个区间中数的个数。</p>
+<p><strong>注意这里的区间是指 数的取值范围，而不是 数组下标。</strong></p>
+<p>划分之后，左右两个区间里一定至少存在一个区间，区间中数的个数大于区间长度。</p>
+<p>这个可以用反证法来说明：如果两个区间中数的个数都小于等于区间长度，那么整个区间中数的个数就小于等于n，和有n+1个数矛盾。</p>
+<p>因此我们可以把问题划归到左右两个子区间中的一个，而且由于区间中数的个数大于区间长度，根据抽屉原理，在这个子区间中一定存在某个数出现了两次。</p>
+<p>依次类推，每次我们可以把区间长度缩小一半，直到区间长度为1时，我们就找到了答案。</p>
+<h2 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h2><p><strong>时间复杂度</strong>：每次会将区间长度缩小一半，一共会缩小$ O(logn)$次。每次统计两个子区间中的数时需要遍历整个数组，时间复杂度是 $O(n)$。所以总时间复杂度是$ O(nlogn)$。</p>
+<p><strong>空间复杂度</strong>：代码中没有用到额外的数组，所以额外的空间复杂度是 $O(1)$。</p>
+<h2 id="C-代码-1"><a href="#C-代码-1" class="headerlink" title="C++代码"></a>C++代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int duplicateInArray(vector&lt;int&gt;&amp; nums) &#123;</span><br><span class="line">        int n=nums.size();</span><br><span class="line">        <span class="keyword">for</span>(auto x:nums)&#123;</span><br><span class="line">            <span class="keyword">if</span>(x&gt;n||x&lt;<span class="number">1</span>)</span><br><span class="line">            	<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">        int l=<span class="number">1</span>,r=n<span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">while</span>(l&lt;r)&#123;</span><br><span class="line">            int count=<span class="number">0</span>;</span><br><span class="line">            middle=end+start&gt;&gt;<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">for</span> (auto x : nums) count += x &gt;= start &amp;&amp; x &lt;= middle;</span><br><span class="line">            <span class="keyword">if</span>(count&gt;middle-start+<span class="number">1</span>)</span><br><span class="line">            	end=middle;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            	start=middle+<span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">        <span class="keyword">return</span> r;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h2><p><strong>二分查找算法模板</strong></p>
+<p>算法思路：假设目标值在闭区间$[l, r]$中， 每次将区间长度缩小一半，当$l = r$时，我们就找到了目标值。</p>
+<p>当我们将区间<code>[l, r]</code>划分成<code>[l, mid]</code>和<code>[mid + 1, r]</code>时，其更新操作是<code>r = mid</code>或者<code>l = mid + 1</code>;，计算mid时不需要加1。</p>
+<p>C++ 代码模板：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">binarySearch</span><span class="params">(<span class="keyword">int</span> l,<span class="keyword">int</span> r)</span></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(l&lt;r)&#123;</span><br><span class="line">      mid=l+r&gt;&gt;<span class="number">2</span>;</span><br><span class="line">      <span class="keyword">if</span> (check(mid)) r = mid;</span><br><span class="line">      <span class="keyword">else</span> l = mid + <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> l;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="问题三：二维数组中的查找"><a href="#问题三：二维数组中的查找" class="headerlink" title="问题三：二维数组中的查找"></a>问题三：二维数组中的查找</h1><h2 id="题目描述-2"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h2><p>在一个二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。</p>
+<p>请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。</p>
+<p><strong>样例</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">输入数组</span><br><span class="line">[</span><br><span class="line">  [<span class="number">1</span>,<span class="number">2</span>,<span class="number">8</span>,<span class="number">9</span>]，</span><br><span class="line">  [<span class="number">2</span>,<span class="number">4</span>,<span class="number">9</span>,<span class="number">12</span>]，</span><br><span class="line">  [<span class="number">4</span>,<span class="number">7</span>,<span class="number">10</span>,<span class="number">13</span>]，</span><br><span class="line">  [<span class="number">6</span>,<span class="number">8</span>,<span class="number">11</span>,<span class="number">15</span>]</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">如果输入查找数值为<span class="number">7</span>，则返回<span class="literal">true</span>，</span><br><span class="line"></span><br><span class="line">如果输入查找数值为<span class="number">5</span>，则返回<span class="literal">false</span>。</span><br></pre></td></tr></table></figure>
+<h2 id="题目分析-2"><a href="#题目分析-2" class="headerlink" title="题目分析"></a>题目分析</h2><p><strong>(单调性扫描)</strong> $O(n+m)$</p>
+<p>核心在于发现每个子矩阵右上角的数的性质：</p>
+<ul>
+<li>如下图所示，x左边的数都小于等于x，x下边的数都大于等于x。</li>
+</ul>
+<p><img src="https://i.loli.net/2019/03/22/5c94de406fc19.png" alt=""></p>
+<p>因此我们可以从整个矩阵的右上角开始枚举，假设当前枚举的数是 $x$：</p>
+<ul>
+<li>如果 $x$等于target，则说明我们找到了目标值，返回true；</li>
+</ul>
+<ul>
+<li>如果 $x$小于target，则 $x$左边的数一定都小于target，我们可以直接排除当前一整行的数；</li>
+</ul>
+<ul>
+<li>如果 $x$大于target，则 $x$下边的数一定都大于target，我们可以直接排序当前一整列的数；</li>
+</ul>
+<p>排除一整行就是让枚举的点的横坐标加一，排除一整列就是让纵坐标减一。</p>
+<p>当我们排除完整个矩阵后仍没有找到目标值时，就说明目标值不存在，返回false。</p>
+<h2 id="时间复杂度分析-1"><a href="#时间复杂度分析-1" class="headerlink" title="时间复杂度分析"></a>时间复杂度分析</h2><p>每一步会排除一行或者一列，矩阵一共有$n$行，$m$列，所以最多会进行$m+n$步。所以时间复杂度是$O(n+m)$。</p>
+<h2 id="C-代码-2"><a href="#C-代码-2" class="headerlink" title="C++代码"></a>C++代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">searchArray</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; <span class="built_in">array</span>, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">    	<span class="keyword">if</span>(<span class="built_in">array</span>.empty()||<span class="built_in">array</span>[<span class="number">0</span>].empty()) <span class="keyword">return</span> <span class="literal">false</span>;   <span class="comment">//先判断函数传入的参数是否合格</span></span><br><span class="line">      	<span class="keyword">int</span> i=<span class="number">0</span>,j=<span class="built_in">array</span>[<span class="number">0</span>].size()<span class="number">-1</span>;</span><br><span class="line">      	<span class="keyword">while</span>(i&lt;<span class="built_in">array</span>.size()&amp;&amp;j&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">  			<span class="keyword">if</span>(target==<span class="built_in">array</span>[i][j]) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">          	<span class="keyword">if</span>(target&gt;<span class="built_in">array</span>[i][j])</span><br><span class="line">              	i++;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">              	j--;</span><br><span class="line">		&#125;</span><br><span class="line">      <span class="keyword">return</span> flase;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="总结-2"><a href="#总结-2" class="headerlink" title="总结"></a>总结</h2><p>在遇到比较复杂的问题时，应该从一个简单的情况入手，得到一般的规律。</p>
+<h1 id="问题四：替换空格"><a href="#问题四：替换空格" class="headerlink" title="问题四：替换空格"></a>问题四：替换空格</h1><h2 id="题目描述-3"><a href="#题目描述-3" class="headerlink" title="题目描述"></a>题目描述</h2><p>请实现一个函数，把字符串中的每个空格替换成<code>&quot;%20&quot;</code>。</p>
+<p>你可以假定输入字符串的长度最大是1000。</p>
+<blockquote>
+<p>注意输出字符串的长度可能大于1000。</p>
+</blockquote>
+<p><strong>样例</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：&quot;We are happy.&quot;</span><br><span class="line"></span><br><span class="line">输出：&quot;We%20are%20happy.&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="题目分析-3"><a href="#题目分析-3" class="headerlink" title="题目分析"></a>题目分析</h2><h3 id="算法1"><a href="#算法1" class="headerlink" title="算法1"></a>算法1</h3><p><strong>(线性扫描)</strong> $O(n)$<br>这个题在C++里比较好做，我们可以从前往后枚举原字符串：</p>
+<p>如果遇到空格，则在string类型的答案中添加 “%20”；</p>
+<p>如果遇到其他字符，则直接将它添加在答案中；</p>
+<p>但在C语言中，我们没有string这种好用的模板，需要自己malloc出char数组来存储答案。</p>
+<p>此时我们就需要分成三步来做：</p>
+<ul>
+<li>遍历一遍原字符串，计算出答案的最终长度；</li>
+</ul>
+<ul>
+<li>malloc出该长度的char数组；</li>
+</ul>
+<ul>
+<li>再遍历一遍原字符串，计算出最终的答案数组；</li>
+</ul>
+<h4 id="时间复杂度分析-2"><a href="#时间复杂度分析-2" class="headerlink" title="时间复杂度分析"></a>时间复杂度分析</h4><p>原字符串只会被遍历常数次，所以总时间复杂度是$O(n)$。</p>
+<h3 id="算法2"><a href="#算法2" class="headerlink" title="算法2"></a>算法2</h3><p><strong>(双指针扫描)</strong> $O(n)$<br>在部分编程语言中，我们可以动态地将原数组长度扩大，此时我们就可以使用双指针算法，来降低空间的使用：</p>
+<ul>
+<li>首先遍历一遍原数组，求出最终答案的长度length；</li>
+</ul>
+<ul>
+<li>将原数组<strong>resize</strong>成length大小；</li>
+</ul>
+<ul>
+<li>使用两个指针，指针i指向原字符串的末尾，指针j指向length的位置；</li>
+</ul>
+<ul>
+<li>两个指针分别从后往前遍历，如果str[i] == ‘ ‘，则指针j的位置上依次填充’0’, ‘2’, ‘%’，这样倒着看就是”%20”；如果str[i] != ‘ ‘，则指针j的位置上填充该字符即可。</li>
+</ul>
+<p>由于i之前的字符串，在变换之后，长度一定不小于原字符串，所以遍历过程中一定有i &lt;= j，这样可以保证str[j]不会覆盖还未遍历过的str[i]，从而答案是正确的。</p>
+<h4 id="时间复杂度分析-3"><a href="#时间复杂度分析-3" class="headerlink" title="时间复杂度分析"></a>时间复杂度分析</h4><p>原字符串只会被遍历常数次，所以总时间复杂度是$ O(n)$。</p>
+<h2 id="C-代码-3"><a href="#C-代码-3" class="headerlink" title="C++代码"></a>C++代码</h2><p><strong>算法一：</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">replaceSpaces</span><span class="params">(<span class="built_in">string</span> &amp;str)</span> </span>&#123;</span><br><span class="line">      	<span class="built_in">string</span> res;</span><br><span class="line">      	<span class="keyword">for</span>(<span class="keyword">auto</span> x:str)&#123;</span><br><span class="line">  			<span class="keyword">if</span>(x==<span class="string">' '</span>)</span><br><span class="line">              	res+=<span class="string">"20%"</span></span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">              	res+=x;</span><br><span class="line">		&#125;</span><br><span class="line">      <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>算法二：</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">replaceSpaces</span><span class="params">(<span class="built_in">string</span> &amp;str)</span> </span>&#123;</span><br><span class="line">    	<span class="keyword">int</span> count=<span class="number">0</span>;</span><br><span class="line">    	<span class="keyword">for</span>(<span class="keyword">auto</span> x:str)</span><br><span class="line">    		<span class="keyword">if</span>(x==<span class="string">' '</span>)</span><br><span class="line">    			count++;</span><br><span class="line">    	<span class="keyword">int</span> indexOfOriginal=str.size();</span><br><span class="line">    	<span class="keyword">int</span> indexOfNew=str.size()+count*<span class="number">2</span>;</span><br><span class="line">      	str.resize(indexOfNew+<span class="number">1</span>);</span><br><span class="line">    	<span class="keyword">while</span>(indexOfOriginal&gt;=<span class="number">0</span>&amp;&amp;indexOfNew&gt;indexOfOriginal)&#123;</span><br><span class="line">  			<span class="keyword">if</span>(str[indexOfOriginal]==<span class="string">' '</span>)</span><br><span class="line">  				str[indexOfNew--]=<span class="string">"0"</span>;</span><br><span class="line">  				str[indexOfNew--]=<span class="string">"2"</span>;</span><br><span class="line">  				str[indexOfNew--]=<span class="string">"%"</span>;</span><br><span class="line">  			<span class="keyword">else</span></span><br><span class="line">  				str[indexOfNew--]=str[indexOfOriginal];</span><br><span class="line">  			indexOfOriginal--;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> str;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="总结-3"><a href="#总结-3" class="headerlink" title="总结"></a>总结</h2><p>如果面试的过程中面试官要求不能浪费多余的空间，也就是直接在原数组后面直接加内存，则用算法二；如果没有这种要求的话，就直接用算法一。</p>
+<h1 id="问题五：从尾到头打印链表"><a href="#问题五：从尾到头打印链表" class="headerlink" title="问题五：从尾到头打印链表"></a>问题五：从尾到头打印链表</h1><p>输入一个链表的头结点，按照 <strong>从尾到头</strong> 的顺序返回节点的值。</p>
+<p>返回的结果用数组存储。</p>
+<p><strong>样例</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：[2, 3, 5]</span><br><span class="line">返回：[5, 3, 2]</span><br></pre></td></tr></table></figure>
+<h2 id="题目分析-4"><a href="#题目分析-4" class="headerlink" title="题目分析"></a>题目分析</h2><p><strong>(遍历链表)</strong> $O(n)$</p>
+<p>单链表只能从前往后遍历，不能从后往前遍历。</p>
+<p>因此我们先从前往后遍历一遍输入的链表，将结果记录在答案数组中。<br>最后再将得到的数组逆序即可。</p>
+<h2 id="时间复杂度分析-4"><a href="#时间复杂度分析-4" class="headerlink" title="时间复杂度分析"></a>时间复杂度分析</h2><p>链表和答案数组仅被遍历了常数次，所以总时间复杂度是$O(n)$。</p>
+<h2 id="C-代码-4"><a href="#C-代码-4" class="headerlink" title="C++代码"></a>C++代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * struct ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode *next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) : val(x), next(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; printListReversingly(ListNode* head) &#123;</span><br><span class="line">    	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line">    	</span><br><span class="line">    	<span class="keyword">while</span>(head)&#123;</span><br><span class="line">  			res.push_back(head-&gt;val);</span><br><span class="line">  			head=head-&gt;next();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(res.rbegin(),res.rend());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="总结-4"><a href="#总结-4" class="headerlink" title="总结"></a>总结</h2><p>链表的数据结构：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">struct ListNode&#123;</span><br><span class="line">  	int m_nValue;</span><br><span class="line">  	ListNode *m_pNext;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>模板一：在链表的末尾添加一个节点</p>
+<p>模板二：找到第一个含有某个数值的节点并删除这个节点</p>
+<h1 id="问题六：重构二叉树"><a href="#问题六：重构二叉树" class="headerlink" title="问题六：重构二叉树"></a>问题六：重构二叉树</h1><h2 id="题目描述-4"><a href="#题目描述-4" class="headerlink" title="题目描述"></a>题目描述</h2><p>输入一棵二叉树前序遍历和中序遍历的结果，请重建该二叉树。</p>
+<p><strong>注意</strong>:</p>
+<ul>
+<li>二叉树中每个节点的值都互不相同；</li>
+<li>输入的前序遍历和中序遍历一定合法；</li>
+</ul>
+<p><strong>样例</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">给定：</span><br><span class="line">前序遍历是：[3, 9, 20, 15, 7]</span><br><span class="line">中序遍历是：[9, 3, 15, 20, 7]</span><br><span class="line"></span><br><span class="line">返回：[3, 9, 20, null, null, 15, 7, null, null, null, null]</span><br><span class="line">返回的二叉树如下所示：</span><br><span class="line">    3</span><br><span class="line">   / \</span><br><span class="line">  9  20</span><br><span class="line">    /  \</span><br><span class="line">   15   7</span><br></pre></td></tr></table></figure>
+<h2 id="题目分析-5"><a href="#题目分析-5" class="headerlink" title="题目分析"></a>题目分析</h2><p><strong>(递归)</strong> $O(n)$<br>递归建立整棵二叉树：先递归创建左右子树，然后创建根节点，并让指针指向两棵子树。</p>
+<p>具体步骤如下：</p>
+<ul>
+<li>先利用前序遍历找根节点：前序遍历的第一个数，就是根节点的值；</li>
+</ul>
+<ul>
+<li>在中序遍历中找到根节点的位置$k$，则$k$左边是左子树的中序遍历，右边是右子树的中序遍历；</li>
+</ul>
+<ul>
+<li>假设左子树的中序遍历的长度是$l$，则在前序遍历中，根节点后面的个$l$数，是左子树的前序遍历，剩下的数是右子树的前序遍历；</li>
+</ul>
+<ul>
+<li>有了左右子树的前序遍历和中序遍历，我们可以先递归创建出左右子树，然后再创建根节点；</li>
+</ul>
+<h2 id="时间复杂度分析-5"><a href="#时间复杂度分析-5" class="headerlink" title="时间复杂度分析"></a>时间复杂度分析</h2><p>我们在初始化时，用哈希表(unordered_map<int,int>)记录每个值在中序遍历中的位置，这样我们在递归到每个节点时，在中序遍历中查找根节点位置的操作，只需要$O(1)$的时间。此时，创建每个节点需要的时间是$O(1)$，所以总时间复杂度是$O(n)$。</int,int></p>
+<h2 id="C-代码-5"><a href="#C-代码-5" class="headerlink" title="C++代码"></a>C++代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     TreeNode *right;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  	<span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; pos;</span><br><span class="line">  	<span class="function">TreeNode* <span class="title">buildTree</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; preorder, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; inorder)</span> </span>&#123;</span><br><span class="line">      	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;inorder.size();i++)</span><br><span class="line">          	pos[inorder[i]]=i;   <span class="comment">//记录下每一个中序遍历的的序列下标</span></span><br><span class="line">      	<span class="keyword">return</span> dfs(preorder,inorder,<span class="number">0</span>,preorder.size()<span class="number">-1</span>,<span class="number">0</span>,preorder.size()<span class="number">-1</span>);</span><br><span class="line">    <span class="function">TreeNode* <span class="title">dfs</span><span class="params">(vecotr&lt;<span class="keyword">int</span>&gt;&amp; pre,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; in,pl,pr,il,ir)</span></span>&#123;</span><br><span class="line">      	<span class="keyword">if</span>(pl&gt;pr) <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">  		<span class="function">TreeNdoe* <span class="title">root</span><span class="params">(pre[pl])</span></span>;</span><br><span class="line">      	<span class="keyword">int</span> k=pos[pre[pl]];  <span class="comment">//左子树节点的个数为k-il</span></span><br><span class="line">      	root-&gt;left=dfs(pre,in,pl+<span class="number">1</span>,pl+k-il,il,k<span class="number">-1</span>);</span><br><span class="line">      	root-&gt;right=dfs(pre,in,pl+k-il+<span class="number">1</span>,pr,k+<span class="number">1</span>,ir);</span><br><span class="line">      	<span class="keyword">return</span> root;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="总结-5"><a href="#总结-5" class="headerlink" title="总结"></a>总结</h2><p>这个题目非常经典，必须要熟练掌握啊，思想就是用递归的想法建立左子树和右子树。</p>
+<h1 id="问题七：二叉树的下一个节点"><a href="#问题七：二叉树的下一个节点" class="headerlink" title="问题七：二叉树的下一个节点"></a>问题七：二叉树的下一个节点</h1><h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>给定一棵二叉树的其中一个节点，请找出中序遍历序列的下一个节点。</p>
+<p><strong>注意：</strong></p>
+<ul>
+<li>如果给定的节点是中序遍历序列的最后一个，则返回空节点;</li>
+<li>二叉树一定不为空，且给定的节点一定不是空节点；</li>
+</ul>
+<p><strong>样例</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">假定二叉树是：[2, 1, 3, null, null, null, null]， 给出的是值等于2的节点。</span><br><span class="line"></span><br><span class="line">则应返回值等于3的节点。</span><br><span class="line"></span><br><span class="line">解释：该二叉树的结构如下，2的后继节点是3。</span><br><span class="line">  2</span><br><span class="line"> / \</span><br><span class="line">1   3</span><br></pre></td></tr></table></figure>
+<h2 id="题目分析-6"><a href="#题目分析-6" class="headerlink" title="题目分析"></a>题目分析</h2><p><strong>(模拟)</strong> $O(h)$</p>
+<p>这道题目就是让我们求二叉树中给定节点的后继。</p>
+<p>分情况讨论即可，如下图所示：</p>
+<ul>
+<li>如果当前节点有右儿子，则右子树中最左侧的节点就是当前节点的后继。比如F的后继是H；</li>
+</ul>
+<ul>
+<li>如果当前节点没有右儿子，则需要沿着father域一直向上找，找到第一个是其father左儿子的节点，该节点的father就是当前节点的后继。比如当前节点是D，则第一个满足是其father左儿子的节点是C，则C的father就是D的后继。</li>
+</ul>
+<p><img src="https://i.loli.net/2019/03/22/5c94ef59205cf.png" alt=""></p>
+<h2 id="时间复杂度分析-6"><a href="#时间复杂度分析-6" class="headerlink" title="时间复杂度分析"></a>时间复杂度分析</h2><p>不论往上找还是往下找，总共遍历的节点数都不大于树的高度。所以时间复杂度是$O(h)$，其中$h$是树的高度。</p>
+<h2 id="C-代码-6"><a href="#C-代码-6" class="headerlink" title="C++代码"></a>C++代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     TreeNode *right;</span></span><br><span class="line"><span class="comment"> *     TreeNode *father;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) : val(x), left(NULL), right(NULL), father(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">TreeNode* <span class="title">inorderSuccessor</span><span class="params">(TreeNode* p)</span> </span>&#123;</span><br><span class="line">    	<span class="keyword">if</span>(p-&gt;right)&#123;</span><br><span class="line">    		p=p-&gt;right;</span><br><span class="line">    		<span class="keyword">while</span>(p-&gt;left) p=p-&gt;left;</span><br><span class="line">    		<span class="keyword">return</span> p;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">  			<span class="keyword">while</span> (p-&gt;father &amp;&amp; p == p-&gt;father-&gt;right) p = p-&gt;father;</span><br><span class="line">  			<span class="keyword">return</span> p-&gt;father;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="问题八：用两个栈实现队列"><a href="#问题八：用两个栈实现队列" class="headerlink" title="问题八：用两个栈实现队列"></a>问题八：用两个栈实现队列</h1><h2 id="题目描述-5"><a href="#题目描述-5" class="headerlink" title="题目描述"></a>题目描述</h2><p>请用栈实现一个队列，支持如下四种操作：</p>
+<ul>
+<li>push(x) – 将元素x插到队尾；</li>
+<li>pop() – 将队首的元素弹出，并返回该元素；</li>
+<li>peek() – 返回队首元素；</li>
+<li>empty() – 返回队列是否为空；</li>
+</ul>
+<blockquote>
+<p><strong>注意：</strong></p>
+</blockquote>
+<ul>
+<li>你只能使用栈的标准操作：<code>push to top</code>，<code>peek/pop from top</code>, <code>size</code> 和 <code>is empty</code>；</li>
+<li>如果你选择的编程语言没有栈的标准库，你可以使用list或者deque等模拟栈的操作；</li>
+<li>输入数据保证合法，例如，在队列为空时，不会进行<code>pop</code>或者<code>peek</code>等操作；</li>
+</ul>
+<p>样例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">MyQueue queue = new MyQueue();</span><br><span class="line"></span><br><span class="line">queue.push(1);</span><br><span class="line">queue.push(2);</span><br><span class="line">queue.peek();  // returns 1</span><br><span class="line">queue.pop();   // returns 1</span><br><span class="line">queue.empty(); // returns false</span><br></pre></td></tr></table></figure>
+<h2 id="题目分析-7"><a href="#题目分析-7" class="headerlink" title="题目分析"></a>题目分析</h2><p><strong>(栈，队列)</strong> $O(n)$</p>
+<p>这是一道基础题，只要把功能实现对就可以，不需要考虑运行效率。</p>
+<p>我们用两个栈来做，一个<strong>主栈</strong>，用来<strong>存储数据</strong>；一个<strong>辅助栈</strong>，用来当<strong>缓存</strong>。</p>
+<ul>
+<li>push(x)，我们直接将x插入主栈中即可。</li>
+</ul>
+<ul>
+<li>pop()，此时我们需要弹出最先进入栈的元素，也就是栈底元素。我们可以先将所有元素从主栈中弹出，压入辅助栈中。则辅助栈的栈顶元素就是我们要弹出的元素，将其弹出即可。然后再将辅助栈中的元素全部弹出，压入主栈中。</li>
+</ul>
+<ul>
+<li>peek()，可以用和pop()操作类似的方式，得到最先压入栈的元素。</li>
+</ul>
+<ul>
+<li>empty()，直接判断主栈是否为空即可。</li>
+</ul>
+<h2 id="时间复杂度分析-7"><a href="#时间复杂度分析-7" class="headerlink" title="时间复杂度分析"></a>时间复杂度分析</h2><ul>
+<li>push()：$O(1)$；</li>
+</ul>
+<ul>
+<li>pop(): 每次需要将主栈元素全部弹出，再压入，所以需要$O(n)$ 的时间；</li>
+</ul>
+<ul>
+<li>peek()：类似于pop()，需要$O(n)$的时间；</li>
+</ul>
+<ul>
+<li>empty()：$O(1)$；</li>
+</ul>
+<h2 id="C-代码-7"><a href="#C-代码-7" class="headerlink" title="C++代码"></a>C++代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyQueue</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">/** Initialize your data structure here. */</span></span><br><span class="line">    <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; stk, cache;</span><br><span class="line">    MyQueue() &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">  	<span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">  		stk.push(x);</span><br><span class="line">	&#125;</span><br><span class="line">  	<span class="function"><span class="keyword">void</span> <span class="title">copy</span><span class="params">(<span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; &amp;a,<span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; &amp;b)</span></span>&#123;</span><br><span class="line">  		<span class="keyword">while</span>(a.size())&#123;</span><br><span class="line">			b.push(a.top());</span><br><span class="line">          	a.pop();</span><br><span class="line">		&#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">pop</span><span class="params">()</span></span>&#123;</span><br><span class="line">  		copy(stk,cache);</span><br><span class="line">      	res=cache.top()</span><br><span class="line">        cache.pop();</span><br><span class="line">      	copy(cache,stk);</span><br><span class="line">      	<span class="keyword">return</span> res;</span><br><span class="line">	&#125;</span><br><span class="line">	 <span class="comment">/** Get the front element. */</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">peek</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        copy(stk, cache);</span><br><span class="line">        <span class="keyword">int</span> res = cache.top();</span><br><span class="line">        copy(cache, stk);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/** Returns whether the queue is empty. */</span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">empty</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> stk.empty();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Your MyQueue object will be instantiated and called as such:</span></span><br><span class="line"><span class="comment"> * MyQueue obj = MyQueue();</span></span><br><span class="line"><span class="comment"> * obj.push(x);</span></span><br><span class="line"><span class="comment"> * int param_2 = obj.pop();</span></span><br><span class="line"><span class="comment"> * int param_3 = obj.peek();</span></span><br><span class="line"><span class="comment"> * bool param_4 = obj.empty();</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+<h2 id="总结-6"><a href="#总结-6" class="headerlink" title="总结"></a>总结</h2><p>如果用两个队列实现一个栈的话，在插入元素的时候，就是将该元素压入到非空的队列中；在删除元素的时候将当前非空的队列的元素一一进行删除并压入到另一个空的队列中，队列中最后一个元素只进行删除。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">用两个队列模拟入栈操作</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(PQUEUE pS1,PQUEUE pS2,<span class="keyword">int</span> val)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(is_empty(pS2))</span><br><span class="line">		en_queue(pS1, val);</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		en_queue(pS2, val);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">用两个队列模拟出栈操作</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">pop</span><span class="params">(PQUEUE pS1,PQUEUE pS2,<span class="keyword">int</span> *pData)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(is_empty(pS1) &amp;&amp; is_empty(pS2))</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"> </span><br><span class="line">	<span class="keyword">int</span> DelData;</span><br><span class="line">	<span class="keyword">if</span>(!is_empty(pS2))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> len = length(pS2);</span><br><span class="line">		<span class="keyword">while</span>(len-- &gt; <span class="number">1</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			de_queue(pS2,&amp;DelData);</span><br><span class="line">			en_queue(pS1,DelData);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//将队列的最后一个元素出队，作为出栈元素</span></span><br><span class="line">		de_queue(pS2,pData);</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(!is_empty(pS1))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> len = length(pS1);</span><br><span class="line">		<span class="keyword">while</span>(len-- &gt; <span class="number">1</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			de_queue(pS1,&amp;DelData);</span><br><span class="line">			en_queue(pS2,DelData);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//将队列的最后一个元素出队，作为出栈元素</span></span><br><span class="line">		de_queue(pS1,pData);</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="问题九：斐波那契数列"><a href="#问题九：斐波那契数列" class="headerlink" title="问题九：斐波那契数列"></a>问题九：斐波那契数列</h1><h2 id="问题描述-1"><a href="#问题描述-1" class="headerlink" title="问题描述"></a>问题描述</h2><p>输入一个整数 $n$，求斐波那契数列的第$n$项。</p>
+<p>假定从0开始，第0项为0。($n&lt;=39$)</p>
+<p>样例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入整数 n=5 </span><br><span class="line"></span><br><span class="line">返回 5</span><br></pre></td></tr></table></figure>
+<h2 id="题目分析-递推"><a href="#题目分析-递推" class="headerlink" title="题目分析(递推)"></a>题目分析(递推)</h2><p>这题的数据范围很小，我们直接模拟即可。</p>
+<p>当数据范围很大时，就需要采用其他方式了，可以参考 求解斐波那契数列的若干方法 。</p>
+<p>用两个变量滚动式得往后计算，$a$表示第 $n−1$项，$b$表示第$n$项。</p>
+<p>则令$c=a+b$ 表示第 $n+1$ 项，然后让 $a,b$ 顺次往后移一位。</p>
+<p><strong>时间复杂度分析</strong></p>
+<p>总共需要计算$n$ 次，所以时间复杂度是 $O(n)$ 。</p>
+<h2 id="C-代码-8"><a href="#C-代码-8" class="headerlink" title="C++代码"></a>C++代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">Fibonacci</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    	<span class="keyword">int</span> a=b=<span class="number">1</span>;</span><br><span class="line">    	<span class="keyword">int</span> c;</span><br><span class="line">    	<span class="keyword">while</span>(n--)&#123;</span><br><span class="line">  			c=a+b;</span><br><span class="line">  			b=a;</span><br><span class="line">  			b=c;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> c;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="总结-7"><a href="#总结-7" class="headerlink" title="总结"></a>总结</h2><p><strong>矩阵运算 + 快速幂</strong>。</p>
+<p>快速幂算法的模板可以参考这里。</p>
+<p>可以先利用矩阵运算的性质将通项公式变成幂次形式，然后用平方倍增（快速幂）的方法求解第$n$项。</p>
+<p>首先我们定义向量</p>
+<script type="math/tex; mode=display">X_{n}=\left[ \begin{array}{ll}{a_{n}} & {a_{n-1}}\end{array}\right]$$，边界：$$X_{1}=\left[ \begin{array}{ll}{a_{1}} & {a_{0}}\end{array}\right]</script><p>然后我们可以找出矩阵：</p>
+<script type="math/tex; mode=display">
+A=\left[ \begin{array}{ll}{1} & {1} \\ {1} & {0}\end{array}\right]</script><p>则有：</p>
+<script type="math/tex; mode=display">
+X_{n}=X_{n-1} \times A</script><p>所以：</p>
+<script type="math/tex; mode=display">
+X_{n}=X_{1} \times A^{n-1}</script><p>由于矩阵具有结合律，所以我们可以先求出$A^{n-1} \% P$，然后再用$X1$左乘，即可求出$X_n$，向量$X_n$的第一个元素就是$a_n$。</p>
+<p><strong>时间复杂度分析：快速幂的时间复杂度是 $O(logn)$，所以算法5的时间复杂度也是 $O(logn)$。</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ctime&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">mul</span><span class="params">(<span class="keyword">int</span> a[][<span class="number">2</span>], <span class="keyword">int</span> b[][<span class="number">2</span>], <span class="keyword">int</span> c[][<span class="number">2</span>])</span></span>&#123;</span><br><span class="line">  	<span class="keyword">int</span> temp[][<span class="number">2</span>] = &#123;&#123;<span class="number">0</span>, <span class="number">0</span>&#125;, &#123;<span class="number">0</span>, <span class="number">0</span>&#125;&#125;;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">2</span>; i ++ )</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">2</span>; j ++ )</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; <span class="number">2</span>; k ++ )</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">long</span> <span class="keyword">long</span> x = temp[i][j] + (<span class="keyword">long</span> <span class="keyword">long</span>)a[i][k] * b[k][j];</span><br><span class="line">                temp[i][j] = x % MOD;</span><br><span class="line">            &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">2</span>; i ++ )</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">2</span>; j ++ )</span><br><span class="line">            c[i][j] = temp[i][j];</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">f_final</span><span class="params">(<span class="keyword">long</span> <span class="keyword">long</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x[<span class="number">2</span>] = &#123;<span class="number">1</span>, <span class="number">1</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> a[<span class="number">2</span>][<span class="number">2</span>] = &#123;&#123;<span class="number">1</span>, <span class="number">1</span>&#125;, &#123;<span class="number">1</span>, <span class="number">0</span>&#125;&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> res[][<span class="number">2</span>] = &#123;&#123;<span class="number">1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">0</span>, <span class="number">1</span>&#125;&#125;;</span><br><span class="line">    <span class="keyword">int</span> t[][<span class="number">2</span>] = &#123;&#123;<span class="number">1</span>, <span class="number">1</span>&#125;, &#123;<span class="number">1</span>, <span class="number">0</span>&#125;&#125;;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> k = n - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (k)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (k&amp;<span class="number">1</span>) mul(res, t, res);   <span class="comment">//res*=t</span></span><br><span class="line">        mul(t, t, t);    <span class="comment">//t*=t</span></span><br><span class="line">        k &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> c[<span class="number">2</span>] = &#123;<span class="number">0</span>, <span class="number">0</span>&#125;;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">2</span>; i ++ )</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">2</span>; j ++ )</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">long</span> <span class="keyword">long</span> r = c[i] + (<span class="keyword">long</span> <span class="keyword">long</span>)x[j] * res[i][j];</span><br><span class="line">            c[i] = r % MOD;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> c[<span class="number">0</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> n ;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; f_final(n) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里给出快速幂运算的代码和解释：</p>
+<p>代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pow</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> ans = <span class="number">1</span>, base = a;</span><br><span class="line">    <span class="keyword">while</span> (b != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (b &amp; <span class="number">1</span> != <span class="number">0</span>)   <span class="comment">//当b的最后一位为奇数时</span></span><br><span class="line">            ans *= base;</span><br><span class="line">        base *= base;</span><br><span class="line">        b &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>解释：快速幂运算也叫<strong>反复平方法</strong></p>
+<p> 假设要求$x^n$，如果$n = 2^k$，那么原题可以很轻松的表示为：$x^n = ((x^2)^2)^2…$。这样只要做$k$次平方运算就能解决，时间复杂度就从$O(n)$下降到$log(n)$。</p>
+<p>由上面的分析可知，只要幂运算的幂可以写成$2^k$的形式，就可以用上面的方法降低时间复杂度。所以我们可以将任意的实数$n$改写有限个$2^k$的形式的相加。例如：</p>
+<p><img src="https://img-blog.csdn.net/20180605195842322" alt="img"><br>如图所示，$x^{22}$可以改写成$x^{16}<em>x^4</em>x^2$。这样我们就可以分别对$x^{16}$和$x^4$以及$x^2$使用上述方法快速计算结果，最后只要相加就可以了。</p>
+<p>由于是二进制，很自然地想到用位运算这个强大的工具：&amp;和&gt;&gt;    </p>
+<blockquote>
+<p> &amp;运算通常用于二进制取位操作，例如一个数 &amp; 1 的结果就是取二进制的最末位。还可以判断奇偶x&amp;1==0为偶，x&amp;1==1为奇。</p>
+<p>运算比较单纯,二进制去掉最后一位，</p>
+</blockquote>
+<h1 id="题目十：找出旋转数组中的最小值"><a href="#题目十：找出旋转数组中的最小值" class="headerlink" title="题目十：找出旋转数组中的最小值"></a>题目十：找出旋转数组中的最小值</h1><h2 id="题目描述-6"><a href="#题目描述-6" class="headerlink" title="题目描述"></a>题目描述</h2><p>把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。</p>
+<p>输入一个升序的数组的一个旋转，输出旋转数组的最小元素。</p>
+<p>例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。</p>
+<p>数组可能包含重复项。</p>
+<p><strong>注意</strong>：数组内所含元素非负，若数组大小为0，请返回-1。</p>
+<p>样例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：nums=[2,2,2,0,1]</span><br><span class="line"></span><br><span class="line">输出：0</span><br></pre></td></tr></table></figure>
+<h2 id="题目分析-8"><a href="#题目分析-8" class="headerlink" title="题目分析"></a>题目分析</h2><p>(二分) $O(n)$</p>
+<p>用两个指针分别指向数组中的第一个元素和最后一个元素，按照题目中的旋转的规则，第一个元素应该是大于或者等于最后一个元素（当然，这种情况有特例，当数组中允许存在重复数组的时候，有可能数组中最后一个元素和第一个元素是相等的，这个时候我们需要将最后一个相等的元素删除掉）</p>
+<p>接着我们可以找到中间元素，如果中间元素大于第一个指针指向的元素的话，那么中间元素就是位于前面的数组中；如果中间元素小于第二个指针指向的元素的话，那么中间元素就是位于后面的数组中。这两种情况下分别移动第二个和第一个指针。</p>
+<p>为了便于分析，我们先将数组中的数画在二维坐标系中，横坐标表示数组下标，纵坐标表示数值，如下所示：</p>
+<p><img src="https://i.loli.net/2019/03/26/5c9a0db42e0f9.png" alt=""></p>
+<p>图中水平的实线段表示相同元素。</p>
+<p>我们发现除了最后水平的一段（黑色水平那段）之外，其余部分满足二分性质：竖直虚线左边的数满足 $nums[i]&gt;=nums[0]$；而竖直虚线右边的数不满足这个条件。</p>
+<p>分界点就是整个数组的最小值。</p>
+<p>所以我们先将最后水平的一段删除即可。</p>
+<p>另外，不要忘记处理数组完全单调的特殊情况：</p>
+<p>当我们删除最后水平的一段之后，如果剩下的最后一个数大于等于第一个数，则说明数组完全单调。</p>
+<h2 id="时间复杂度分析-8"><a href="#时间复杂度分析-8" class="headerlink" title="时间复杂度分析"></a>时间复杂度分析</h2><p>二分的时间复杂度是 $O(logn)$，删除最后水平一段的时间复杂度最坏是 $O(n)$，所以总时间复杂度是 $O(n)$。</p>
+<h2 id="C-代码-9"><a href="#C-代码-9" class="headerlink" title="C++代码"></a>C++代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findMin</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = nums.size() - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (n &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">while</span> (n &gt; <span class="number">0</span> &amp;&amp; nums[n] == nums[<span class="number">0</span>]) n -- ;</span><br><span class="line">        <span class="keyword">if</span> (nums[n] &gt;= nums[<span class="number">0</span>]) <span class="keyword">return</span> nums[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">int</span> l = <span class="number">0</span>, r = n;</span><br><span class="line">        <span class="keyword">while</span> (l &lt; r) &#123;</span><br><span class="line">            <span class="keyword">int</span> mid = l + r &gt;&gt; <span class="number">1</span>;       <span class="comment">// [l, mid], [mid + 1, r]</span></span><br><span class="line">            <span class="keyword">if</span> (nums[mid] &lt; nums[<span class="number">0</span>]) r = mid;</span><br><span class="line">            <span class="keyword">else</span> l = mid + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> nums[r];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="总结-8"><a href="#总结-8" class="headerlink" title="总结"></a>总结</h2><p>二分查找的使用主要是判断$low$指针和$high$指针和$middle$位置的大小，这个题目其实在第一次迭代后就是我们常规的二分查找了</p>
+<h1 id="问题十一：数组中的路径"><a href="#问题十一：数组中的路径" class="headerlink" title="问题十一：数组中的路径"></a>问题十一：数组中的路径</h1><h2 id="题目描述-7"><a href="#题目描述-7" class="headerlink" title="题目描述"></a>题目描述</h2><p>请设计一个函数，用来判断在一个矩阵中是否存在一条包含某字符串所有字符的路径。</p>
+<p>路径可以从矩阵中的任意一个格子开始，每一步可以在矩阵中向左，向右，向上，向下移动一个格子。</p>
+<p>如果一条路径经过了矩阵中的某一个格子，则之后不能再次进入这个格子。</p>
+<p><strong>注意：</strong></p>
+<ul>
+<li>输入的路径不为空；</li>
+<li>所有出现的字符均为大写英文字母；</li>
+</ul>
+<p>样例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">matrix=</span><br><span class="line">[</span><br><span class="line">  [&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;E&quot;],</span><br><span class="line">  [&quot;S&quot;,&quot;F&quot;,&quot;C&quot;,&quot;S&quot;],</span><br><span class="line">  [&quot;A&quot;,&quot;D&quot;,&quot;E&quot;,&quot;E&quot;]</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">str=&quot;BCCE&quot; , return &quot;true&quot; </span><br><span class="line"></span><br><span class="line">str=&quot;ASAE&quot; , return &quot;false&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="题目分析-9"><a href="#题目分析-9" class="headerlink" title="题目分析"></a>题目分析</h2><p><strong>(DFS)</strong> $O(n^23^k)$</p>
+<p>在深度优先搜索中，<strong>最重要的就是考虑好搜索顺序。</strong></p>
+<p>我们先枚举单词的起点，然后依次枚举单词的每个字母。</p>
+<p>过程中需要将已经使用过的字母改成一个特殊字母，以避免重复使用字符。</p>
+<h2 id="时间复杂度分析-9"><a href="#时间复杂度分析-9" class="headerlink" title="时间复杂度分析"></a>时间复杂度分析</h2><p>单词起点一共有 $n^2$ 个，单词的每个字母一共有上下左右四个方向可以选择，但由于不能走回头路，所以除了单词首字母外，仅有三种选择。所以总时间复杂度是 $O(n^23^k)$。</p>
+<h2 id="C-代码-10"><a href="#C-代码-10" class="headerlink" title="C++代码"></a>C++代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">hasPath</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt;&amp; matrix, <span class="built_in">string</span> str)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;matrix.size();i++)</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;matrix[<span class="number">0</span>].size();j++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(dfs(matrix,str,<span class="number">0</span>,i,j))</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">dfs</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt; &amp;matrix, <span class="built_in">string</span> &amp;str, <span class="keyword">int</span> u, <span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (matrix[x][y] != str[u]) <span class="keyword">return</span> <span class="literal">false</span>;   <span class="comment">//如果当前的矩阵中的元素和字符串元素不相等，则直接返回false;</span></span><br><span class="line">        <span class="keyword">if</span> (u == str.size() - <span class="number">1</span>) <span class="keyword">return</span> <span class="literal">true</span>;   <span class="comment">//如果当前已经到了字符串最后一个元素，则可以跳出递归，直接返回true；</span></span><br><span class="line">        <span class="keyword">int</span> dx[<span class="number">4</span>] = &#123;<span class="number">-1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>&#125;, dy[<span class="number">4</span>] = &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">-1</span>&#125;;</span><br><span class="line">        <span class="keyword">char</span> t = matrix[x][y];</span><br><span class="line">        matrix[x][y] = <span class="string">'*'</span>;  <span class="comment">//标记这个元素已经访问过</span></span><br><span class="line">        <span class="comment">//在上下左右四个方位进行判断</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i ++ ) &#123;</span><br><span class="line">            <span class="keyword">int</span> a = x + dx[i], b = y + dy[i];</span><br><span class="line">            <span class="keyword">if</span> (a &gt;= <span class="number">0</span> &amp;&amp; a &lt; matrix.size() &amp;&amp; b &gt;= <span class="number">0</span> &amp;&amp; b &lt; matrix[a].size()) &#123;</span><br><span class="line">                <span class="keyword">if</span> (dfs(matrix, str, u + <span class="number">1</span>, a, b)) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//在上下左右四个方位中没有元素能够进行匹配</span></span><br><span class="line">        matrix[x][y] = t;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="总结-9"><a href="#总结-9" class="headerlink" title="总结"></a>总结</h2><p>这个题目就是使用回溯法，主要要判断好递归的入口！</p>
+<p>第一周的打卡结束，收获满满，加油，徐何军！！！</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+    
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="XuHejun 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/06/机器学习中正则化项L1和L2的直观理解/" rel="next" title="机器学习中正则化项L1和L2的直观理解">
+                <i class="fa fa-chevron-left"></i> 机器学习中正则化项L1和L2的直观理解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/25/图神经网络的应用与模型/" rel="prev" title="图神经网络的模型与应用">
+                图神经网络的模型与应用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/image/xu.jpg" alt="XuHejun">
+            
+              <p class="site-author-name" itemprop="name">XuHejun</p>
+              <p class="site-description motion-element" itemprop="description">Stay hungry,stay foolish</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/MuMaXu" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/xu-he-jun-24" target="_blank" title="Zhihu">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Zhihu</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/MuMaXu2" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Twitter</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/5307894956" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Weibo</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#问题一：找出数组中重复的数"><span class="nav-number">1.</span> <span class="nav-text">问题一：找出数组中重复的数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目描述"><span class="nav-number">1.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#题目分析"><span class="nav-number">1.2.</span> <span class="nav-text">题目分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#时间复杂度分析"><span class="nav-number">1.3.</span> <span class="nav-text">时间复杂度分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-代码"><span class="nav-number">1.4.</span> <span class="nav-text">C++代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.5.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题二：不修改数组找出重复的数字"><span class="nav-number">2.</span> <span class="nav-text">问题二：不修改数组找出重复的数字</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目描述-1"><span class="nav-number">2.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#题目分析-1"><span class="nav-number">2.2.</span> <span class="nav-text">题目分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复杂度分析"><span class="nav-number">2.3.</span> <span class="nav-text">复杂度分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-代码-1"><span class="nav-number">2.4.</span> <span class="nav-text">C++代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结-1"><span class="nav-number">2.5.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题三：二维数组中的查找"><span class="nav-number">3.</span> <span class="nav-text">问题三：二维数组中的查找</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目描述-2"><span class="nav-number">3.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#题目分析-2"><span class="nav-number">3.2.</span> <span class="nav-text">题目分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#时间复杂度分析-1"><span class="nav-number">3.3.</span> <span class="nav-text">时间复杂度分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-代码-2"><span class="nav-number">3.4.</span> <span class="nav-text">C++代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结-2"><span class="nav-number">3.5.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题四：替换空格"><span class="nav-number">4.</span> <span class="nav-text">问题四：替换空格</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目描述-3"><span class="nav-number">4.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#题目分析-3"><span class="nav-number">4.2.</span> <span class="nav-text">题目分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#算法1"><span class="nav-number">4.2.1.</span> <span class="nav-text">算法1</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#时间复杂度分析-2"><span class="nav-number">4.2.1.1.</span> <span class="nav-text">时间复杂度分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法2"><span class="nav-number">4.2.2.</span> <span class="nav-text">算法2</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#时间复杂度分析-3"><span class="nav-number">4.2.2.1.</span> <span class="nav-text">时间复杂度分析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-代码-3"><span class="nav-number">4.3.</span> <span class="nav-text">C++代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结-3"><span class="nav-number">4.4.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题五：从尾到头打印链表"><span class="nav-number">5.</span> <span class="nav-text">问题五：从尾到头打印链表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目分析-4"><span class="nav-number">5.1.</span> <span class="nav-text">题目分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#时间复杂度分析-4"><span class="nav-number">5.2.</span> <span class="nav-text">时间复杂度分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-代码-4"><span class="nav-number">5.3.</span> <span class="nav-text">C++代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结-4"><span class="nav-number">5.4.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题六：重构二叉树"><span class="nav-number">6.</span> <span class="nav-text">问题六：重构二叉树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目描述-4"><span class="nav-number">6.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#题目分析-5"><span class="nav-number">6.2.</span> <span class="nav-text">题目分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#时间复杂度分析-5"><span class="nav-number">6.3.</span> <span class="nav-text">时间复杂度分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-代码-5"><span class="nav-number">6.4.</span> <span class="nav-text">C++代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结-5"><span class="nav-number">6.5.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题七：二叉树的下一个节点"><span class="nav-number">7.</span> <span class="nav-text">问题七：二叉树的下一个节点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题描述"><span class="nav-number">7.1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#题目分析-6"><span class="nav-number">7.2.</span> <span class="nav-text">题目分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#时间复杂度分析-6"><span class="nav-number">7.3.</span> <span class="nav-text">时间复杂度分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-代码-6"><span class="nav-number">7.4.</span> <span class="nav-text">C++代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题八：用两个栈实现队列"><span class="nav-number">8.</span> <span class="nav-text">问题八：用两个栈实现队列</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目描述-5"><span class="nav-number">8.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#题目分析-7"><span class="nav-number">8.2.</span> <span class="nav-text">题目分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#时间复杂度分析-7"><span class="nav-number">8.3.</span> <span class="nav-text">时间复杂度分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-代码-7"><span class="nav-number">8.4.</span> <span class="nav-text">C++代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结-6"><span class="nav-number">8.5.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题九：斐波那契数列"><span class="nav-number">9.</span> <span class="nav-text">问题九：斐波那契数列</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题描述-1"><span class="nav-number">9.1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#题目分析-递推"><span class="nav-number">9.2.</span> <span class="nav-text">题目分析(递推)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-代码-8"><span class="nav-number">9.3.</span> <span class="nav-text">C++代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结-7"><span class="nav-number">9.4.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#题目十：找出旋转数组中的最小值"><span class="nav-number">10.</span> <span class="nav-text">题目十：找出旋转数组中的最小值</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目描述-6"><span class="nav-number">10.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#题目分析-8"><span class="nav-number">10.2.</span> <span class="nav-text">题目分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#时间复杂度分析-8"><span class="nav-number">10.3.</span> <span class="nav-text">时间复杂度分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-代码-9"><span class="nav-number">10.4.</span> <span class="nav-text">C++代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结-8"><span class="nav-number">10.5.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题十一：数组中的路径"><span class="nav-number">11.</span> <span class="nav-text">问题十一：数组中的路径</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目描述-7"><span class="nav-number">11.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#题目分析-9"><span class="nav-number">11.2.</span> <span class="nav-text">题目分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#时间复杂度分析-9"><span class="nav-number">11.3.</span> <span class="nav-text">时间复杂度分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-代码-10"><span class="nav-number">11.4.</span> <span class="nav-text">C++代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结-9"><span class="nav-number">11.5.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">XuHejun</span>
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+  
+</body>
+</html>
